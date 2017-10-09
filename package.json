@@ -1,0 +1,25 @@
+{
+  "name": "ucalypt-api",
+  "description": "Node RESTful API",
+  "main": "app.js",
+  "license": "ISC",
+  "private": true,
+  "scripts": {
+    "start": "NODE_ENV='production' node ./app.js",
+    "start_dev": "NODE_ENV='development' node ./app.js"
+  },
+  "repository" : {
+    "type": "git",
+    "url": "git://github.com/sberlinches/ucalypt_api.git"
+  },
+  "dependencies": {
+    "express": "4.16.1",
+    "express-session": "1.15.6",
+    "body-parser": "1.18.2",
+    "sequelize": "4.13.0",
+    "mysql2": "1.4.2",
+    "bcrypt": "1.0.3",
+    "cors": "2.8.4",
+    "compression": "1.7.1"
+  }
+}
