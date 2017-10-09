@@ -11,10 +11,12 @@ const fs            = require('fs');
 const key           = fs.readFileSync(config.keyPath);
 const cert          = fs.readFileSync(config.certPath);
 const server        = https.createServer({ key: key, cert: cert }, app);
+const router        = require('./routes');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded(config.bodyParser.urlencoded));
 app.use(cors());
+app.use(router);
 if(config.isProduction) app.use(compression());
 
 server.listen(config.node.port, config.node.host, function() {
