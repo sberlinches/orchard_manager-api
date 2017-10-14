@@ -44,7 +44,6 @@ module.exports = function(sequelize, Sequelize) {
         firstName: {
             type: Sequelize.STRING(30),
             field: 'firstName',
-            allowNull: false,
             validate: {
                 isAlpha: true,
                 notEmpty: true,
@@ -112,6 +111,7 @@ module.exports = function(sequelize, Sequelize) {
         modifiedBy: {
             type: Sequelize.INTEGER(11).UNSIGNED,
             field: 'modifiedBy',
+            allowNull: false,
             validate: {
                 isInt: true
             }
