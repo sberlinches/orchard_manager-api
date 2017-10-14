@@ -7,6 +7,9 @@ const userController    = require('../controllers/userController');
 
 // Register routes
 router.get('/', isAuthenticated, userController.findAll);
-router.get('/:user_id', isAuthenticated, userController.findBy);
+router.post('/', isAuthenticated, userController.create);
+router.get('/:id', isAuthenticated, userController.findById);
+router.patch('/:id', isAuthenticated, userController.update);
+router.delete('/:id', isAuthenticated, userController.destroy);
 
 module.exports = router;
