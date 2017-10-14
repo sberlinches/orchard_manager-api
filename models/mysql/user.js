@@ -1,5 +1,7 @@
 "use strict";
 
+const bcrypt = require('bcrypt');
+
 /**
  * user
  *
@@ -39,7 +41,11 @@ module.exports = function(sequelize, Sequelize) {
         password: {
             type: Sequelize.STRING(60),
             field: 'password',
-            allowNull: false
+            allowNull: false,
+            validate: {
+                notEmpty: true,
+                len: [4, 30]
+            }
         },
         firstName: {
             type: Sequelize.STRING(30),
@@ -120,6 +126,11 @@ module.exports = function(sequelize, Sequelize) {
         scopes: {
             activeUsers: {
                 where: { deletedAt: null }
+            }
+        },
+        hooks: {
+            afterValidate: function(user) {
+                if(user.password) user.password = bcrypt.hashSync(user.password, config.bcrypt.salt);
             }
         }
     });

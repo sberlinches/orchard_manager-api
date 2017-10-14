@@ -46,5 +46,8 @@ module.exports = {
         saveUninitialized: true
     },
     keyPath: '../../../ssl/key.pem',
-    certPath: '../../../ssl/cert.pem'
+    certPath: '../../../ssl/cert.pem',
+    bcrypt: {
+        salt: 10
+    }
 };
