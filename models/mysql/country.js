@@ -5,11 +5,11 @@
  *
  * @param sequelize
  * @param Sequelize
- * @returns {Model|*|{}|{timestamps, paranoid, freezeTableName}}
+ * @returns country
  */
 module.exports = function(sequelize, Sequelize) {
 
-    return sequelize.define('country', {
+    const country = sequelize.define('country', {
         id: {
             type: Sequelize.INTEGER(6).UNSIGNED,
             primaryKey: true,
@@ -19,15 +19,27 @@ module.exports = function(sequelize, Sequelize) {
             type: Sequelize.CHAR(2),
             field: 'code',
             allowNull: false,
-            unique: true
+            unique: true,
+            validate: {
+                isAlpha: true,
+                notEmpty: true,
+                len: [2]
+            }
         },
         nameEn: {
             type: Sequelize.STRING(50),
             field: 'nameEn',
-            allowNull: false
+            allowNull: false,
+            validate: {
+                isAlpha: true,
+                notEmpty: true,
+                len: [2, 50]
+            }
         }
     },
     {
         timestamps: false
     });
+
+    return country;
 };
