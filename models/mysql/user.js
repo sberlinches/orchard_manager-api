@@ -47,6 +47,13 @@ module.exports = function(sequelize, Sequelize) {
                 len: [4, 30]
             }
         },
+        roleId: {
+            type: Sequelize.INTEGER(4).UNSIGNED,
+            field: 'roleId',
+            validate: {
+                isInt: true
+            }
+        },
         firstName: {
             type: Sequelize.STRING(30),
             field: 'firstName',
@@ -135,6 +142,7 @@ module.exports = function(sequelize, Sequelize) {
         }
     });
 
+    user.belongsTo(sequelize.import('role.js'), { foreignKey: 'roleId' });
     user.belongsTo(sequelize.import('city.js'), { foreignKey: 'cityId' });
     user.belongsTo(sequelize.import('state.js'), { foreignKey: 'stateId' });
     user.belongsTo(sequelize.import('country.js'), { foreignKey: 'countryId' });
