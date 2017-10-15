@@ -9,7 +9,7 @@
  */
 module.exports = function(sequelize, Sequelize) {
 
-    const State = sequelize.define('State', {
+    const State = sequelize.define('state', {
             id: {
                 type: Sequelize.INTEGER(11).UNSIGNED,
                 primaryKey: true,
