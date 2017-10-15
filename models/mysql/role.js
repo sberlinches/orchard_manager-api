@@ -1,15 +1,15 @@
 "use strict";
 
 /**
- * role
+ * Role
  *
  * @param sequelize
  * @param Sequelize
- * @returns role
+ * @returns Role
  */
 module.exports = function(sequelize, Sequelize) {
 
-    const role = sequelize.define('role', {
+    const Role = sequelize.define('Role', {
             id: {
                 type: Sequelize.INTEGER(6).UNSIGNED,
                 primaryKey: true,
@@ -40,5 +40,5 @@ module.exports = function(sequelize, Sequelize) {
             timestamps: false
         });
 
-    return role;
+    return Role;
 };

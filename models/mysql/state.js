@@ -1,15 +1,15 @@
 "use strict";
 
 /**
- * state
+ * State
  *
  * @param sequelize
  * @param Sequelize
- * @returns state
+ * @returns State
  */
 module.exports = function(sequelize, Sequelize) {
 
-    const state = sequelize.define('state', {
+    const State = sequelize.define('State', {
             id: {
                 type: Sequelize.INTEGER(11).UNSIGNED,
                 primaryKey: true,
@@ -38,5 +38,5 @@ module.exports = function(sequelize, Sequelize) {
             timestamps: false
         });
 
-    return state;
+    return State;
 };

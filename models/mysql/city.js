@@ -1,15 +1,15 @@
 "use strict";
 
 /**
- * city
+ * City
  *
  * @param sequelize
  * @param Sequelize
- * @returns city
+ * @returns City
  */
 module.exports = function(sequelize, Sequelize) {
 
-    const city = sequelize.define('city', {
+    const City = sequelize.define('City', {
             id: {
                 type: Sequelize.INTEGER(11).UNSIGNED,
                 primaryKey: true,
@@ -38,5 +38,5 @@ module.exports = function(sequelize, Sequelize) {
             timestamps: false
         });
 
-    return city;
+    return City;
 };

@@ -3,15 +3,15 @@
 const bcrypt = require('bcrypt');
 
 /**
- * user
+ * User
  *
  * @param sequelize
  * @param Sequelize
- * @returns user
+ * @returns User
  */
 module.exports = function(sequelize, Sequelize) {
 
-    const user = sequelize.define('user', {
+    const User = sequelize.define('User', {
         id: {
             type: Sequelize.INTEGER(11).UNSIGNED,
             primaryKey: true,
@@ -136,16 +136,16 @@ module.exports = function(sequelize, Sequelize) {
             }
         },
         hooks: {
-            afterValidate: function(user) {
-                if(user.password) user.password = bcrypt.hashSync(user.password, config.bcrypt.salt);
+            afterValidate: function(User) {
+                if(User.password) User.password = bcrypt.hashSync(User.password, config.bcrypt.salt);
             }
         }
     });
 
-    user.belongsTo(sequelize.import('role.js'), { foreignKey: 'roleId' });
-    user.belongsTo(sequelize.import('city.js'), { foreignKey: 'cityId' });
-    user.belongsTo(sequelize.import('state.js'), { foreignKey: 'stateId' });
-    user.belongsTo(sequelize.import('country.js'), { foreignKey: 'countryId' });
+    User.belongsTo(sequelize.import('role.js'), { foreignKey: 'roleId' });
+    User.belongsTo(sequelize.import('city.js'), { foreignKey: 'cityId' });
+    User.belongsTo(sequelize.import('state.js'), { foreignKey: 'stateId' });
+    User.belongsTo(sequelize.import('country.js'), { foreignKey: 'countryId' });
 
-    return user;
+    return User;
 };
