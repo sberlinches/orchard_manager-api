@@ -6,7 +6,7 @@
   "private": true,
   "scripts": {
     "start": "NODE_ENV='production' node ./bin/www.js",
-    "start_dev": "NODE_ENV='development' node ./bin/www.js"
+    "start:dev": "NODE_ENV='development' node ./bin/www.js"
   },
   "repository" : {
     "type": "git",
