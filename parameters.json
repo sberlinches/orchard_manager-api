@@ -1,0 +1,22 @@
+{
+  "production": {},
+  "development": {
+    "node": {
+      "host": "127.0.0.1",
+      "port": 3443
+    },
+    "mysql": {
+      "host": "127.0.0.1",
+      "port": 3306,
+      "database": "ucalypt",
+      "username": "ucalypt",
+      "password": "koala",
+      "timezone": "America/Vancouver"
+    },
+    "session": {
+      "secret": "1234567890QWERTY"
+    },
+    "keyPath": "../../../ssl/key.pem",
+    "certPath": "../../../ssl/cert.pem"
+  }
+}

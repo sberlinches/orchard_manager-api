@@ -6,7 +6,7 @@ const sequelize     = new Sequelize(
     config.sequelize.mysql.database,
     config.sequelize.mysql.username,
     config.sequelize.mysql.password,
-    config.sequelize.mysql.parameters
+    config.sequelize.mysql.options
 );
 
 sequelize.authenticate()

@@ -1,24 +1,27 @@
 'use strict';
 
+const env           = process.env.NODE_ENV;
+const parameters    = require('./parameters.json')[env];
+const isProduction  = (env === 'production');
+
+/**
+ * Application configuration parameters
+ */
 module.exports = {
-    isProduction: process.env.NODE_ENV === 'production',
+    isProduction: isProduction,
     node: {
-        host: '127.0.0.1',
-        port: 3443
+        host: parameters.node.host,
+        port: parameters.node.port
     },
     sequelize: {
         mysql: {
-            database: '',
-            username: '',
-            password: '',
-            parameters: {
-                host: '127.0.0.1',
+            database: parameters.mysql.database,
+            username: parameters.mysql.username,
+            password: parameters.mysql.password,
+            options: {
+                host: parameters.mysql.host,
+                port: parameters.mysql.port,
                 dialect: 'mysql',
-                pool: {
-                    max: 5,
-                    min: 0,
-                    idle: 10000
-                },
                 define: {
                     // Add the timestamp attributes (updatedAt, createdAt, deletedAt)
                     timestamps: true,
@@ -38,7 +41,17 @@ module.exports = {
                     // if you don't want that, set the following
                     freezeTableName: true
                 },
-                timezone: 'America/Vancouver'
+
+                // The timezone used when converting a date from the database into a JavaScript date.
+                // The timezone is also used to SET TIMEZONE when connecting to the server, to ensure that the
+                // result of NOW, CURRENT_TIMESTAMP and other time related functions have in the right timezone.
+                // For best cross platform performance use the format +/-HH:MM. Will also accept string versions of
+                // timezones used by moment.js (e.g. 'America/Los_Angeles'); this is useful to capture daylight
+                // savings time changes.
+                timezone: parameters.mysql.timezone,
+
+                // A function that gets executed every time Sequelize would log something.
+                logging: (isProduction) ? false: console.log
             }
         }
     },
@@ -48,12 +61,12 @@ module.exports = {
         }
     },
     session: {
-        secret: '',
+        secret: parameters.session.timezone,
         resave: true,
         saveUninitialized: true
     },
-    keyPath: '../../../ssl/key.pem',
-    certPath: '../../../ssl/cert.pem',
+    keyPath: parameters.keyPath,
+    certPath: parameters.certPath,
     bcrypt: {
         salt: 10
     }
