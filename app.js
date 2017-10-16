@@ -1,28 +1,26 @@
 "use strict";
 
-//require('./functions');
-
+// Configuration parameters
 const config        = require('./config');
+
+// Dependencies
 const express    	= require('express');
-const app        	= express();
-const https         = require('https');
 const bodyParser    = require('body-parser');
 const cors          = require('cors');
 const compression   = require('compression');
-//const session       = require('express-session');
-const fs            = require('fs');
-const key           = fs.readFileSync(config.keyPath);
-const cert          = fs.readFileSync(config.certPath);
-const server        = https.createServer({ key: key, cert: cert }, app);
 const router        = require('./routes');
 
+// Set up the express app
+const app        	= express();
+
+// Parse incoming requests data
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded(config.bodyParser.urlencoded));
-//app.use(session(config.session));
+// Enable All CORS (Cross-origin resource sharing) Requests
 app.use(cors());
+// Enable the routes
 app.use(router);
-if(config.isProduction) app.use(compression()); // TODO: Is it working?
+// Compress all responses TODO: Is it working?
+if(config.isProduction) app.use(compression());
 
-server.listen(config.node.port, config.node.host, function() {
-    console.log('Server available at https://%s', config.node.host + ':' + config.node.port);
-});
+module.exports = app;
