@@ -142,10 +142,36 @@ module.exports = function(sequelize, Sequelize) {
         }
     });
 
-    User.belongsTo(sequelize.import('role.js'), { foreignKey: 'roleId' });
-    User.belongsTo(sequelize.import('city.js'), { foreignKey: 'cityId' });
-    User.belongsTo(sequelize.import('state.js'), { foreignKey: 'stateId' });
-    User.belongsTo(sequelize.import('country.js'), { foreignKey: 'countryId' });
+    // Associations
+    User.belongsTo(sequelize.import('role'), {
+        foreignKey: 'roleId',
+        constraints: false,
+        as: 'role'
+    });
+
+    User.belongsTo(sequelize.import('country'), {
+        foreignKey: 'countryId',
+        constraints: false,
+        as: 'country'
+    });
+
+    User.belongsTo(sequelize.import('state'), {
+        foreignKey: 'stateId',
+        constraints: false,
+        as: 'state'
+    });
+
+    User.belongsTo(sequelize.import('city'), {
+        foreignKey: 'cityId',
+        constraints: false,
+        as: 'city'
+    });
+
+    User.belongsToMany(sequelize.import('zone'), {
+        as: 'Zones',
+        through: sequelize.import('userZones'),
+        foreignKey: 'userId'
+    });
 
     return User;
 };
