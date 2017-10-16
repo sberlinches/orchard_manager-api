@@ -15,6 +15,7 @@ router.use('/', apiRoute);
 router.use('/countries', countryRoute);
 router.use('/plants', plantRoute);
 router.use('/users', userRoute);
+// All routes above are under /api
 router.use('/api', router);
 
 module.exports = router;

@@ -7,6 +7,6 @@ const isAuthenticated   = require('../middlewares/isAuthenticated');
 const plantController   = require('../controllers/plantController');
 
 // Register routes
-router.post('/', isAuthenticated, plantController.findLikeName);
+router.post('/name', isAuthenticated, plantController.findLikeName);
 
 module.exports = router;
