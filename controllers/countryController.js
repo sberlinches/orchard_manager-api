@@ -1,5 +1,6 @@
 "use strict";
 
+// Dependencies
 const Sequelize         = require('sequelize');
 const sequelize         = require('../models/mysql');
 const Country           = sequelize.import('../models/mysql/country');

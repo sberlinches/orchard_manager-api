@@ -1,7 +1,8 @@
 "use strict";
 
-const sequelize         = require('../models/mysql');
-const User              = sequelize.import('../models/mysql/user');
+// Dependencies
+const sequelize = require('../models/mysql');
+const User      = sequelize.import('../models/mysql/user');
 
 /**
  * findAll

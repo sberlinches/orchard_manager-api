@@ -1,6 +1,9 @@
 "use strict";
 
+// Configuration parameters
 const config        = require('../../config');
+
+// Dependencies
 const Sequelize     = require('sequelize');
 const sequelize     = new Sequelize(
     config.sequelize.mysql.database,
