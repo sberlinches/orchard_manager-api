@@ -36,7 +36,6 @@ module.exports = function(sequelize, Sequelize) {
         },
         createdAt: {
             type: Sequelize.DATE,
-            primaryKey: true,
             field: 'createdAt',
             validate: {
                 isDate: true
