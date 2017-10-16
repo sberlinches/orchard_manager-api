@@ -16,23 +16,23 @@ module.exports = function(sequelize, Sequelize) {
                 autoIncrement: true
             },
             nameEn: {
-                type: Sequelize.STRING(50),
+                type: Sequelize.STRING(30),
                 field: 'nameEn',
                 allowNull: false,
                 validate: {
                     isAlpha: true,
                     notEmpty: true,
-                    len: [2, 50]
+                    len: [2, 30]
                 }
             },
             nameEs: {
-                type: Sequelize.STRING(50),
+                type: Sequelize.STRING(30),
                 field: 'nameEs',
                 allowNull: false,
                 validate: {
                     isAlpha: true,
                     notEmpty: true,
-                    len: [2, 50]
+                    len: [2, 30]
                 }
             }
         },
