@@ -167,8 +167,14 @@ module.exports = function(sequelize, Sequelize) {
         as: 'city'
     });
 
+    User.belongsToMany(sequelize.import('sensor'), {
+        as: 'sensors',
+        through: sequelize.import('userSensors'),
+        foreignKey: 'userId'
+    });
+
     User.belongsToMany(sequelize.import('zone'), {
-        as: 'Zones',
+        as: 'zones',
         through: sequelize.import('userZones'),
         foreignKey: 'userId'
     });
