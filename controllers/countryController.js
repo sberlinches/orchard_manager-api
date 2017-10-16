@@ -7,6 +7,7 @@ const countryRepository = require('../models/mysql/countryRepository');
 
 /**
  * findAll
+ * Gets all countries
  *
  * @param req HTTP request argument
  * @param res HTTP response argument
