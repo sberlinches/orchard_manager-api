@@ -1,5 +1,23 @@
 {
-  "production": {},
+  "production": {
+    "node": {
+      "host": "",
+      "port": ""
+    },
+    "mysql": {
+      "host": "",
+      "port": "",
+      "database": "",
+      "username": "",
+      "password": "",
+      "timezone": ""
+    },
+    "session": {
+      "secret": ""
+    },
+    "keyPath": "",
+    "certPath": ""
+  },
   "development": {
     "node": {
       "host": "127.0.0.1",
