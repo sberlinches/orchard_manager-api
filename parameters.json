@@ -1,40 +1,34 @@
 {
   "production": {
-    "node": {
-      "host": "",
-      "port": ""
-    },
+    "host": null,
+    "port": 8080,
+    "key": "",
+    "cert": "",
     "mysql": {
       "host": "",
-      "port": "",
-      "database": "",
+      "port": 3306,
+      "database": "ucalypt",
       "username": "",
       "password": "",
-      "timezone": ""
-    },
-    "session": {
-      "secret": ""
-    },
-    "keyPath": "",
-    "certPath": ""
+      "dialect": "mysql",
+      "dialectOptions": {},
+      "timezone": "America/Vancouver"
+    }
   },
   "development": {
-    "node": {
-      "host": "127.0.0.1",
-      "port": 3443
-    },
+    "host": null,
+    "port": 8080,
+    "key": "./ssl/api-key.pem",
+    "cert": "./ssl/api-cert.pem",
     "mysql": {
       "host": "127.0.0.1",
       "port": 3306,
       "database": "ucalypt",
       "username": "ucalypt",
       "password": "koala",
+      "dialect": "mysql",
+      "dialectOptions": {},
       "timezone": "America/Vancouver"
-    },
-    "session": {
-      "secret": "1234567890QWERTY"
-    },
-    "keyPath": "../../../ssl/key.pem",
-    "certPath": "../../../ssl/cert.pem"
+    }
   }
 }

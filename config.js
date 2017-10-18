@@ -8,11 +8,10 @@ const isProduction  = (env === 'production');
  * Application configuration parameters
  */
 module.exports = {
-    isProduction: isProduction,
-    node: {
-        host: parameters.node.host,
-        port: parameters.node.port
-    },
+    host: parameters.host,
+    port: process.env.PORT || parameters.port,
+    key: parameters.key,
+    cert: parameters.cert,
     sequelize: {
         mysql: {
             database: parameters.mysql.database,
@@ -21,7 +20,8 @@ module.exports = {
             options: {
                 host: parameters.mysql.host,
                 port: parameters.mysql.port,
-                dialect: 'mysql',
+                dialect: parameters.mysql.dialect,
+                dialectOptions: parameters.mysql.dialectOptions,
                 define: {
                     // Add the timestamp attributes (updatedAt, createdAt, deletedAt)
                     timestamps: true,
@@ -56,17 +56,12 @@ module.exports = {
         }
     },
     bodyParser: {
+        json: {},
         urlencoded: {
             extended: true
         }
     },
-    session: {
-        secret: parameters.session.timezone,
-        resave: true,
-        saveUninitialized: true
-    },
-    keyPath: parameters.keyPath,
-    certPath: parameters.certPath,
+    compression: true,
     bcrypt: {
         salt: 10
     }

@@ -1,12 +1,13 @@
 {
   "name": "ucalypt-api",
   "description": "Node RESTful API",
-  "main": "app.js",
-  "license": "ISC",
   "private": true,
   "scripts": {
     "start": "NODE_ENV='production' node ./bin/www.js",
     "start:dev": "NODE_ENV='development' node ./bin/www.js"
+  },
+  "engines": {
+    "node": "7.*"
   },
   "repository" : {
     "type": "git",
