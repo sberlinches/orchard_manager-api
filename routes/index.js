@@ -8,12 +8,14 @@ const router    = express.Router();
 const apiRoute      = require('./apiRoute');
 const countryRoute  = require('./countryRoute');
 const plantRoute    = require('./plantRoute');
+const sensorRoute   = require('./sensorRoute');
 const userRoute     = require('./userRoute');
 
 // Add to middleware
 router.use('/', apiRoute);
 router.use('/countries', countryRoute);
 router.use('/plants', plantRoute);
+router.use('/sensors', sensorRoute);
 router.use('/users', userRoute);
 // All routes above are under /api
 router.use('/api', router);
