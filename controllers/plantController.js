@@ -2,7 +2,7 @@
 
 // Dependencies
 const sequelize = require('../models/mysql');
-const Plant     = sequelize.import('../models/mysql/plant');
+const AppPlant  = sequelize.import('../models/mysql/appPlant');
 
 /**
  * findLikeName
@@ -13,7 +13,7 @@ const Plant     = sequelize.import('../models/mysql/plant');
  */
 exports.findLikeName = function(req, res) {
 
-    Plant.findLikeName(req.body.name)
+    AppPlant.findLikeName(req.body.name)
         .then(function(result) {
             res.status(200).json(result);
         })

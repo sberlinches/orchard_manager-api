@@ -1,15 +1,15 @@
 "use strict";
 
 /**
- * UserSensors
+ * AppUsersZones
  *
  * @param sequelize
  * @param Sequelize
- * @returns UserSensors
+ * @returns AppUsersZones
  */
 module.exports = function(sequelize, Sequelize) {
 
-    const UserSensors = sequelize.define('user_sensors', {
+    const AppUsersZones = sequelize.define('app-users_zones', {
         userId: {
             type: Sequelize.INTEGER(11).UNSIGNED,
             primaryKey: true,
@@ -18,10 +18,18 @@ module.exports = function(sequelize, Sequelize) {
                 isInt: true
             }
         },
-        sensorId: {
+        zoneId: {
             type: Sequelize.INTEGER(11).UNSIGNED,
             primaryKey: true,
-            field: 'sensorId',
+            field: 'zoneId',
+            validate: {
+                isInt: true
+            }
+        },
+        roleId: {
+            type: Sequelize.INTEGER(4).UNSIGNED,
+            primaryKey: true,
+            field: 'roleId',
             validate: {
                 isInt: true
             }
@@ -37,5 +45,12 @@ module.exports = function(sequelize, Sequelize) {
         timestamps: false
     });
 
-    return UserSensors;
+    // Associations
+    AppUsersZones.belongsTo(sequelize.import('appRole'), {
+        foreignKey: 'roleId',
+        constraints: false,
+        as: 'role'
+    });
+
+    return AppUsersZones;
 };

@@ -2,7 +2,7 @@
 
 // Dependencies
 const sequelize = require('../models/mysql');
-const User      = sequelize.import('../models/mysql/user');
+const CoreUser  = sequelize.import('../models/mysql/coreUser');
 
 /**
  * findAll
@@ -18,7 +18,7 @@ exports.findAll = function(req, res) {
         include: [{ all: true }]
     };
 
-    User.findAll(options)
+    CoreUser.findAll(options)
         .then(function(result) {
             res.status(200).json(result);
         })
@@ -41,7 +41,7 @@ exports.findById = function(req, res) {
         include: [{ all: true }]
     };
 
-    User.findById(req.params.id, options)
+    CoreUser.findById(req.params.id, options)
         .then(function(result) {
             res.status(200).json(result);
         })
@@ -59,7 +59,7 @@ exports.findById = function(req, res) {
  */
 exports.create = function(req, res) {
 
-    User.create(req.body)
+    CoreUser.create(req.body)
         .then(function(result) {
             res.status(200).json(result);
         })
@@ -81,7 +81,7 @@ exports.update = function(req, res) {
         where: { id: req.params.id }
     };
 
-    User.update(req.body, options)
+    CoreUser.update(req.body, options)
         .then(function(result) {
             res.status(200).json(result);
         })
@@ -103,7 +103,7 @@ exports.destroy = function(req, res) {
         where: { id: req.params.id }
     };
 
-    User.destroy(options)
+    CoreUser.destroy(options)
         .then(function(result) {
             res.status(200).json(result);
         })

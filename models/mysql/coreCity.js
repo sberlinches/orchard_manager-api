@@ -1,15 +1,15 @@
 "use strict";
 
 /**
- * State
+ * CoreCity
  *
  * @param sequelize
  * @param Sequelize
- * @returns State
+ * @returns CoreCity
  */
 module.exports = function(sequelize, Sequelize) {
 
-    const State = sequelize.define('state', {
+    const CoreCity = sequelize.define('core-city', {
             id: {
                 type: Sequelize.INTEGER(11).UNSIGNED,
                 primaryKey: true,
@@ -25,9 +25,9 @@ module.exports = function(sequelize, Sequelize) {
                     len: [2, 50]
                 }
             },
-            countryId: {
-                type: Sequelize.INTEGER(6).UNSIGNED,
-                field: 'countryId',
+            stateId: {
+                type: Sequelize.INTEGER(11).UNSIGNED,
+                field: 'stateId',
                 allowNull: false,
                 validate: {
                     isInt: true
@@ -38,5 +38,5 @@ module.exports = function(sequelize, Sequelize) {
             timestamps: false
         });
 
-    return State;
+    return CoreCity;
 };

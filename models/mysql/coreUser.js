@@ -3,15 +3,15 @@
 const bcrypt = require('bcrypt');
 
 /**
- * User
+ * CoreUser
  *
  * @param sequelize
  * @param Sequelize
- * @returns User
+ * @returns CoreUser
  */
 module.exports = function(sequelize, Sequelize) {
 
-    const User = sequelize.define('user', {
+    const CoreUser = sequelize.define('core-user', {
         id: {
             type: Sequelize.INTEGER(11).UNSIGNED,
             primaryKey: true,
@@ -120,14 +120,6 @@ module.exports = function(sequelize, Sequelize) {
             validate: {
                 isDate: true
             }
-        },
-        modifiedBy: {
-            type: Sequelize.INTEGER(11).UNSIGNED,
-            field: 'modifiedBy',
-            allowNull: false,
-            validate: {
-                isInt: true
-            }
         }
     }, {
         scopes: {
@@ -143,41 +135,36 @@ module.exports = function(sequelize, Sequelize) {
     });
 
     // Associations
-    User.belongsTo(sequelize.import('role'), {
+    CoreUser.belongsTo(sequelize.import('coreRole'), {
         foreignKey: 'roleId',
         constraints: false,
         as: 'role'
     });
 
-    User.belongsTo(sequelize.import('country'), {
+    CoreUser.belongsTo(sequelize.import('coreCountry'), {
         foreignKey: 'countryId',
         constraints: false,
         as: 'country'
     });
 
-    User.belongsTo(sequelize.import('state'), {
+    CoreUser.belongsTo(sequelize.import('coreState'), {
         foreignKey: 'stateId',
         constraints: false,
         as: 'state'
     });
 
-    User.belongsTo(sequelize.import('city'), {
+    CoreUser.belongsTo(sequelize.import('coreCity'), {
         foreignKey: 'cityId',
         constraints: false,
         as: 'city'
     });
 
-    User.belongsToMany(sequelize.import('sensor'), {
-        as: 'sensors',
-        through: sequelize.import('userSensors'),
-        foreignKey: 'userId'
-    });
-
-    User.belongsToMany(sequelize.import('zone'), {
+    CoreUser.belongsToMany(sequelize.import('appZone'), {
         as: 'zones',
-        through: sequelize.import('userZones'),
-        foreignKey: 'userId'
+        through: sequelize.import('appUsersZones'),
+        foreignKey: 'userId',
+        otherKey: 'zoneId'
     });
 
-    return User;
+    return CoreUser;
 };

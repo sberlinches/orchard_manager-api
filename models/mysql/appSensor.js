@@ -1,23 +1,31 @@
 "use strict";
 
 /**
- * Sensor
+ * AppSensor
  *
  * @param sequelize
  * @param Sequelize
- * @returns Sensor
+ * @returns AppSensor
  */
 module.exports = function(sequelize, Sequelize) {
 
-    const Sensor = sequelize.define('sensor', {
+    const AppSensor = sequelize.define('app-sensor', {
         id: {
             type: Sequelize.INTEGER(11).UNSIGNED,
             primaryKey: true,
             autoIncrement: true
         },
-        serialCode: {
+        userId: {
+            type: Sequelize.INTEGER(11).UNSIGNED,
+            primaryKey: true,
+            field: 'userId',
+            validate: {
+                isInt: true
+            }
+        },
+        serial: {
             type: Sequelize.CHAR(9),
-            field: 'serialCode',
+            field: 'serial',
             allowNull: false
         },
         createdAt: {
@@ -40,16 +48,8 @@ module.exports = function(sequelize, Sequelize) {
             validate: {
                 isDate: true
             }
-        },
-        modifiedBy: {
-            type: Sequelize.INTEGER(11).UNSIGNED,
-            field: 'modifiedBy',
-            allowNull: false,
-            validate: {
-                isInt: true
-            }
         }
     });
 
-    return Sensor;
+    return AppSensor;
 };

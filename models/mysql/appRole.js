@@ -1,36 +1,28 @@
 "use strict";
 
 /**
- * City
+ * AppRole
  *
  * @param sequelize
  * @param Sequelize
- * @returns City
+ * @returns AppRole
  */
 module.exports = function(sequelize, Sequelize) {
 
-    const City = sequelize.define('city', {
+    const AppRole = sequelize.define('app-role', {
             id: {
-                type: Sequelize.INTEGER(11).UNSIGNED,
+                type: Sequelize.INTEGER(6).UNSIGNED,
                 primaryKey: true,
                 autoIncrement: true
             },
             nameEn: {
-                type: Sequelize.STRING(50),
+                type: Sequelize.STRING(30),
                 field: 'nameEn',
                 allowNull: false,
                 validate: {
                     isAlpha: true,
                     notEmpty: true,
-                    len: [2, 50]
-                }
-            },
-            stateId: {
-                type: Sequelize.INTEGER(11).UNSIGNED,
-                field: 'stateId',
-                allowNull: false,
-                validate: {
-                    isInt: true
+                    len: [2, 30]
                 }
             }
         },
@@ -38,5 +30,5 @@ module.exports = function(sequelize, Sequelize) {
             timestamps: false
         });
 
-    return City;
+    return AppRole;
 };

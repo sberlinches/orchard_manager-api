@@ -1,19 +1,27 @@
 "use strict";
 
 /**
- * Zone
+ * AppZone
  *
  * @param sequelize
  * @param Sequelize
- * @returns Zone
+ * @returns AppZone
  */
 module.exports = function(sequelize, Sequelize) {
 
-    const Zone = sequelize.define('zone', {
+    const AppZone = sequelize.define('app-zone', {
             id: {
-                type: Sequelize.INTEGER(6).UNSIGNED,
+                type: Sequelize.INTEGER(11).UNSIGNED,
                 primaryKey: true,
                 autoIncrement: true
+            },
+            userId: {
+                type: Sequelize.INTEGER(11).UNSIGNED,
+                primaryKey: true,
+                field: 'userId',
+                validate: {
+                    isInt: true
+                }
             },
             alias: {
                 type: Sequelize.STRING(30),
@@ -38,23 +46,11 @@ module.exports = function(sequelize, Sequelize) {
                 validate: {
                     isDate: true
                 }
-            },
-            deletedAt: {
-                type: Sequelize.DATE,
-                field: 'deletedAt',
-                validate: {
-                    isDate: true
-                }
-            },
-            modifiedBy: {
-                type: Sequelize.INTEGER(11).UNSIGNED,
-                field: 'modifiedBy',
-                allowNull: false,
-                validate: {
-                    isInt: true
-                }
             }
+        },
+        {
+            timestamps: false
         });
 
-    return Zone;
+    return AppZone;
 };

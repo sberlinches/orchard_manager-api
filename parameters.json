@@ -7,7 +7,7 @@
     "mysql": {
       "host": "",
       "port": 3306,
-      "database": "ucalypt",
+      "database": "",
       "username": "",
       "password": "",
       "dialect": "mysql",
@@ -23,9 +23,9 @@
     "mysql": {
       "host": "127.0.0.1",
       "port": 3306,
-      "database": "ucalypt",
-      "username": "ucalypt",
-      "password": "koala",
+      "database": "orchardManager",
+      "username": "orchardManager_user",
+      "password": "orchardManager_password",
       "dialect": "mysql",
       "dialectOptions": {},
       "timezone": "America/Vancouver"

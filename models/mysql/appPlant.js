@@ -1,15 +1,15 @@
 "use strict";
 
 /**
- * Plant
+ * AppPlant
  *
  * @param sequelize
  * @param Sequelize
- * @returns plant
+ * @returns AppPlant
  */
 module.exports = function(sequelize, Sequelize) {
 
-    const Plant = sequelize.define('plant', {
+    const AppPlant = sequelize.define('app-plant', {
             id: {
                 type: Sequelize.INTEGER(6).UNSIGNED,
                 primaryKey: true,
@@ -18,16 +18,6 @@ module.exports = function(sequelize, Sequelize) {
             nameEn: {
                 type: Sequelize.STRING(30),
                 field: 'nameEn',
-                allowNull: false,
-                validate: {
-                    isAlpha: true,
-                    notEmpty: true,
-                    len: [2, 30]
-                }
-            },
-            nameEs: {
-                type: Sequelize.STRING(30),
-                field: 'nameEs',
                 allowNull: false,
                 validate: {
                     isAlpha: true,
@@ -48,27 +38,15 @@ module.exports = function(sequelize, Sequelize) {
                 validate: {
                     isDate: true
                 }
-            },
-            deletedAt: {
-                type: Sequelize.DATE,
-                field: 'deletedAt',
-                validate: {
-                    isDate: true
-                }
-            },
-            modifiedBy: {
-                type: Sequelize.INTEGER(11).UNSIGNED,
-                field: 'modifiedBy',
-                allowNull: false,
-                validate: {
-                    isInt: true
-                }
             }
+        },
+        {
+            timestamps: false
         });
 
     // Class Method
-    Plant.findLikeName = function (name) {
-        return Plant.findAll({
+    AppPlant.findLikeName = function (name) {
+        return AppPlant.findAll({
             attributes: ['id', ['nameEn', 'name']],
             where: { nameEn: { $like: '%' + name + '%' } },
             order: [['nameEn', 'ASC']],
@@ -76,5 +54,5 @@ module.exports = function(sequelize, Sequelize) {
         });
     };
 
-    return Plant;
+    return AppPlant;
 };
