@@ -1,10 +1,10 @@
 "use strict";
 
 // Dependencies
-const Sequelize             = require('sequelize');
+//const Sequelize             = require('sequelize');
 const sequelize             = require('../models/mysql');
-const CoreCountry           = sequelize.import('../models/mysql/coreCountry');
-const coreCountryRepository = require('../models/mysql/coreCountryRepository');
+const CoreCountry           = sequelize.models.CoreCountry;
+//const coreCountryRepository = require('../models/mysql/coreCountryRepository');
 
 /**
  * findAll

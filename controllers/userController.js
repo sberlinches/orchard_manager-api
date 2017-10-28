@@ -2,7 +2,7 @@
 
 // Dependencies
 const sequelize = require('../models/mysql');
-const CoreUser  = sequelize.import('../models/mysql/coreUser');
+const CoreUser  = sequelize.models.CoreUser;
 
 /**
  * findAll
@@ -14,8 +14,7 @@ const CoreUser  = sequelize.import('../models/mysql/coreUser');
 exports.findAll = function(req, res) {
 
     var options = {
-        attributes: { exclude: ['password'] },
-        include: [{ all: true }]
+        attributes: { exclude: ['password'] }
     };
 
     CoreUser.findAll(options)
@@ -28,7 +27,7 @@ exports.findAll = function(req, res) {
 };
 
 /**
- * findBy
+ * findById
  * Gets an user
  *
  * @param req HTTP request argument
@@ -37,8 +36,7 @@ exports.findAll = function(req, res) {
 exports.findById = function(req, res) {
 
     var options = {
-        attributes: { exclude: ['password'] },
-        include: [{ all: true }]
+        attributes: { exclude: ['password'] }
     };
 
     CoreUser.findById(req.params.id, options)

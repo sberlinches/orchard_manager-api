@@ -2,7 +2,7 @@
 
 // Dependencies
 const sequelize = require('../models/mysql');
-const AppPlant  = sequelize.import('../models/mysql/appPlant');
+const AppPlant  = sequelize.models.AppPlant;
 
 /**
  * findLikeName

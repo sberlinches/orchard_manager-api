@@ -2,7 +2,7 @@
 
 // Dependencies
 const sequelize = require('../models/mysql');
-const AppSensor = sequelize.import('../models/mysql/appSensor');
+const AppSensor = sequelize.models.AppSensor;
 
 /**
  * findByUserId

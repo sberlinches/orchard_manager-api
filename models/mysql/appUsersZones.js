@@ -46,11 +46,15 @@ module.exports = function(sequelize, Sequelize) {
     });
 
     // Associations
-    AppUsersZones.belongsTo(sequelize.import('appRole'), {
-        foreignKey: 'roleId',
-        constraints: false,
-        as: 'role'
-    });
+    AppUsersZones.associate = function(models) {
+
+        // belongsTo: the foreign key for the one-to-one relation exists on the source model.
+        AppUsersZones.belongsTo(models.AppRole, {
+            as: 'role',
+            foreignKey: 'roleId',
+            constraints: false
+        });
+    };
 
     return AppUsersZones;
 };

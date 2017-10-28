@@ -135,36 +135,64 @@ module.exports = function(sequelize, Sequelize) {
     });
 
     // Associations
-    CoreUser.belongsTo(sequelize.import('coreRole'), {
-        foreignKey: 'roleId',
-        constraints: false,
-        as: 'role'
-    });
+    CoreUser.associate = function(models) {
 
-    CoreUser.belongsTo(sequelize.import('coreCountry'), {
-        foreignKey: 'countryId',
-        constraints: false,
-        as: 'country'
-    });
+        // belongsTo: the foreign key for the one-to-one relation exists on the source model.
+        CoreUser.belongsTo(models.CoreRole, {
+            as: 'role',
+            foreignKey: 'roleId',
+            constraints: false
+        });
 
-    CoreUser.belongsTo(sequelize.import('coreState'), {
-        foreignKey: 'stateId',
-        constraints: false,
-        as: 'state'
-    });
+        CoreUser.belongsTo(models.CoreCountry, {
+            as: 'country',
+            foreignKey: 'countryId',
+            constraints: false
+        });
 
-    CoreUser.belongsTo(sequelize.import('coreCity'), {
-        foreignKey: 'cityId',
-        constraints: false,
-        as: 'city'
-    });
+        CoreUser.belongsTo(models.CoreState, {
+            as: 'state',
+            foreignKey: 'stateId',
+            constraints: false
+        });
 
-    CoreUser.belongsToMany(sequelize.import('appZone'), {
-        as: 'zones',
-        through: sequelize.import('appUsersZones'),
-        foreignKey: 'userId',
-        otherKey: 'zoneId'
-    });
+        CoreUser.belongsTo(models.CoreCity, {
+            as: 'city',
+            foreignKey: 'cityId',
+            constraints: false
+        });
+
+        // hasMany: the foreign key for the one-to-many relation exists on the target model
+        CoreUser.hasMany(models.AppSensor, {
+            as: 'sensors',
+            foreignKey: {
+                name: 'userId',
+                allowNull: true
+            },
+            constraints: false
+        });
+
+        CoreUser.hasMany(models.AppZone, {
+            as: 'ownedZones',
+            foreignKey: {
+                name: 'userId',
+                allowNull: false
+            },
+            constraints: false
+        });
+
+        // belongs-To-Many: used to connect sources with multiple targets.
+        CoreUser.belongsToMany(models.AppZone, {
+            as: 'zones',
+            through: models.AppUsersZones,
+            foreignKey: {
+                name: 'userId',
+                allowNull: false
+            },
+            otherKey: 'zoneId',
+            constraints: false
+        });
+    };
 
     return CoreUser;
 };

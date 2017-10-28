@@ -52,5 +52,21 @@ module.exports = function(sequelize, Sequelize) {
             timestamps: false
         });
 
+    // Associations
+    AppZone.associate = function(models) {
+
+        // belongs-To-Many: used to connect sources with multiple targets.
+        AppZone.belongsToMany(models.CoreUser, {
+            as: 'users',
+            through: models.AppUsersZones,
+            foreignKey: {
+                name: 'zoneId',
+                allowNull: false
+            },
+            otherKey: 'userId',
+            constraints: false
+        });
+    };
+
     return AppZone;
 };
