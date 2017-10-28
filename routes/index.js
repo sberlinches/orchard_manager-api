@@ -6,6 +6,7 @@ const router    = express.Router();
 
 // Import routes
 const apiRoute      = require('./apiRoute');
+const authRoute     = require('./authRoute');
 const countryRoute  = require('./countryRoute');
 const plantRoute    = require('./plantRoute');
 const sensorRoute   = require('./sensorRoute');
@@ -14,6 +15,7 @@ const zoneRoute     = require('./zoneRoute');
 
 // Add to middleware
 router.use('/', apiRoute);
+router.use('/auth', authRoute);
 router.use('/countries', countryRoute);
 router.use('/plants', plantRoute);
 router.use('/sensors', sensorRoute);
