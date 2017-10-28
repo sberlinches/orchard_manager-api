@@ -1,5 +1,5 @@
 {
-  "name": "ucalypt-api",
+  "name": "orchard_manager-api",
   "description": "Node RESTful API",
   "private": true,
   "scripts": {
@@ -11,7 +11,7 @@
   },
   "repository" : {
     "type": "git",
-    "url": "git://github.com/sberlinches/ucalypt_api.git"
+    "url": "git://github.com/sberlinches/orchard_manager-api.git"
   },
   "dependencies": {
     "express": "4.16.1",
