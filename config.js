@@ -86,7 +86,7 @@ module.exports = {
         // but not modified. Choosing false is useful for implementing login sessions, reducing server storage usage, or
         // complying with laws that require permission before setting a cookie. Choosing false will also help with race
         // conditions where a client makes multiple parallel requests without a session.
-        saveUninitialized: true,
+        saveUninitialized: false,
         cookie: {
             secure: (isProduction)
         }
