@@ -2,6 +2,7 @@
 
 /**
  * isAuthenticated
+ * Checks whether the user is authenticated or not.
  *
  * @param req HTTP request argument
  * @param res HTTP response argument
@@ -9,9 +10,7 @@
  */
 module.exports = function (req, res, next) {
 
-    // TODO: User and permissions logic
-    if (1 === 1) {
-        console.log('Allowed');
+    if (req.session.user) {
         next();
     } else {
         res.status(403).send('Forbidden');

@@ -6,40 +6,65 @@ const sequelize = require('../models/mysql');
 const CoreUser  = sequelize.models.CoreUser;
 
 /**
- * findOne
- * Gets the user that matches with the username and password given
+ * login
+ * Stores the user in the session.
  *
  * @param req HTTP request argument
  * @param res HTTP response argument
  */
-exports.findByUsername = function(req, res) {
+exports.login = function(req, res) {
 
-    var options = {
-        where: { username: req.body.username },
-        include: [
-            CoreUser.associations.role,
-            CoreUser.associations.country,
-            CoreUser.associations.state,
-            CoreUser.associations.city,
-            CoreUser.associations.zones
-        ]
-    };
+    const username = req.body.username;
+    const password = req.body.password;
 
-    CoreUser.findOne(options)
-        .then(function(result) {
+    if(!username || !password) {
+        return res.status(400).send('Not enough parameters');
+    }
 
-            const isValidPassword = bcrypt.compareSync(req.body.password, result.password);
-
-            if(isValidPassword) {
-
-                delete result.dataValues.password;
-
-                res.status(200).json(result);
-            } else {
-                res.status(422).json({});
-            }
+    getUser(username, password)
+        .then(function(user) {
+            req.session.user = user;
+            res.status(200).send('Granted');
         })
         .catch(function(err) {
-            res.status(422).json(err);
+            res.status(401).send('' + err); // Bug. Without the concatenation, it doesn't sent the msg.
         });
 };
+
+/**
+ * getUser
+ * Gets the user that matches in the database.
+ *
+ * @param username User username
+ * @param password User password
+ * @returns user
+ */
+function getUser(username, password) {
+
+    var options = { where: { username: username } };
+
+    return CoreUser.findOne(options)
+        .then(function(user) {
+
+            if(!user)
+                throw new Error('Bad username');
+
+            if(!bcrypt.compareSync(password, user.password))
+                throw new Error('Bad password');
+
+            var options = {
+                attributes: { exclude: ['password'] },
+                include: [
+                    CoreUser.associations.role,
+                    CoreUser.associations.country,
+                    CoreUser.associations.state,
+                    CoreUser.associations.city,
+                    CoreUser.associations.zones
+                ]
+            };
+
+            return CoreUser.findById(user.id, options).then(function(user) {
+                return user;
+            });
+        });
+}

@@ -13,7 +13,12 @@
       "dialect": "mysql",
       "dialectOptions": {},
       "timezone": "America/Vancouver"
-    }
+    },
+    "redis": {
+      "host": "",
+      "port": 6379
+    },
+    "session": ""
   },
   "development": {
     "host": null,
@@ -29,6 +34,11 @@
       "dialect": "mysql",
       "dialectOptions": {},
       "timezone": "America/Vancouver"
-    }
+    },
+    "redis": {
+      "host": "127.0.0.1",
+      "port": 6379
+    },
+    "session": "1234567890QWERTY"
   }
 }

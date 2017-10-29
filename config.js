@@ -55,6 +55,10 @@ module.exports = {
             }
         }
     },
+    redis: {
+        host: parameters.redis.host,
+        port: parameters.redis.port
+    },
     bodyParser: {
         json: {},
         urlencoded: {
@@ -62,6 +66,31 @@ module.exports = {
         }
     },
     compression: true,
+    session: {
+        // This is the secret used to sign the session ID cookie. This can be either a string for a single secret, or
+        // an array of multiple secrets. If an array of secrets is provided, only the first element will be used to sign
+        // the session ID cookie, while all the elements will be considered when verifying the signature in requests.
+        secret: parameters.session,
+
+        // Forces the session to be saved back to the session store, even if the session was never modified during the
+        // request. Depending on your store this may be necessary, but it can also create race conditions where a client
+        // makes two parallel requests to your server and changes made to the session in one request may get overwritten
+        // when the other request ends, even if it made no changes (this behavior also depends on what store you're
+        // using).
+        // How do I know if this is necessary for my store? The best way to know is to check with your store if it
+        // implements the touch method. If it does, then you can safely set resave: false. If it does not implement the
+        // touch method and your store sets an expiration date on stored sessions, then you likely need resave: true.
+        resave: false,
+
+        // Forces a session that is "uninitialized" to be saved to the store. A session is uninitialized when it is new
+        // but not modified. Choosing false is useful for implementing login sessions, reducing server storage usage, or
+        // complying with laws that require permission before setting a cookie. Choosing false will also help with race
+        // conditions where a client makes multiple parallel requests without a session.
+        saveUninitialized: true,
+        cookie: {
+            secure: (isProduction)
+        }
+    },
     bcrypt: {
         salt: 10
     }
