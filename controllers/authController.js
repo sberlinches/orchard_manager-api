@@ -32,6 +32,18 @@ exports.login = function(req, res) {
 };
 
 /**
+ * logout
+ * Removes the user user from the session
+ *
+ * @param req HTTP request argument
+ * @param res HTTP response argument
+ */
+exports.logout = function(req, res) {
+    req.session.destroy();
+    res.status(200).send('See you!');
+};
+
+/**
  * getUser
  * Gets the user that matches in the database.
  *
