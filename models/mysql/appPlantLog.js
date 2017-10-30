@@ -38,7 +38,7 @@ module.exports = function(sequelize, Sequelize) {
             },
             airHum: {
                 type: Sequelize.DECIMAL(5, 2).UNSIGNED,
-                field: 'airHumMin',
+                field: 'airHum',
                 validate: {
                     isFloat: true
                 }
@@ -82,6 +82,24 @@ module.exports = function(sequelize, Sequelize) {
         {
             timestamps: false
         });
+
+    // Associations
+    AppPlantLog.associate = function(models) {
+
+        // belongsTo: the foreign key for the one-to-one relation exists on the source model.
+        AppPlantLog.belongsTo(models.AppZonesVarieties, {
+            as: 'zoneVariety',
+            foreignKey: 'id',
+            constraints: false
+        });
+    };
+
+    // Class Method
+    AppPlantLog.findAllById = function (id) {
+        return AppPlantLog.findAll({
+            where: { id: id }
+        });
+    };
 
     return AppPlantLog;
 };
