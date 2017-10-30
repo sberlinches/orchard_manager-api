@@ -17,7 +17,6 @@ module.exports = function(sequelize, Sequelize) {
         },
         userId: {
             type: Sequelize.INTEGER(11).UNSIGNED,
-            primaryKey: true,
             field: 'userId',
             validate: {
                 isInt: true
@@ -26,7 +25,8 @@ module.exports = function(sequelize, Sequelize) {
         serial: {
             type: Sequelize.CHAR(9),
             field: 'serial',
-            allowNull: false
+            allowNull: false,
+            unique: true
         },
         createdAt: {
             type: Sequelize.DATE,
@@ -50,6 +50,17 @@ module.exports = function(sequelize, Sequelize) {
             }
         }
     });
+
+    // Associations
+    AppSensor.associate = function(models) {
+
+        // belongsTo: the foreign key for the one-to-one relation exists on the source model.
+        AppSensor.belongsTo(models.CoreUser, {
+            as: 'user',
+            foreignKey: 'userId',
+            constraints: false
+        });
+    };
 
     // Class Method
     AppSensor.findByUserId = function (userId) {

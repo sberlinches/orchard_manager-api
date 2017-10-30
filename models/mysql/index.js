@@ -24,10 +24,13 @@ sequelize.authenticate()
 // Load the models
 sequelize.models = {
     AppPlant: sequelize.import('appPlant'),
+    AppPlantLog: sequelize.import('appPlantLog'),
     AppRole: sequelize.import('appRole'),
     AppSensor: sequelize.import('appSensor'),
     AppUsersZones: sequelize.import('appUsersZones'),
+    AppVariety: sequelize.import('appVariety'),
     AppZone: sequelize.import('appZone'),
+    AppZonesVarieties: sequelize.import('appZonesVarieties'),
     CoreCity: sequelize.import('coreCity'),
     CoreCountry: sequelize.import('coreCountry'),
     CoreRole: sequelize.import('coreRole'),

@@ -19,6 +19,7 @@ module.exports = function(sequelize, Sequelize) {
                 type: Sequelize.STRING(30),
                 field: 'nameEn',
                 allowNull: false,
+                unique: true,
                 validate: {
                     isAlpha: true,
                     notEmpty: true,

@@ -11,7 +11,7 @@ module.exports = function(sequelize, Sequelize) {
 
     const AppPlant = sequelize.define('app-plant', {
             id: {
-                type: Sequelize.INTEGER(6).UNSIGNED,
+                type: Sequelize.INTEGER(11).UNSIGNED,
                 primaryKey: true,
                 autoIncrement: true
             },
@@ -43,6 +43,20 @@ module.exports = function(sequelize, Sequelize) {
         {
             timestamps: false
         });
+
+    // Associations
+    AppPlant.associate = function(models) {
+
+        // hasMany: the foreign key for the one-to-many relation exists on the target model
+        AppPlant.hasMany(models.AppVariety, {
+            as: 'varieties',
+            foreignKey: {
+                name: 'plantId',
+                allowNull: true
+            },
+            constraints: false
+        });
+    };
 
     // Class Method
     AppPlant.findLikeName = function (name) {

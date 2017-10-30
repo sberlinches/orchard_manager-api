@@ -17,7 +17,6 @@ module.exports = function(sequelize, Sequelize) {
             },
             userId: {
                 type: Sequelize.INTEGER(11).UNSIGNED,
-                primaryKey: true,
                 field: 'userId',
                 validate: {
                     isInt: true
@@ -56,6 +55,17 @@ module.exports = function(sequelize, Sequelize) {
     AppZone.associate = function(models) {
 
         // belongs-To-Many: used to connect sources with multiple targets.
+        AppZone.belongsToMany(models.AppVariety, {
+            as: 'varieties',
+            through: models.AppZonesVarieties,
+            foreignKey: {
+                name: 'id',
+                allowNull: false
+            },
+            otherKey: 'varietyId',
+            constraints: false
+        });
+
         AppZone.belongsToMany(models.CoreUser, {
             as: 'users',
             through: models.AppUsersZones,
