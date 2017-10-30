@@ -5,15 +5,33 @@ const sequelize = require('../models/mysql');
 const AppPlant  = sequelize.models.AppPlant;
 
 /**
+ * findAll
+ * Gets all plants
+ *
+ * @param req HTTP request argument
+ * @param res HTTP response argument
+ */
+exports.findAll = function(req, res) {
+
+    AppPlant.findAll()
+        .then(function(result) {
+            res.status(200).json(result);
+        })
+        .catch(function(err) {
+            res.status(500).json(err);
+        });
+};
+
+/**
  * findLikeName
  * Gets all plants that match the input
  *
  * @param req HTTP request argument
  * @param res HTTP response argument
  */
-exports.findLikeName = function(req, res) {
+exports.findAllLikeName = function(req, res) {
 
-    AppPlant.findLikeName(req.body.name)
+    AppPlant.findAllLikeName(req.body.name)
         .then(function(result) {
             res.status(200).json(result);
         })

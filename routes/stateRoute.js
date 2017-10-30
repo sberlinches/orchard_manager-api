@@ -4,10 +4,9 @@
 const express           = require('express');
 const router            = express.Router();
 const isAuthenticated   = require('../middlewares/isAuthenticated');
-const plantController   = require('../controllers/plantController');
+const stateController   = require('../controllers/stateController');
 
 // Register routes
-router.get('/', isAuthenticated, plantController.findAll);
-router.post('/name', isAuthenticated, plantController.findAllLikeName);
+router.get('/country/:id', isAuthenticated, stateController.findAllByCountryId);
 
 module.exports = router;

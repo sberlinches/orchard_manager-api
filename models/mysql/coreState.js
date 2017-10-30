@@ -15,6 +15,14 @@ module.exports = function(sequelize, Sequelize) {
                 primaryKey: true,
                 autoIncrement: true
             },
+            countryId: {
+                type: Sequelize.INTEGER(6).UNSIGNED,
+                field: 'countryId',
+                allowNull: false,
+                validate: {
+                    isInt: true
+                }
+            },
             nameEn: {
                 type: Sequelize.STRING(50),
                 field: 'nameEn',
@@ -24,19 +32,19 @@ module.exports = function(sequelize, Sequelize) {
                     notEmpty: true,
                     len: [2, 50]
                 }
-            },
-            countryId: {
-                type: Sequelize.INTEGER(6).UNSIGNED,
-                field: 'countryId',
-                allowNull: false,
-                validate: {
-                    isInt: true
-                }
             }
         },
         {
             timestamps: false
         });
+
+    // Class Method
+    CoreState.findAllByCountryId = function (countryId) {
+        return CoreState.findAll({
+            where: { countryId: countryId },
+            order: [['id', 'ASC']]
+        });
+    };
 
     return CoreState;
 };

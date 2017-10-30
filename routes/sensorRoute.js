@@ -7,6 +7,7 @@ const isAuthenticated   = require('../middlewares/isAuthenticated');
 const sensorController  = require('../controllers/sensorController');
 
 // Register routes
-router.post('/user', isAuthenticated, sensorController.findByUser);
+router.get('/', isAuthenticated, sensorController.findAll);
+router.get('/user/:id', isAuthenticated, sensorController.findAllByUserId);
 
 module.exports = router;

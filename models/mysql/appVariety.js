@@ -176,5 +176,13 @@ module.exports = function(sequelize, Sequelize) {
         });
     };
 
+    // Class Method
+    AppVariety.findAllByPlantId = function (plantId) {
+        return AppVariety.findAll({
+            where: { plantId: plantId },
+            order: [['id', 'ASC']]
+        });
+    };
+
     return AppVariety;
 };

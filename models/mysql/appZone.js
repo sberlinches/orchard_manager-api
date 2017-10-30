@@ -78,5 +78,13 @@ module.exports = function(sequelize, Sequelize) {
         });
     };
 
+    // Class Method
+    AppZone.findAllByUserId = function (userId) {
+        return AppZone.findAll({
+            where: { userId: userId },
+            order: [['id', 'ASC']]
+        });
+    };
+
     return AppZone;
 };

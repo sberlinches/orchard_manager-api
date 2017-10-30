@@ -63,7 +63,7 @@ module.exports = function(sequelize, Sequelize) {
     };
 
     // Class Method
-    AppSensor.findByUserId = function (userId) {
+    AppSensor.findAllByUserId = function (userId) {
         return AppSensor.findAll({
             attributes: ['id', 'serial'],
             where: { userId: userId },
