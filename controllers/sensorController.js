@@ -20,8 +20,8 @@ exports.findAll = function(req, res) {
     };
 
     AppSensor.findAll(options)
-        .then(function(result) {
-            res.status(200).json(result);
+        .then(function(sensor) {
+            res.status(200).json(sensor);
         })
         .catch(function(err) {
             res.status(500).json(err);
@@ -30,7 +30,7 @@ exports.findAll = function(req, res) {
 
 /**
  * findAllByUserId
- * Gets all sensors owned by the user given
+ * Gets all sensors owned by the user given.
  *
  * @param req HTTP request argument
  * @param res HTTP response argument
@@ -38,8 +38,8 @@ exports.findAll = function(req, res) {
 exports.findAllByUserId = function(req, res) {
 
     AppSensor.findAllByUserId(req.params.id)
-        .then(function(result) {
-            res.status(200).json(result);
+        .then(function(sensor) {
+            res.status(200).json(sensor);
         })
         .catch(function(err) {
             res.status(500).json(err);
@@ -48,7 +48,7 @@ exports.findAllByUserId = function(req, res) {
 
 /**
  * updateOwner
- * Updates the sensor ownership
+ * Updates the sensor ownership.
  *
  *
  * @param req HTTP request argument
@@ -56,7 +56,7 @@ exports.findAllByUserId = function(req, res) {
  */
 exports.updateOwner = function(req, res) {
 
-    AppSensor.updateOwner(req.params.id, req.body.userId)
+    AppSensor.updateOwner(req.params.id, req.session.user.id)
         .then(function(result) {
             res.status(200).json(result);
         })
@@ -67,14 +67,15 @@ exports.updateOwner = function(req, res) {
 
 /**
  * deleteOwner
- * Deletes the sensor ownership
+ * Deletes the sensor ownership.
+ * Only the owner of the sensor is able to delete the ownership.
  *
  * @param req HTTP request argument
  * @param res HTTP response argument
  */
 exports.deleteOwner = function(req, res) {
 
-    AppSensor.deleteOwner(req.params.id, req.body.userId)
+    AppSensor.deleteOwner(req.params.id, req.session.user.id)
         .then(function(result) {
             res.status(200).json(result);
         })
