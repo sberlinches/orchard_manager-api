@@ -194,5 +194,45 @@ module.exports = function(sequelize, Sequelize) {
         });
     };
 
+    /**
+     * login
+     * Checks if the username and password matches with the DB
+     * Then gets the user and its associated details.
+     *
+     * @param username User username
+     * @param password User password
+     * @returns user
+     */
+    CoreUser.login = function(username, password) {
+
+        var options = { where: { username: username } };
+
+        return CoreUser.findOne(options)
+            .then(function(user) {
+
+                if(!user)
+                    throw new Error('Bad username');
+
+                if(!bcrypt.compareSync(password, user.password))
+                    throw new Error('Bad password');
+
+                var options = {
+                    attributes: { exclude: ['password'] },
+                    include: [
+                        CoreUser.associations.role,
+                        CoreUser.associations.country,
+                        CoreUser.associations.state,
+                        CoreUser.associations.city,
+                        CoreUser.associations.zones
+                    ]
+                };
+
+                return CoreUser.findById(user.id, options)
+                    .then(function(user) {
+                        return user;
+                    });
+            });
+    };
+
     return CoreUser;
 };
