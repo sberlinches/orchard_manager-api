@@ -78,7 +78,13 @@ module.exports = function(sequelize, Sequelize) {
         });
     };
 
-    // Class Method
+    /**
+     * findAllByUserId
+     * Gets all zones belonging to an user
+     *
+     * @param userId
+     * @returns {*}
+     */
     AppZone.findAllByUserId = function (userId) {
         return AppZone.findAll({
             where: { userId: userId },
