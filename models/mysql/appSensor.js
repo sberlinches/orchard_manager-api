@@ -62,12 +62,56 @@ module.exports = function(sequelize, Sequelize) {
         });
     };
 
-    // Class Method
+    /**
+     * findAllByUserId
+     * Gets all sensors owned by the user given
+     *
+     * @param userId
+     * @returns
+     */
     AppSensor.findAllByUserId = function (userId) {
         return AppSensor.findAll({
             attributes: ['id', 'serial'],
             where: { userId: userId },
             order: [['id', 'ASC']]
+        }, {
+            include: [
+                { association: 'user', attributes: ['id', 'username'] }
+            ]
+        });
+    };
+
+    /**
+     * updateOwner
+     * Updates the sensor ownership
+     *
+     * @param sensorId
+     * @param userId New owner id
+     * @returns
+     */
+    AppSensor.updateOwner = function (sensorId, userId) {
+        return AppSensor.update({
+            userId: userId
+        }, {
+            fields: ['userId'],
+            where: { id: sensorId, userId: null }
+        });
+    };
+
+    /**
+     * deleteOwner
+     * Deletes the sensor ownership
+     *
+     * @param sensorId
+     * @param userId Previous owner id
+     * @returns
+     */
+    AppSensor.deleteOwner = function (sensorId, userId) {
+        return AppSensor.update({
+            userId: null
+        }, {
+            fields: ['userId'],
+            where: { id: sensorId, userId: userId }
         });
     };
 

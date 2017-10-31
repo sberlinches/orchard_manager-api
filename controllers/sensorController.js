@@ -30,20 +30,48 @@ exports.findAll = function(req, res) {
 
 /**
  * findAllByUserId
- * Gets all the sensors owned by the user given
+ * Gets all sensors owned by the user given
  *
  * @param req HTTP request argument
  * @param res HTTP response argument
  */
 exports.findAllByUserId = function(req, res) {
+    AppSensor.findAllByUserId(req.params.id)
+        .then(function(result) {
+            res.status(200).json(result);
+        })
+        .catch(function(err) {
+            res.status(500).json(err);
+        });
+};
 
-    var options = {
-        include: [
-            { association: 'user', attributes: ['id', 'username'] }
-        ]
-    };
+/**
+ * updateOwner
+ * Updates the sensor ownership
+ *
+ *
+ * @param req HTTP request argument
+ * @param res HTTP response argument
+ */
+exports.updateOwner = function(req, res) {
+    AppSensor.updateOwner(req.params.id, req.body.userId)
+        .then(function(result) {
+            res.status(200).json(result);
+        })
+        .catch(function(err) {
+            res.status(500).json(err);
+        });
+};
 
-    AppSensor.findAllByUserId(req.params.id, options)
+/**
+ * deleteOwner
+ * Deletes the sensor ownership
+ *
+ * @param req HTTP request argument
+ * @param res HTTP response argument
+ */
+exports.deleteOwner = function(req, res) {
+    AppSensor.deleteOwner(req.params.id, req.body.userId)
         .then(function(result) {
             res.status(200).json(result);
         })
