@@ -70,6 +70,7 @@ module.exports = function(sequelize, Sequelize) {
      * @returns
      */
     AppSensor.findAllByUserId = function (userId) {
+
         return AppSensor.findAll({
             attributes: ['id', 'serial'],
             where: { userId: userId },
@@ -90,6 +91,7 @@ module.exports = function(sequelize, Sequelize) {
      * @returns
      */
     AppSensor.updateOwner = function (sensorId, userId) {
+
         return AppSensor.update({
             userId: userId
         }, {
@@ -107,6 +109,7 @@ module.exports = function(sequelize, Sequelize) {
      * @returns
      */
     AppSensor.deleteOwner = function (sensorId, userId) {
+
         return AppSensor.update({
             userId: null
         }, {
