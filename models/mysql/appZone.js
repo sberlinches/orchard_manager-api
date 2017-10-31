@@ -27,7 +27,6 @@ module.exports = function(sequelize, Sequelize) {
                 field: 'alias',
                 allowNull: false,
                 validate: {
-                    isAlpha: true,
                     notEmpty: true,
                     len: [2, 30]
                 }
