@@ -1,8 +1,9 @@
 "use strict";
 
 // Dependencies
-const sequelize = require('../models/mysql');
-const AppZone   = sequelize.models.AppZone;
+const sequelize         = require('../models/mysql');
+const AppZone           = sequelize.models.AppZone;
+const AppUsersZones     = sequelize.models.AppUsersZones;
 
 /**
  * findAll
@@ -21,8 +22,8 @@ exports.findAll = function(req, res) {
     };
 
     AppZone.findAll(options)
-        .then(function(result) {
-            res.status(200).json(result);
+        .then(function(zone) {
+            res.status(200).json(zone);
         })
         .catch(function(err) {
             res.status(500).json(err);
@@ -39,8 +40,8 @@ exports.findAll = function(req, res) {
 exports.findAllByUserId = function(req, res) {
 
     AppZone.findAllByUserId(req.params.id)
-        .then(function(result) {
-            res.status(200).json(result);
+        .then(function(zone) {
+            res.status(200).json(zone);
         })
         .catch(function(err) {
             res.status(500).json(err);
@@ -49,7 +50,7 @@ exports.findAllByUserId = function(req, res) {
 
 /**
  * create
- * Creates a new zone
+ * Creates a new zone.
  *
  * @param req HTTP request argument
  * @param res HTTP response argument
@@ -58,9 +59,20 @@ exports.create = function(req, res) {
 
     req.body.userId = req.session.user.id;
 
+    /*
+     * TODO: Use transactions, or a native way to persist it.
+     * TODO: Create should be dynamic. zone + usersZones, or zone + usersZones + zonesVarieties
+     */
     AppZone.create(req.body)
-        .then(function(result) {
-            res.status(200).json(result);
+        .then(function(zone) {
+            return AppUsersZones.create({
+                userId: req.session.user.id,
+                zoneId: zone.id,
+                roleId: 1 // TODO: no magic numbers. Constants?
+            });
+        })
+        .then(function(AppZonesVarieties) {
+            res.status(200).json(AppZonesVarieties);
         })
         .catch(function(err) {
             res.status(500).json(err);
@@ -69,16 +81,22 @@ exports.create = function(req, res) {
 
 /**
  * findById
- * Gets a zone
+ * Gets a zone and its associated details.
  *
  * @param req HTTP request argument
  * @param res HTTP response argument
  */
 exports.findById = function(req, res) {
 
-    AppZone.findById(req.params.id)
-        .then(function(result) {
-            res.status(200).json(result);
+    var options = {
+        include: [
+            { association: 'varieties', attributes: ['id', 'nameEn'] }
+        ]
+    };
+
+    AppZone.findById(req.params.id, options)
+        .then(function(zone) {
+            res.status(200).json(zone);
         })
         .catch(function(err) {
             res.status(500).json(err);
@@ -109,7 +127,7 @@ exports.update = function(req, res) {
 
 /**
  * delete
- * Deletes a zone.
+ * Deletes a zone and its associated details (Performed in DB side).
  * Only the owner of the zone is able to delete it.
  *
  * @param req HTTP request argument
