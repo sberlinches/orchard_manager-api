@@ -14,8 +14,8 @@ const AppPlant  = sequelize.models.AppPlant;
 exports.findAll = function(req, res) {
 
     AppPlant.findAll()
-        .then(function(result) {
-            res.status(200).json(result);
+        .then(function(plant) {
+            res.status(200).json(plant);
         })
         .catch(function(err) {
             res.status(500).json(err);
@@ -32,8 +32,8 @@ exports.findAll = function(req, res) {
 exports.findAllLikeName = function(req, res) {
 
     AppPlant.findAllLikeName(req.body.name)
-        .then(function(result) {
-            res.status(200).json(result);
+        .then(function(plant) {
+            res.status(200).json(plant);
         })
         .catch(function(err) {
             res.status(500).json(err);

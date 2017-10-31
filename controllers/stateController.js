@@ -14,8 +14,8 @@ const CoreState = sequelize.models.CoreState;
 exports.findAllByCountryId = function(req, res) {
 
     CoreState.findAllByCountryId(req.params.id)
-        .then(function(result) {
-            res.status(200).json(result);
+        .then(function(state) {
+            res.status(200).json(state);
         })
         .catch(function(err) {
             res.status(500).json(err);

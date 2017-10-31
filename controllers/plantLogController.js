@@ -14,8 +14,8 @@ const AppPlantLog   = sequelize.models.AppPlantLog;
 exports.findAllById = function(req, res) {
 
     AppPlantLog.findAllById(req.params.id)
-        .then(function(result) {
-            res.status(200).json(result);
+        .then(function(log) {
+            res.status(200).json(log);
         })
         .catch(function(err) {
             res.status(500).json(err);

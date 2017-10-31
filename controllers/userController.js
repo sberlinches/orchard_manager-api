@@ -18,8 +18,8 @@ exports.findAll = function(req, res) {
     };
 
     CoreUser.findAll(options)
-        .then(function(result) {
-            res.status(200).json(result);
+        .then(function(user) {
+            res.status(200).json(user);
         })
         .catch(function(err) {
             res.status(500).json(err);
@@ -40,8 +40,8 @@ exports.findById = function(req, res) {
     };
 
     CoreUser.findById(req.params.id, options)
-        .then(function(result) {
-            res.status(200).json(result);
+        .then(function(user) {
+            res.status(200).json(user);
         })
         .catch(function(err) {
             res.status(500).json(err);
@@ -58,8 +58,8 @@ exports.findById = function(req, res) {
 exports.create = function(req, res) {
 
     CoreUser.create(req.body)
-        .then(function(result) {
-            res.status(200).json(result);
+        .then(function(user) {
+            res.status(200).json(user);
         })
         .catch(function(err) {
             res.status(500).json(err);

@@ -14,8 +14,8 @@ const CoreCity  = sequelize.models.CoreCity;
 exports.findAllByStateId = function(req, res) {
 
     CoreCity.findAllByStateId(req.params.id)
-        .then(function(result) {
-            res.status(200).json(result);
+        .then(function(city) {
+            res.status(200).json(city);
         })
         .catch(function(err) {
             res.status(500).json(err);

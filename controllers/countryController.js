@@ -17,8 +17,8 @@ exports.findAll = function(req, res) {
 
     CoreCountry.findAll()
     //CoreCountry.sequelize.query(coreCountryRepository.findAll, {type: Sequelize.QueryTypes.SELECT}) // TODO: Temporal
-        .then(function(result) {
-            res.status(200).json(result);
+        .then(function(country) {
+            res.status(200).json(country);
         })
         .catch(function(err) {
             res.status(500).json(err);

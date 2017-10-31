@@ -20,8 +20,8 @@ exports.findAll = function(req, res) {
     };
 
     AppVariety.findAll(options)
-        .then(function(result) {
-            res.status(200).json(result);
+        .then(function(variety) {
+            res.status(200).json(variety);
         })
         .catch(function(err) {
             res.status(500).json(err);
@@ -38,8 +38,8 @@ exports.findAll = function(req, res) {
 exports.findAllByPlantId = function(req, res) {
 
     AppVariety.findAllByPlantId(req.params.id)
-        .then(function(result) {
-            res.status(200).json(result);
+        .then(function(variety) {
+            res.status(200).json(variety);
         })
         .catch(function(err) {
             res.status(500).json(err);
