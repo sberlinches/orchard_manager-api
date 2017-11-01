@@ -37,7 +37,7 @@ exports.findAll = function(req, res) {
  */
 exports.findAllByUserId = function(req, res) {
 
-    AppSensor.findAllByUserId(req.params.id)
+    AppSensor.findAllByUserId(req.params.userId)
         .then(function(sensor) {
             res.status(200).json(sensor);
         })
