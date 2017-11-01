@@ -7,6 +7,6 @@ const isAuthenticated   = require('../middlewares/isAuthenticated');
 const stateController   = require('../controllers/stateController');
 
 // Register routes
-router.get('/country/:id', isAuthenticated, stateController.findAllByCountryId);
+router.get('/country/:id(\\d+)', isAuthenticated, stateController.findAllByCountryId);
 
 module.exports = router;

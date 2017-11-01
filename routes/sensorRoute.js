@@ -8,8 +8,8 @@ const sensorController  = require('../controllers/sensorController');
 
 // Register routes
 router.get('/', isAuthenticated, sensorController.findAll);
-router.patch('/:id/owner', isAuthenticated, sensorController.updateOwner);
-router.delete('/:id/owner', isAuthenticated, sensorController.deleteOwner);
-router.get('/user/:userId', isAuthenticated, sensorController.findAllByUserId);
+router.patch('/:id(\\d+)/owner', isAuthenticated, sensorController.updateOwner);
+router.delete('/:id(\\d+)/owner', isAuthenticated, sensorController.deleteOwner);
+router.get('/user/:userId(\\d+)', isAuthenticated, sensorController.findAllByUserId);
 
 module.exports = router;

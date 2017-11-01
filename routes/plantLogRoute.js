@@ -7,6 +7,6 @@ const isAuthenticated       = require('../middlewares/isAuthenticated');
 const plantLogController    = require('../controllers/plantLogController');
 
 // Register routes
-router.get('/:id', isAuthenticated, plantLogController.findAllById);
+router.get('/:id(\\d+)', isAuthenticated, plantLogController.findAllById);
 
 module.exports = router;

@@ -8,6 +8,6 @@ const varietyController = require('../controllers/varietyController');
 
 // Register routes
 router.get('/', isAuthenticated, varietyController.findAll);
-router.get('/plant/:id', isAuthenticated, varietyController.findAllByPlantId);
+router.get('/plant/:id(\\d+)', isAuthenticated, varietyController.findAllByPlantId);
 
 module.exports = router;

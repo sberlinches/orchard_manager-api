@@ -9,8 +9,8 @@ const userController    = require('../controllers/userController');
 // Register routes
 router.get('/', isAuthenticated, userController.findAll);
 router.post('/', isAuthenticated, userController.create);
-router.get('/:id', isAuthenticated, userController.findById);
-router.patch('/:id', isAuthenticated, userController.update);
-router.delete('/:id', isAuthenticated, userController.destroy);
+router.get('/:id(\\d+)', isAuthenticated, userController.findById);
+router.patch('/:id(\\d+)', isAuthenticated, userController.update);
+router.delete('/:id(\\d+)', isAuthenticated, userController.destroy);
 
 module.exports = router;
