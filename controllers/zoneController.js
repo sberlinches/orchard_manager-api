@@ -3,6 +3,7 @@
 // Dependencies
 const sequelize         = require('../models/mysql');
 const AppZone           = sequelize.models.AppZone;
+const AppZonesVarieties = sequelize.models.AppZonesVarieties;
 const AppUsersZones     = sequelize.models.AppUsersZones;
 
 /**
@@ -31,15 +32,21 @@ exports.findAll = function(req, res) {
 };
 
 /**
- * findAllByUserId
- * Gets all zones belonging to an user
+ * findById
+ * Gets a zone and its associated details.
  *
  * @param req HTTP request argument
  * @param res HTTP response argument
  */
-exports.findAllByUserId = function(req, res) {
+exports.findById = function(req, res) {
 
-    AppZone.findAllByUserId(req.params.id)
+    var options = {
+        include: [
+            { association: 'varieties', attributes: ['id', 'nameEn'] }
+        ]
+    };
+
+    AppZone.findById(req.params.id, options)
         .then(function(zone) {
             res.status(200).json(zone);
         })
@@ -80,30 +87,6 @@ exports.create = function(req, res) {
 };
 
 /**
- * findById
- * Gets a zone and its associated details.
- *
- * @param req HTTP request argument
- * @param res HTTP response argument
- */
-exports.findById = function(req, res) {
-
-    var options = {
-        include: [
-            { association: 'varieties', attributes: ['id', 'nameEn'] }
-        ]
-    };
-
-    AppZone.findById(req.params.id, options)
-        .then(function(zone) {
-            res.status(200).json(zone);
-        })
-        .catch(function(err) {
-            res.status(500).json(err);
-        });
-};
-
-/**
  * update
  * Updates a zone
  *
@@ -116,6 +99,12 @@ exports.update = function(req, res) {
         where: { id: req.params.id }
     };
 
+    /*
+     * update alias name
+     * update the varieties
+     * update the collaborators
+     * update the combination of the previous tables
+     */
     AppZone.update(req.body, options)
         .then(function(result) {
             res.status(200).json(result);
@@ -142,6 +131,83 @@ exports.destroy = function(req, res) {
     AppZone.destroy(options)
         .then(function(result) {
             res.status(200).json(result);
+        })
+        .catch(function(err) {
+            res.status(500).json(err);
+        });
+};
+
+/**
+ * addVariety
+ *
+ * @param req HTTP request argument
+ * @param res HTTP response argument
+ */
+exports.addVariety = function(req, res) {
+
+    req.body.zoneId = req.params.id;
+
+    AppZonesVarieties.create(req.body)
+        .then(function(result) {
+            res.status(500).json(result);
+        })
+        .catch(function(err) {
+            res.status(500).json(err);
+        });
+};
+
+/**
+ * addCollaborator
+ *
+ * @param req HTTP request argument
+ * @param res HTTP response argument
+ */
+exports.addCollaborator = function(req, res) {
+
+    req.body.zoneId = req.params.id;
+    req.body.roleId = 2; // TODO: no literals
+
+    AppUsersZones.create(req.body)
+        .then(function(result) {
+            res.status(500).json(result);
+        })
+        .catch(function(err) {
+            res.status(500).json(err);
+        });
+};
+
+/**
+ * addFollower
+ *
+ * @param req HTTP request argument
+ * @param res HTTP response argument
+ */
+exports.addFollower = function(req, res) {
+
+    req.body.zoneId = req.params.id;
+    req.body.roleId = 3; // TODO: no literals
+
+    AppUsersZones.create(req.body)
+        .then(function(result) {
+            res.status(500).json(result);
+        })
+        .catch(function(err) {
+            res.status(500).json(err);
+        });
+};
+
+/**
+ * findAllByUserId
+ * Gets all zones belonging to an user
+ *
+ * @param req HTTP request argument
+ * @param res HTTP response argument
+ */
+exports.findAllByUserId = function(req, res) {
+
+    AppZone.findAllByUserId(req.params.userId)
+        .then(function(zone) {
+            res.status(200).json(zone);
         })
         .catch(function(err) {
             res.status(500).json(err);
