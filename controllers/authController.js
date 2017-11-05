@@ -23,7 +23,7 @@ exports.login = function(req, res) {
     CoreUser.login(username, password)
         .then(function(user) {
             req.session.user = user;
-            res.status(200).send('Granted');
+            res.status(200).send(user);
         })
         .catch(function(err) {
             res.status(401).send('' + err); // Bug. Without the concatenation, it doesn't sent the msg.
