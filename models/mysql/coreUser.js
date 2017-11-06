@@ -1,5 +1,6 @@
 "use strict";
 
+const config = require('../../config');
 const bcrypt = require('bcrypt');
 
 /**
@@ -195,7 +196,6 @@ module.exports = function(sequelize, Sequelize) {
     };
 
     /**
-     * login
      * Checks if the username and password matches with the DB
      * Then gets the user and its associated details.
      *
