@@ -5,8 +5,7 @@ const sequelize = require('../models/mysql');
 const CoreUser  = sequelize.models.CoreUser;
 
 /**
- * login
- * Stores the user in the session.
+ * Stores the user in the session
  *
  * @param req HTTP request argument
  * @param res HTTP response argument
@@ -31,7 +30,27 @@ exports.login = function(req, res) {
 };
 
 /**
- * logout
+ * Creates an user account and stores it in the session
+ *
+ * @param req HTTP request argument
+ * @param res HTTP response argument
+ */
+exports.signup = function(req, res) {
+
+    // Every account created through signup has user role
+    req.body.roleId = 3; // TODO: No literals
+
+    CoreUser.create(req.body)
+        .then(function(user) {
+            req.session.user = user;
+            res.status(200).json(user);
+        })
+        .catch(function(err) {
+            res.status(500).json(err);
+        });
+};
+
+/**
  * Removes the user user from the session
  *
  * @param req HTTP request argument
