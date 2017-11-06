@@ -5,7 +5,6 @@ const sequelize = require('../models/mysql');
 const CoreUser  = sequelize.models.CoreUser;
 
 /**
- * findAll
  * Gets all users
  *
  * @param req HTTP request argument
@@ -27,7 +26,6 @@ exports.findAll = function(req, res) {
 };
 
 /**
- * findById
  * Gets an user
  *
  * @param req HTTP request argument
@@ -49,7 +47,6 @@ exports.findById = function(req, res) {
 };
 
 /**
- * create
  * Inserts a new user
  *
  * @param req HTTP request argument
@@ -59,6 +56,8 @@ exports.create = function(req, res) {
 
     CoreUser.create(req.body)
         .then(function(user) {
+            // Deletes the password before send the user back
+            delete user.dataValues.password;
             res.status(200).json(user);
         })
         .catch(function(err) {
@@ -67,7 +66,6 @@ exports.create = function(req, res) {
 };
 
 /**
- * update
  * Updates partially an user
  *
  * @param req HTTP request argument
@@ -89,7 +87,6 @@ exports.update = function(req, res) {
 };
 
 /**
- * destroy
  * Deletes an user
  *
  * @param req HTTP request argument

@@ -42,6 +42,9 @@ exports.signup = function(req, res) {
 
     CoreUser.create(req.body)
         .then(function(user) {
+            // Deletes the password before send the user back
+            delete user.dataValues.password;
+            // Stores the user in session
             req.session.user = user;
             res.status(200).json(user);
         })
