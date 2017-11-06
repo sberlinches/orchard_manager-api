@@ -63,11 +63,10 @@ module.exports = function(sequelize, Sequelize) {
     };
 
     /**
-     * findAllByUserId
-     * Gets all sensors owned by the user given
+     * Gets all sensors owned by the given user
      *
-     * @param userId
-     * @returns
+     * @param userId The user id
+     * @returns Sensors
      */
     AppSensor.findAllByUserId = function (userId) {
 
@@ -83,11 +82,10 @@ module.exports = function(sequelize, Sequelize) {
     };
 
     /**
-     * updateOwner
      * Updates the sensor ownership
      *
-     * @param sensorId
-     * @param userId New owner id
+     * @param sensorId The sensor id
+     * @param userId The new owner id
      * @returns
      */
     AppSensor.updateOwner = function (sensorId, userId) {
@@ -101,11 +99,11 @@ module.exports = function(sequelize, Sequelize) {
     };
 
     /**
-     * deleteOwner
      * Deletes the sensor ownership
+     * Only the owner of the sensor is able to delete the ownership.
      *
-     * @param sensorId
-     * @param userId Previous owner id
+     * @param sensorId The sensor id
+     * @param userId The previous owner id
      * @returns
      */
     AppSensor.deleteOwner = function (sensorId, userId) {
