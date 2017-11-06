@@ -38,7 +38,12 @@ module.exports = function(sequelize, Sequelize) {
             timestamps: false
         });
 
-    // Class Method
+    /**
+     * Gets all the states belonging to a country
+     *
+     * @param countryId The country id
+     * @returns States
+     */
     CoreState.findAllByCountryId = function (countryId) {
         return CoreState.findAll({
             where: { countryId: countryId },

@@ -8,5 +8,6 @@ const countryController = require('../controllers/countryController');
 
 // Register routes
 router.get('/', isAuthenticated, countryController.findAll);
+router.get('/:id(\\d+)', isAuthenticated, countryController.findById);
 
 module.exports = router;

@@ -38,7 +38,12 @@ module.exports = function(sequelize, Sequelize) {
             timestamps: false
         });
 
-    // Class Method
+    /**
+     * Gets all the cities belonging to a state
+     *
+     * @param stateId The state id
+     * @returns Cities
+     */
     CoreCity.findAllByStateId = function (stateId) {
         return CoreCity.findAll({
             where: { stateId: stateId },
