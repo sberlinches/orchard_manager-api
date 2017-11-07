@@ -63,7 +63,7 @@ module.exports = function(sequelize, Sequelize) {
         return AppPlant.findAll({
             attributes: ['id', ['nameEn', 'name']],
             where: { nameEn: { $like: '%' + name + '%' } },
-            order: [['nameEn', 'ASC']],
+            order: [['name', 'ASC']],
             limit: 5
         });
     };
