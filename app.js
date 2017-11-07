@@ -1,5 +1,7 @@
 "use strict";
 
+require('./extendedScripts');
+
 // Configuration parameters
 const config        = require('./config');
 
