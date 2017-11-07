@@ -49,6 +49,18 @@ module.exports = function(sequelize, Sequelize) {
     AppUsersZones.associate = function(models) {
 
         // belongsTo: the foreign key for the one-to-one relation exists on the source model.
+        AppUsersZones.belongsTo(models.CoreUser, {
+            as: 'user',
+            foreignKey: 'userId',
+            constraints: false
+        });
+
+        AppUsersZones.belongsTo(models.AppZone, {
+            as: 'zone',
+            foreignKey: 'zoneId',
+            constraints: false
+        });
+
         AppUsersZones.belongsTo(models.AppRole, {
             as: 'role',
             foreignKey: 'roleId',

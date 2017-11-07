@@ -7,13 +7,12 @@ const AppZonesVarieties = sequelize.models.AppZonesVarieties;
 const AppUsersZones     = sequelize.models.AppUsersZones;
 
 /**
- * findAll
  * Gets all zones
  *
  * @param req HTTP request argument
  * @param res HTTP response argument
  */
-exports.findAll = function(req, res) {
+exports.getZones = function(req, res) {
 
     var options = {
         include: [
@@ -32,21 +31,15 @@ exports.findAll = function(req, res) {
 };
 
 /**
- * findById
- * Gets a zone and its associated details.
+ * Gets a zone and optionally its associated details
  *
  * @param req HTTP request argument
+ * @param req.assoc[] An array with the associations to perform
  * @param res HTTP response argument
  */
-exports.findById = function(req, res) {
+exports.getZone = function(req, res) {
 
-    var options = {
-        include: [
-            { association: 'varieties', attributes: ['id', 'nameEn'] }
-        ]
-    };
-
-    AppZone.findById(req.params.id, options)
+    AppZone.findZone(req.params.zoneId, req.query)
         .then(function(zone) {
             res.status(200).json(zone);
         })
@@ -56,13 +49,29 @@ exports.findById = function(req, res) {
 };
 
 /**
- * create
- * Creates a new zone.
+ * Gets all zones where the user is: Owner, collaborator and follower
  *
  * @param req HTTP request argument
  * @param res HTTP response argument
  */
-exports.create = function(req, res) {
+exports.getZonesByUser = function(req, res) {
+
+    AppZone.findZonesByUser(req.params.userId)
+        .then(function(zone) {
+            res.status(200).json(zone);
+        })
+        .catch(function(err) {
+            res.status(500).json(err);
+        });
+};
+
+/**
+ * Add a new zone to the user
+ *
+ * @param req HTTP request argument
+ * @param res HTTP response argument
+ */
+exports.addZone = function(req, res) {
 
     req.body.userId = req.session.user.id;
 
@@ -87,16 +96,15 @@ exports.create = function(req, res) {
 };
 
 /**
- * update
  * Updates a zone
  *
  * @param req HTTP request argument
  * @param res HTTP response argument
  */
-exports.update = function(req, res) {
+exports.updateZone = function(req, res) {
 
     var options = {
-        where: { id: req.params.id }
+        where: { id: req.params.zoneId }
     };
 
     /*
@@ -115,17 +123,16 @@ exports.update = function(req, res) {
 };
 
 /**
- * delete
- * Deletes a zone and its associated details (Performed in DB side).
+ * Removes a zone and its associated details (Performed in DB side).
  * Only the owner of the zone is able to delete it.
  *
  * @param req HTTP request argument
  * @param res HTTP response argument
  */
-exports.destroy = function(req, res) {
+exports.removeZone = function(req, res) {
 
     var options = {
-        where: { id: req.params.id, userId: req.session.user.id }
+        where: { id: req.params.zoneId, userId: req.session.user.id }
     };
 
     AppZone.destroy(options)
@@ -138,14 +145,22 @@ exports.destroy = function(req, res) {
 };
 
 /**
- * addVariety
+ * Gets all varieties of a certain zone
+ *
+ * @param req HTTP request argument
+ * @param res HTTP response argument
+ */
+exports.getVarieties = function(req, res) {};
+
+/**
+ * Adds a variety to a certain zone
  *
  * @param req HTTP request argument
  * @param res HTTP response argument
  */
 exports.addVariety = function(req, res) {
 
-    req.body.zoneId = req.params.id;
+    req.body.zoneId = req.params.zoneId;
 
     AppZonesVarieties.create(req.body)
         .then(function(result) {
@@ -157,14 +172,30 @@ exports.addVariety = function(req, res) {
 };
 
 /**
- * addCollaborator
+ * Remove a variety from a certain zone
+ *
+ * @param req HTTP request argument
+ * @param res HTTP response argument
+ */
+exports.removeVariety = function(req, res) {};
+
+/**
+ * Gets all collaborators of a certain zone
+ *
+ * @param req HTTP request argument
+ * @param res HTTP response argument
+ */
+exports.getCollaborators = function(req, res) {};
+
+/**
+ * Adds a collaborator to a certain zone
  *
  * @param req HTTP request argument
  * @param res HTTP response argument
  */
 exports.addCollaborator = function(req, res) {
 
-    req.body.zoneId = req.params.id;
+    req.body.zoneId = req.params.zoneId;
     req.body.roleId = 2; // TODO: no literals
 
     AppUsersZones.create(req.body)
@@ -177,14 +208,30 @@ exports.addCollaborator = function(req, res) {
 };
 
 /**
- * addFollower
+ * Remove a collaborator of a certain zone
+ *
+ * @param req HTTP request argument
+ * @param res HTTP response argument
+ */
+exports.removeCollaborator = function(req, res) {};
+
+/**
+ * Gets all followers of a certain zone
+ *
+ * @param req HTTP request argument
+ * @param res HTTP response argument
+ */
+exports.getFollowers = function(req, res) {};
+
+/**
+ * Adds a follower to a certain zone
  *
  * @param req HTTP request argument
  * @param res HTTP response argument
  */
 exports.addFollower = function(req, res) {
 
-    req.body.zoneId = req.params.id;
+    req.body.zoneId = req.params.zoneId;
     req.body.roleId = 3; // TODO: no literals
 
     AppUsersZones.create(req.body)
@@ -197,19 +244,9 @@ exports.addFollower = function(req, res) {
 };
 
 /**
- * findAllByUserId
- * Gets all zones belonging to an user
+ * Remove a follower of a certain zone
  *
  * @param req HTTP request argument
  * @param res HTTP response argument
  */
-exports.findAllByUserId = function(req, res) {
-
-    AppZone.findAllByUserId(req.params.userId)
-        .then(function(zone) {
-            res.status(200).json(zone);
-        })
-        .catch(function(err) {
-            res.status(500).json(err);
-        });
-};
+exports.removeFollower = function(req, res) {};

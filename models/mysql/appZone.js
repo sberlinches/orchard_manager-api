@@ -58,7 +58,7 @@ module.exports = function(sequelize, Sequelize) {
             as: 'varieties',
             through: models.AppZonesVarieties,
             foreignKey: {
-                name: 'id',
+                name: 'zoneId',
                 allowNull: false
             },
             otherKey: 'varietyId',
@@ -78,17 +78,48 @@ module.exports = function(sequelize, Sequelize) {
     };
 
     /**
-     * findAllByUserId
-     * Gets all zones belonging to an user
+     * Finds a zone and optionally its associated details
      *
-     * @param userId
-     * @returns {*}
+     * @param zoneId The zone id
+     * @param query //TODO: Build the associations object depending on the query string
+     * @returns {Promise} Zone
      */
-    AppZone.findAllByUserId = function (userId) {
-        return AppZone.findAll({
+    AppZone.findZone = function(zoneId, query) {
+
+        var sql = "SELECT zone.id, zone.alias, variety.nameEn AS 'variety.name', zones_varieties.id AS 'variety.logId' ";
+            sql += "FROM `app-zone` AS zone ";
+            sql += "LEFT OUTER JOIN `app-zones_varieties` AS zones_varieties ON zone.id = zones_varieties.zoneId ";
+            sql += "INNER JOIN `app-variety` AS variety ON zones_varieties.varietyId = variety.id ";
+            sql += "WHERE zone.id = " + zoneId +";";
+
+        return AppZone.sequelize.query(sql, {type: sequelize.QueryTypes.SELECT, nest:true})
+    };
+
+    /**
+     * Finds all zones where the user is: Owner, collaborator and follower
+     *
+     * @param userId The user id
+     * @returns {Promise} Zone
+     */
+    AppZone.findZonesByUser = function(userId) {
+
+        var sql = "SELECT users_zones.zoneId, users_zones.roleId, zone.alias ";
+        sql += "FROM `app-users_zones` AS users_zones ";
+        sql += "LEFT OUTER JOIN `app-zone` AS zone ON users_zones.zoneId = zone.id ";
+        sql += "WHERE users_zones.userId = " + userId + " ";
+        sql += "ORDER BY zone.alias ASC;";
+
+        return sequelize.models.AppUsersZones.sequelize.query(sql, {type: sequelize.QueryTypes.SELECT})
+
+        /*return sequelize.models.AppUsersZones.findAll({
+            attributes: ['zoneId', 'roleId'],
             where: { userId: userId },
-            order: [['id', 'ASC']]
-        });
+            order: [[sequelize.literal('zone.alias'), 'ASC']],
+            include: [
+                { association: 'zone', attributes: ['alias'] }
+            ],
+            raw: true
+        });*/
     };
 
     return AppZone;
