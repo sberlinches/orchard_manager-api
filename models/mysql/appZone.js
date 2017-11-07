@@ -103,7 +103,7 @@ module.exports = function(sequelize, Sequelize) {
      */
     AppZone.findZonesByUser = function(userId) {
 
-        var sql = "SELECT users_zones.zoneId, users_zones.roleId, zone.alias ";
+        var sql = "SELECT users_zones.zoneId AS id, users_zones.roleId, zone.alias ";
         sql += "FROM `app-users_zones` AS users_zones ";
         sql += "LEFT OUTER JOIN `app-zone` AS zone ON users_zones.zoneId = zone.id ";
         sql += "WHERE users_zones.userId = " + userId + " ";
