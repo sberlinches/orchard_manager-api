@@ -7,7 +7,7 @@ const isAuthenticated   = require('../middlewares/isAuthenticated');
 const zoneController    = require('../controllers/zoneController');
 
 // TODO: "integers" are not casted as integers...
-// Zone
+// Zone routes
 router.get('/', isAuthenticated, zoneController.getZones);
 router.post('/', isAuthenticated, zoneController.addZone);
 router.get('/:zoneId(\\d+)', isAuthenticated, zoneController.getZone);
@@ -19,6 +19,10 @@ router.get('/user/:userId(\\d+)', isAuthenticated, zoneController.getZonesByUser
 router.get('/:zoneId(\\d+)/varieties', isAuthenticated, zoneController.getVarieties);
 router.post('/:zoneId(\\d+)/varieties', isAuthenticated, zoneController.addVariety);
 router.delete('/:zoneId(\\d+)/varieties/:varietyId(\\d+)', isAuthenticated, zoneController.removeVariety);
+
+// Sensor
+router.post('/:zoneId(\\d+)/varieties/:varietyId(\\d+)/sensors', isAuthenticated, zoneController.addSensor);
+router.delete('/:zoneId(\\d+)/varieties/:varietyId(\\d+)/sensors/:sensorId(\\d+)', isAuthenticated, zoneController.removeSensor);
 
 // Collaborator
 router.get('/:zoneId(\\d+)/collaborators', isAuthenticated, zoneController.getCollaborators);

@@ -145,6 +145,44 @@ exports.removeZone = function(req, res) {
 };
 
 /*
+ * Sensor
+ */
+
+/**
+ * Adds a sensor to a certain zone
+ *
+ * @param req HTTP request argument
+ * @param res HTTP response argument
+ */
+exports.addSensor = function(req, res) {
+
+    AppZonesVarieties.addSensor(req.params.zoneId, req.params.varietyId, req.body.sensorId)
+        .then(function(result) {
+            res.status(500).json(result);
+        })
+        .catch(function(err) {
+            res.status(500).json(err);
+        });
+};
+
+/**
+ * Remove a sensor from a certain zone
+ *
+ * @param req HTTP request argument
+ * @param res HTTP response argument
+ */
+exports.removeSensor = function(req, res) {
+
+    AppZonesVarieties.removeSensor(req.params.zoneId, req.params.varietyId, req.params.sensorId)
+        .then(function(result) {
+            res.status(500).json(result);
+        })
+        .catch(function(err) {
+            res.status(500).json(err);
+        });
+};
+
+/*
  * Variety
  */
 
