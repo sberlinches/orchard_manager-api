@@ -94,7 +94,7 @@ module.exports = function(sequelize, Sequelize) {
     AppZonesVarieties.removeSensor = function(zoneId, varietyId, sensorId) {
 
         var sql = "UPDATE `app-zones_varieties` SET sensorId = NULL ";
-        sql += "WHERE zoneId = " + zoneId + " AND varietyId = " + varietyId + " AND sensorId = " + sensorId + ";";
+            sql += "WHERE zoneId = " + zoneId + " AND varietyId = " + varietyId + " AND sensorId = " + sensorId + ";";
 
         return sequelize.models.AppUsersZones.sequelize.query(sql, {type: sequelize.QueryTypes.UPDATE})
 

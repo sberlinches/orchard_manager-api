@@ -21,6 +21,7 @@ exports.login = function(req, res) {
 
     CoreUser.login(username, password)
         .then(function(user) {
+            // Stores the user in session
             req.session.user = user;
             res.status(200).send(user);
         })

@@ -92,7 +92,7 @@ module.exports = function(sequelize, Sequelize) {
             sql += "INNER JOIN `app-variety` AS variety ON zones_varieties.varietyId = variety.id ";
             sql += "WHERE zone.id = " + zoneId +";";
 
-        return AppZone.sequelize.query(sql, {type: sequelize.QueryTypes.SELECT, nest:true})
+        return AppZone.sequelize.query(sql, {type: sequelize.QueryTypes.SELECT, nest: true})
     };
 
     return AppZone;
