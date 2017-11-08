@@ -86,7 +86,7 @@ module.exports = function(sequelize, Sequelize) {
      */
     AppZone.findZone = function(zoneId, query) {
 
-        var sql = "SELECT zone.id, zone.alias, variety.nameEn AS 'varieties.name', zones_varieties.sensorId AS 'varieties.sensorId', zones_varieties.id AS 'varieties.logId' ";
+        var sql = "SELECT zone.id, zone.alias, variety.id AS 'varieties.id', variety.nameEn AS 'varieties.name', zones_varieties.sensorId AS 'varieties.sensorId', zones_varieties.id AS 'varieties.logId' ";
             sql += "FROM `app-zone` AS zone ";
             sql += "LEFT OUTER JOIN `app-zones_varieties` AS zones_varieties ON zone.id = zones_varieties.zoneId ";
             sql += "INNER JOIN `app-variety` AS variety ON zones_varieties.varietyId = variety.id ";
