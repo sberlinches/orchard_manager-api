@@ -158,7 +158,7 @@ exports.addSensor = function(req, res) {
 
     AppZonesVarieties.addSensor(req.params.zoneId, req.params.varietyId, req.body.sensorId)
         .then(function(result) {
-            res.status(500).json(result);
+            res.status(200).json(result);
         })
         .catch(function(err) {
             res.status(500).json(err);
@@ -175,7 +175,7 @@ exports.removeSensor = function(req, res) {
 
     AppZonesVarieties.removeSensor(req.params.zoneId, req.params.varietyId, req.params.sensorId)
         .then(function(result) {
-            res.status(500).json(result);
+            res.status(200).json(result);
         })
         .catch(function(err) {
             res.status(500).json(err);
@@ -206,7 +206,7 @@ exports.addVariety = function(req, res) {
 
     AppZonesVarieties.create(req.body)
         .then(function(result) {
-            res.status(500).json(result);
+            res.status(200).json(result);
         })
         .catch(function(err) {
             res.status(500).json(err);
@@ -246,7 +246,7 @@ exports.addCollaborator = function(req, res) {
 
     AppUsersZones.create(req.body)
         .then(function(result) {
-            res.status(500).json(result);
+            res.status(200).json(result);
         })
         .catch(function(err) {
             res.status(500).json(err);
@@ -286,7 +286,7 @@ exports.addFollower = function(req, res) {
 
     AppUsersZones.create(req.body)
         .then(function(result) {
-            res.status(500).json(result);
+            res.status(200).json(result);
         })
         .catch(function(err) {
             res.status(500).json(err);
