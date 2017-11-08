@@ -6,10 +6,10 @@ const router            = express.Router();
 const isAuthenticated   = require('../middlewares/isAuthenticated');
 const sensorController  = require('../controllers/sensorController');
 
-// Register routes
-router.get('/', isAuthenticated, sensorController.findAll);
-router.patch('/:id(\\d+)/owner', isAuthenticated, sensorController.updateOwner);
-router.delete('/:id(\\d+)/owner', isAuthenticated, sensorController.deleteOwner);
-router.get('/user/:userId(\\d+)', isAuthenticated, sensorController.findAllByUserId);
+// Sensor routes
+router.get('/', isAuthenticated, sensorController.getSensors);
+router.patch('/:sensorId(\\d+)/owner', isAuthenticated, sensorController.updateSensorOwnership);
+router.delete('/:sensorId(\\d+)/owner', isAuthenticated, sensorController.deleteSensorOwnership);
+router.get('/user/:userId(\\d+)', isAuthenticated, sensorController.getSensorsByUser);
 
 module.exports = router;

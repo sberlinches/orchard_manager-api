@@ -5,21 +5,14 @@ const sequelize = require('../models/mysql');
 const AppSensor = sequelize.models.AppSensor;
 
 /**
- * findAll
  * Gets all sensors
  *
  * @param req HTTP request argument
  * @param res HTTP response argument
  */
-exports.findAll = function(req, res) {
+exports.getSensors = function(req, res) {
 
-    var options = {
-        include: [
-            { association: 'user', attributes: ['id', 'username'] }
-        ]
-    };
-
-    AppSensor.findAll(options)
+    AppSensor.findAll()
         .then(function(sensor) {
             res.status(200).json(sensor);
         })
@@ -29,13 +22,12 @@ exports.findAll = function(req, res) {
 };
 
 /**
- * findAllByUserId
- * Gets all sensors owned by the user given.
+ * Gets all sensors owned by the user given
  *
  * @param req HTTP request argument
  * @param res HTTP response argument
  */
-exports.findAllByUserId = function(req, res) {
+exports.getSensorsByUser = function(req, res) {
 
     AppSensor.findAllByUserId(req.params.userId)
         .then(function(sensor) {
@@ -47,16 +39,14 @@ exports.findAllByUserId = function(req, res) {
 };
 
 /**
- * updateOwner
- * Updates the sensor ownership.
- *
+ * Updates the sensor ownership
  *
  * @param req HTTP request argument
  * @param res HTTP response argument
  */
-exports.updateOwner = function(req, res) {
+exports.updateSensorOwnership = function(req, res) {
 
-    AppSensor.updateOwner(req.params.id, req.session.user.id)
+    AppSensor.updateSensorOwnership(req.params.id, req.session.user.id)
         .then(function(result) {
             res.status(200).json(result);
         })
@@ -66,16 +56,15 @@ exports.updateOwner = function(req, res) {
 };
 
 /**
- * deleteOwner
- * Deletes the sensor ownership.
+ * Deletes the sensor ownership
  * Only the owner of the sensor is able to delete the ownership.
  *
  * @param req HTTP request argument
  * @param res HTTP response argument
  */
-exports.deleteOwner = function(req, res) {
+exports.deleteSensorOwnership = function(req, res) {
 
-    AppSensor.deleteOwner(req.params.id, req.session.user.id)
+    AppSensor.deleteSensorOwnership(req.params.id, req.session.user.id)
         .then(function(result) {
             res.status(200).json(result);
         })

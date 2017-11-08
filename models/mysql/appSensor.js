@@ -88,7 +88,7 @@ module.exports = function(sequelize, Sequelize) {
      * @param userId The new owner id
      * @returns
      */
-    AppSensor.updateOwner = function (sensorId, userId) {
+    AppSensor.updateSensorOwnership = function (sensorId, userId) {
 
         return AppSensor.update({
             userId: userId
@@ -106,7 +106,7 @@ module.exports = function(sequelize, Sequelize) {
      * @param userId The previous owner id
      * @returns
      */
-    AppSensor.deleteOwner = function (sensorId, userId) {
+    AppSensor.deleteSensorOwnership = function (sensorId, userId) {
 
         return AppSensor.update({
             userId: null
