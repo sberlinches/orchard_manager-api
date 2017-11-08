@@ -56,7 +56,7 @@ exports.getZone = function(req, res) {
  */
 exports.getZonesByUser = function(req, res) {
 
-    AppZone.findZonesByUser(req.params.userId)
+    AppUsersZones.findZonesByUser(req.params.userId)
         .then(function(zone) {
             res.status(200).json(zone);
         })
@@ -144,6 +144,10 @@ exports.removeZone = function(req, res) {
         });
 };
 
+/*
+ * Variety
+ */
+
 /**
  * Gets all varieties of a certain zone
  *
@@ -178,6 +182,10 @@ exports.addVariety = function(req, res) {
  * @param res HTTP response argument
  */
 exports.removeVariety = function(req, res) {};
+
+/*
+ * Collaborators
+ */
 
 /**
  * Gets all collaborators of a certain zone
@@ -214,6 +222,10 @@ exports.addCollaborator = function(req, res) {
  * @param res HTTP response argument
  */
 exports.removeCollaborator = function(req, res) {};
+
+/*
+ * Followers
+ */
 
 /**
  * Gets all followers of a certain zone

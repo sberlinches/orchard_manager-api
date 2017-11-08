@@ -68,5 +68,32 @@ module.exports = function(sequelize, Sequelize) {
         });
     };
 
+    /**
+     * Finds all zones where the user is: Owner, collaborator and follower
+     *
+     * @param userId The user id
+     * @returns {Promise} Zone
+     */
+    AppUsersZones.findZonesByUser = function(userId) {
+
+        var sql = "SELECT users_zones.zoneId AS id, users_zones.roleId, zone.alias ";
+        sql += "FROM `app-users_zones` AS users_zones ";
+        sql += "LEFT OUTER JOIN `app-zone` AS zone ON users_zones.zoneId = zone.id ";
+        sql += "WHERE users_zones.userId = " + userId + " ";
+        sql += "ORDER BY zone.alias ASC;";
+
+        return sequelize.models.AppUsersZones.sequelize.query(sql, {type: sequelize.QueryTypes.SELECT})
+
+        /*return sequelize.models.AppUsersZones.findAll({
+            attributes: ['zoneId', 'roleId'],
+            where: { userId: userId },
+            order: [[sequelize.literal('zone.alias'), 'ASC']],
+            include: [
+                { association: 'zone', attributes: ['alias'] }
+            ],
+            raw: true
+        });*/
+    };
+
     return AppUsersZones;
 };
