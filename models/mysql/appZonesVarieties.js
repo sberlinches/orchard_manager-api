@@ -70,10 +70,17 @@ module.exports = function(sequelize, Sequelize) {
      */
     AppZonesVarieties.addSensor = function(zoneId, varietyId, sensorId) {
 
-        var sql = "UPDATE `app-zones_varieties` SET sensorId = " + sensorId + " ";
-            sql += "WHERE zoneId = " + zoneId + " AND varietyId = " + varietyId + ";";
+        var sql = "UPDATE `app-zones_varieties` SET sensorId = :sensorId ";
+            sql += "WHERE zoneId = :zoneId AND varietyId = :varietyId;";
 
-        return sequelize.models.AppUsersZones.sequelize.query(sql, {type: sequelize.QueryTypes.UPDATE})
+        return sequelize.models.AppUsersZones.sequelize.query(sql, {
+            replacements: {
+                zoneId: zoneId,
+                varietyId: varietyId,
+                sensorId: sensorId
+            },
+            type: sequelize.QueryTypes.UPDATE
+        })
 
         /*var options = {
             where: { zoneId: zoneId, varietyId: varietyId }
@@ -94,9 +101,16 @@ module.exports = function(sequelize, Sequelize) {
     AppZonesVarieties.removeSensor = function(zoneId, varietyId, sensorId) {
 
         var sql = "UPDATE `app-zones_varieties` SET sensorId = NULL ";
-            sql += "WHERE zoneId = " + zoneId + " AND varietyId = " + varietyId + " AND sensorId = " + sensorId + ";";
+            sql += "WHERE zoneId = :zoneId AND varietyId = :varietyId AND sensorId = :sensorId;";
 
-        return sequelize.models.AppUsersZones.sequelize.query(sql, {type: sequelize.QueryTypes.UPDATE})
+        return sequelize.models.AppUsersZones.sequelize.query(sql, {
+            replacements: {
+                zoneId: zoneId,
+                varietyId: varietyId,
+                sensorId: sensorId
+            },
+            type: sequelize.QueryTypes.UPDATE
+        })
 
         /*var options = {
             where: { zoneId: zoneId, varietyId: varietyId, sensorId: sensorId }

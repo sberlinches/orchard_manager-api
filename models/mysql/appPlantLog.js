@@ -120,9 +120,13 @@ module.exports = function(sequelize, Sequelize) {
             sql += "FROM `app-zones_varieties` AS zones_varieties ";
             sql += "INNER JOIN `app-variety` AS variety ON zones_varieties.varietyId = variety.id ";
             sql += ") AS recomended ON recomended.id = current.id ";
-            sql += "WHERE current.id = " + plantLogId + ";";
+            sql += "WHERE current.id = :plantLogId;";
 
-        return sequelize.models.AppUsersZones.sequelize.query(sql, {type: sequelize.QueryTypes.SELECT, nest: true})
+        return AppPlantLog.sequelize.query(sql, {
+            replacements: { plantLogId: plantLogId },
+            type: sequelize.QueryTypes.SELECT,
+            nest: true
+        })
     };
 
     return AppPlantLog;

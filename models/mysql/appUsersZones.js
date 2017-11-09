@@ -77,12 +77,15 @@ module.exports = function(sequelize, Sequelize) {
     AppUsersZones.findZonesByUser = function(userId) {
 
         var sql = "SELECT users_zones.zoneId AS id, users_zones.roleId, zone.alias ";
-        sql += "FROM `app-users_zones` AS users_zones ";
-        sql += "LEFT OUTER JOIN `app-zone` AS zone ON users_zones.zoneId = zone.id ";
-        sql += "WHERE users_zones.userId = " + userId + " ";
-        sql += "ORDER BY zone.alias ASC;";
+            sql += "FROM `app-users_zones` AS users_zones ";
+            sql += "LEFT OUTER JOIN `app-zone` AS zone ON users_zones.zoneId = zone.id ";
+            sql += "WHERE users_zones.userId = :userId ";
+            sql += "ORDER BY zone.alias ASC;";
 
-        return sequelize.models.AppUsersZones.sequelize.query(sql, {type: sequelize.QueryTypes.SELECT})
+        return sequelize.models.AppUsersZones.sequelize.query(sql, {
+            replacements: { userId: userId },
+            type: sequelize.QueryTypes.SELECT
+        })
 
         /*return sequelize.models.AppUsersZones.findAll({
             attributes: ['zoneId', 'roleId'],

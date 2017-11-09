@@ -90,9 +90,13 @@ module.exports = function(sequelize, Sequelize) {
             sql += "FROM `app-zone` AS zone ";
             sql += "LEFT OUTER JOIN `app-zones_varieties` AS zones_varieties ON zone.id = zones_varieties.zoneId ";
             sql += "INNER JOIN `app-variety` AS variety ON zones_varieties.varietyId = variety.id ";
-            sql += "WHERE zone.id = " + zoneId +";";
+            sql += "WHERE zone.id = :zoneId;";
 
-        return AppZone.sequelize.query(sql, {type: sequelize.QueryTypes.SELECT, nest: true})
+        return AppZone.sequelize.query(sql, {
+            replacements: { zoneId: zoneId },
+            type: sequelize.QueryTypes.SELECT,
+            nest: true
+        })
     };
 
     return AppZone;
