@@ -41,5 +41,40 @@ module.exports = function(sequelize, Sequelize) {
         timestamps: false
     });
 
+    /**
+     * Finds all the countries
+     *
+     * @returns {Promise}
+     */
+    CoreCountry.findCountries = function() {
+
+        var sql = "SELECT id, nameEn AS name FROM `core-country`;";
+
+        return CoreCountry.sequelize.query(sql, {
+            type: sequelize.QueryTypes.SELECT
+        });
+
+        //return CoreCountry.findAll();
+    };
+
+    /**
+     * Finds a single state
+     *
+     * @param countryId The country id
+     * @returns {Promise}
+     */
+    CoreCountry.findCountry = function(countryId) {
+
+        var sql = "SELECT id, nameEn AS name FROM `core-country` WHERE id = :countryId;";
+
+        return CoreCountry.sequelize.query(sql, {
+            replacements: { countryId: countryId },
+            type: sequelize.QueryTypes.SELECT,
+            plain: true // Return a single row
+        });
+
+        //return CoreCountry.findById(countryId);
+    };
+
     return CoreCountry;
 };

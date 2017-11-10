@@ -10,9 +10,9 @@ const CoreCity  = sequelize.models.CoreCity;
  * @param req HTTP request argument
  * @param res HTTP response argument
  */
-exports.findAll = function(req, res) {
+exports.getCities = function(req, res) {
 
-    CoreCity.findAll()
+    CoreCity.findCities()
         .then(function(country) {
             res.status(200).json(country);
         })
@@ -27,9 +27,9 @@ exports.findAll = function(req, res) {
  * @param req HTTP request argument
  * @param res HTTP response argument
  */
-exports.findById = function(req, res) {
+exports.getCity = function(req, res) {
 
-    CoreCity.findById(req.params.id)
+    CoreCity.findCity(req.params.cityId)
         .then(function(country) {
             res.status(200).json(country);
         })
@@ -44,9 +44,9 @@ exports.findById = function(req, res) {
  * @param req HTTP request argument
  * @param res HTTP response argument
  */
-exports.findAllByStateId = function(req, res) {
+exports.getZonesByState = function(req, res) {
 
-    CoreCity.findAllByStateId(req.params.id)
+    CoreCity.findZonesByState(req.params.stateId)
         .then(function(city) {
             res.status(200).json(city);
         })

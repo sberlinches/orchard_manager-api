@@ -63,22 +63,25 @@ module.exports = function(sequelize, Sequelize) {
     };
 
     /**
-     * Gets all sensors owned by the given user
+     * Finds all sensors owned by the given user
      *
      * @param userId The user id
-     * @returns Sensors
+     * @returns {Promise}
      */
     AppSensor.findAllByUserId = function (userId) {
 
-        return AppSensor.findAll({
-            attributes: ['id', 'serial'],
-            where: { userId: userId },
-            order: [['id', 'ASC']]
-        }, {
-            include: [
-                { association: 'user', attributes: ['id', 'username'] }
-            ]
+        var sql = "SELECT id, serial FROM `app-sensor` ";
+            sql += "WHERE deletedAt IS NULL AND userId = :userId;";
+
+        return AppSensor.sequelize.query(sql, {
+            replacements: { userId: userId },
+            type: sequelize.QueryTypes.SELECT
         });
+
+        /*return AppSensor.findAll({
+            attributes: ['id', 'serial'],
+            where: { userId: userId }
+        });*/
     };
 
     /**
@@ -86,34 +89,49 @@ module.exports = function(sequelize, Sequelize) {
      *
      * @param sensorId The sensor id
      * @param userId The new owner id
-     * @returns
+     * @returns {Promise}
      */
     AppSensor.updateSensorOwnership = function (sensorId, userId) {
 
-        return AppSensor.update({
+        var sql = "UPDATE `app-sensor` SET userId = :userId WHERE id = :sensorId";
+
+        return AppSensor.sequelize.query(sql, {
+            replacements: {
+                sensorId: sensorId,
+                userId: userId
+            },
+            type: sequelize.QueryTypes.UPDATE
+        });
+
+        /*return AppSensor.update({
             userId: userId
         }, {
             fields: ['userId'],
-            where: { id: sensorId, userId: null }
-        });
+            where: { id: sensorId }
+        });*/
     };
 
     /**
      * Deletes the sensor ownership
-     * Only the owner of the sensor is able to delete the ownership.
      *
      * @param sensorId The sensor id
-     * @param userId The previous owner id
-     * @returns
+     * @returns {Promise}
      */
-    AppSensor.deleteSensorOwnership = function (sensorId, userId) {
+    AppSensor.deleteSensorOwnership = function (sensorId) {
 
-        return AppSensor.update({
+        var sql = "UPDATE `app-sensor` SET userId = NULL WHERE id = :sensorId";
+
+        return AppSensor.sequelize.query(sql, {
+            replacements: { sensorId: sensorId },
+            type: sequelize.QueryTypes.UPDATE
+        });
+
+        /*return AppSensor.update({
             userId: null
         }, {
             fields: ['userId'],
-            where: { id: sensorId, userId: userId }
-        });
+            where: { id: sensorId }
+        });*/
     };
 
     return AppSensor;

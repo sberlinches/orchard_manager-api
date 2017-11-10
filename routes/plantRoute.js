@@ -6,8 +6,8 @@ const router            = express.Router();
 const isAuthenticated   = require('../middlewares/isAuthenticated');
 const plantController   = require('../controllers/plantController');
 
-// Register routes
-router.get('/', isAuthenticated, plantController.findAll);
-router.post('/name', isAuthenticated, plantController.findAllLikeName);
+// Plant routes
+router.get('/', isAuthenticated, plantController.getPlants);
+router.post('/name', isAuthenticated, plantController.getPlantsLikeName);
 
 module.exports = router;

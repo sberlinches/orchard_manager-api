@@ -1,10 +1,8 @@
 "use strict";
 
 // Dependencies
-//const Sequelize             = require('sequelize');
-const sequelize             = require('../models/mysql');
-const CoreCountry           = sequelize.models.CoreCountry;
-//const coreCountryRepository = require('../models/mysql/coreCountryRepository');
+const sequelize     = require('../models/mysql');
+const CoreCountry   = sequelize.models.CoreCountry;
 
 /**
  * Gets all the countries
@@ -12,10 +10,9 @@ const CoreCountry           = sequelize.models.CoreCountry;
  * @param req HTTP request argument
  * @param res HTTP response argument
  */
-exports.findAll = function(req, res) {
+exports.getCountries = function(req, res) {
 
-    CoreCountry.findAll()
-    //CoreCountry.sequelize.query(coreCountryRepository.findAll, {type: Sequelize.QueryTypes.SELECT}) // TODO: Temporal
+    CoreCountry.findCountries()
         .then(function(country) {
             res.status(200).json(country);
         })
@@ -30,9 +27,9 @@ exports.findAll = function(req, res) {
  * @param req HTTP request argument
  * @param res HTTP response argument
  */
-exports.findById = function(req, res) {
+exports.getCountry = function(req, res) {
 
-    CoreCountry.findById(req.params.id)
+    CoreCountry.findCountry(req.params.countryId)
         .then(function(country) {
             res.status(200).json(country);
         })

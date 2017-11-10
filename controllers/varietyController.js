@@ -5,21 +5,14 @@ const sequelize     = require('../models/mysql');
 const AppVariety    = sequelize.models.AppVariety;
 
 /**
- * findAll
- * Gets all users
+ * Gets all varieties
  *
  * @param req HTTP request argument
  * @param res HTTP response argument
  */
-exports.findAll = function(req, res) {
+exports.getVarieties = function(req, res) {
 
-    var options = {
-        include: [
-            { association: 'plant', attributes: ['id', 'nameEn'] }
-        ]
-    };
-
-    AppVariety.findAll(options)
+    AppVariety.findVarieties()
         .then(function(variety) {
             res.status(200).json(variety);
         })
@@ -29,15 +22,14 @@ exports.findAll = function(req, res) {
 };
 
 /**
- * findAllByPlantId
  * Gets all varieties belonging to a plant
  *
  * @param req HTTP request argument
  * @param res HTTP response argument
  */
-exports.findAllByPlantId = function(req, res) {
+exports.getVarietiesByPlant = function(req, res) {
 
-    AppVariety.findAllByPlantId(req.params.id)
+    AppVariety.findAllByPlantId(req.params.plantId)
         .then(function(variety) {
             res.status(200).json(variety);
         })

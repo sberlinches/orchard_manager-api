@@ -58,14 +58,42 @@ module.exports = function(sequelize, Sequelize) {
         });
     };
 
-    // Class Method
-    AppPlant.findLikeName = function (name) {
-        return AppPlant.findAll({
+    /**
+     * Finds all the plants
+     *
+     * @returns {Promise}
+     */
+    AppPlant.findPlants = function() {
+
+        var sql = "SELECT id, nameEn AS name FROM `app-plant`;";
+
+        return AppPlant.sequelize.query(sql, {
+            type: sequelize.QueryTypes.SELECT
+        });
+
+        //return AppPlant.findAll();
+    };
+
+    /**
+     * Finds all the plants that match the input name
+     *
+     * @param name The plant name
+     * @returns {Promise}
+     */
+    AppPlant.findPlantsLikeName = function(name) {
+
+        var sql = "SELECT id, nameEn AS name FROM `app-plant` WHERE nameEn LIKE '%" + name + "%' ORDER BY name ASC LIMIT 5;";
+
+        return AppPlant.sequelize.query(sql, {
+            type: sequelize.QueryTypes.SELECT
+        });
+
+        /*return AppPlant.findAll({
             attributes: ['id', ['nameEn', 'name']],
             where: { nameEn: { $like: '%' + name + '%' } },
-            order: [['name', 'ASC']],
+            order: [['nameEn', 'ASC']],
             limit: 5
-        });
+        });*/
     };
 
     return AppPlant;

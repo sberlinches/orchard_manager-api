@@ -5,15 +5,14 @@ const sequelize = require('../models/mysql');
 const AppPlant  = sequelize.models.AppPlant;
 
 /**
- * findAll
- * Gets all plants
+ * Gets all the plants
  *
  * @param req HTTP request argument
  * @param res HTTP response argument
  */
-exports.findAll = function(req, res) {
+exports.getPlants = function(req, res) {
 
-    AppPlant.findAll()
+    AppPlant.findPlants()
         .then(function(plant) {
             res.status(200).json(plant);
         })
@@ -23,15 +22,14 @@ exports.findAll = function(req, res) {
 };
 
 /**
- * findLikeName
- * Gets all plants that match the input
+ * Gets all the plants that match the input name
  *
  * @param req HTTP request argument
  * @param res HTTP response argument
  */
-exports.findAllLikeName = function(req, res) {
+exports.getPlantsLikeName = function(req, res) {
 
-    AppPlant.findAllLikeName(req.body.name)
+    AppPlant.findPlantsLikeName(req.body.name)
         .then(function(plant) {
             res.status(200).json(plant);
         })

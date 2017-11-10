@@ -6,8 +6,8 @@ const router            = express.Router();
 const isAuthenticated   = require('../middlewares/isAuthenticated');
 const varietyController = require('../controllers/varietyController');
 
-// Register routes
-router.get('/', isAuthenticated, varietyController.findAll);
-router.get('/plant/:id(\\d+)', isAuthenticated, varietyController.findAllByPlantId);
+// Variety routes
+router.get('/', isAuthenticated, varietyController.getVarieties);
+router.get('/plant/:plantId(\\d+)', isAuthenticated, varietyController.getVarietiesByPlant);
 
 module.exports = router;

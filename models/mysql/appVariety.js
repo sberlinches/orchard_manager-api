@@ -176,12 +176,40 @@ module.exports = function(sequelize, Sequelize) {
         });
     };
 
-    // Class Method
-    AppVariety.findAllByPlantId = function (plantId) {
-        return AppVariety.findAll({
-            where: { plantId: plantId },
-            order: [['id', 'ASC']]
+    /**
+     * Finds all varieties
+     *
+     * @returns {Promise}
+     */
+    AppVariety.findVarieties = function() {
+
+        var sql ="SELECT *, nameEn AS name FROM `app-variety`";
+
+        return AppVariety.sequelize.query(sql, {
+            type: sequelize.QueryTypes.SELECT
         });
+
+        /*return AppVariety.findAll()*/
+    };
+
+    /**
+     * Finds all varieties belonging to a plant
+     *
+     * @param plantId The plant id
+     * @returns {Promise}
+     */
+    AppVariety.findAllByPlantId = function(plantId) {
+
+        var sql ="SELECT *, nameEn AS name FROM `app-variety` WHERE plantId = :plantId";
+
+        return AppVariety.sequelize.query(sql, {
+            replacements: { plantId: plantId },
+            type: sequelize.QueryTypes.SELECT
+        });
+
+        /*return AppVariety.findAll({
+            where: { plantId: plantId }
+        });*/
     };
 
     return AppVariety;

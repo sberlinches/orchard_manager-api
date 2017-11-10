@@ -10,9 +10,9 @@ const CoreState = sequelize.models.CoreState;
  * @param req HTTP request argument
  * @param res HTTP response argument
  */
-exports.findAll = function(req, res) {
+exports.getStates = function(req, res) {
 
-    CoreState.findAll()
+    CoreState.findStates()
         .then(function(country) {
             res.status(200).json(country);
         })
@@ -27,9 +27,9 @@ exports.findAll = function(req, res) {
  * @param req HTTP request argument
  * @param res HTTP response argument
  */
-exports.findById = function(req, res) {
+exports.getState = function(req, res) {
 
-    CoreState.findById(req.params.id)
+    CoreState.findState(req.params.stateId)
         .then(function(country) {
             res.status(200).json(country);
         })
@@ -44,9 +44,9 @@ exports.findById = function(req, res) {
  * @param req HTTP request argument
  * @param res HTTP response argument
  */
-exports.findAllByCountryId = function(req, res) {
+exports.getStatesByCountry = function(req, res) {
 
-    CoreState.findAllByCountryId(req.params.id)
+    CoreState.findStatesByCountry(req.params.countryId)
         .then(function(state) {
             res.status(200).json(state);
         })
