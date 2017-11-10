@@ -125,7 +125,8 @@ module.exports = function(sequelize, Sequelize) {
         return AppPlantLog.sequelize.query(sql, {
             replacements: { plantLogId: plantLogId },
             type: sequelize.QueryTypes.SELECT,
-            nest: true
+            nest: true,
+            plain: true // Return a single row
         })
     };
 

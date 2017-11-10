@@ -14,7 +14,7 @@ exports.getLastLog = function(req, res) {
 
     AppPlantLog.findLastLog(req.params.plantLogId)
         .then(function(log) {
-            res.status(200).json(log[0]); // TODO: This is not the way to send one record...
+            res.status(200).json(log);
         })
         .catch(function(err) {
             res.status(500).json(err);
