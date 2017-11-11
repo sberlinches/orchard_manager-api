@@ -30,8 +30,8 @@ exports.getSensorsByUser = function(req, res) {
 exports.updateSensorOwnership = function(req, res) {
 
     AppSensor.updateSensorOwnership(req.params.sensorId, req.body.userId)
-        .then(function(result) {
-            res.status(200).json(result);
+        .then(function(response) {
+            res.status(200).json(response);
         })
         .catch(function(err) {
             res.status(500).json(err);
@@ -47,8 +47,8 @@ exports.updateSensorOwnership = function(req, res) {
 exports.deleteSensorOwnership = function(req, res) {
 
     AppSensor.deleteSensorOwnership(req.params.sensorId)
-        .then(function(result) {
-            res.status(200).json(result);
+        .then(function(response) {
+            res.status(200).json(response);
         })
         .catch(function(err) {
             res.status(500).json(err);
