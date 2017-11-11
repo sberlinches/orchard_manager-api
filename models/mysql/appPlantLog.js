@@ -123,7 +123,6 @@ module.exports = function(sequelize, Sequelize) {
             sql += "WHERE current.id = :plantLogId;";
 
         return AppPlantLog.sequelize.query(sql, {
-            model: AppPlantLog,
             replacements: { plantLogId: plantLogId },
             type: sequelize.QueryTypes.SELECT,
             nest: true,
