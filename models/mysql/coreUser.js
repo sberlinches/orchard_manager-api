@@ -228,7 +228,7 @@ module.exports = function(sequelize, Sequelize) {
             model: CoreUser,
             replacements: { userId: userId },
             type: sequelize.QueryTypes.SELECT,
-            plain: true
+            plain: true // Return a single row
         });
 
         /*return CoreUser.findById(userId, {
@@ -301,7 +301,7 @@ module.exports = function(sequelize, Sequelize) {
             model: CoreUser,
             replacements: { username: username },
             type: sequelize.QueryTypes.SELECT,
-            plain: true
+            plain: true // Return a single row
         }).then(function(user) {
 
             if(!user)

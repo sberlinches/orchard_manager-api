@@ -104,6 +104,7 @@ module.exports = function(sequelize, Sequelize) {
             sql += "WHERE zoneId = :zoneId AND varietyId = :varietyId AND sensorId = :sensorId;";
 
         return AppZonesVarieties.sequelize.query(sql, {
+            model: AppZonesVarieties,
             replacements: {
                 zoneId: zoneId,
                 varietyId: varietyId,

@@ -74,6 +74,7 @@ module.exports = function(sequelize, Sequelize) {
             sql += "WHERE deletedAt IS NULL AND userId = :userId;";
 
         return AppSensor.sequelize.query(sql, {
+            model: AppSensor,
             replacements: { userId: userId },
             type: sequelize.QueryTypes.SELECT
         });
@@ -96,6 +97,7 @@ module.exports = function(sequelize, Sequelize) {
         var sql = "UPDATE `app-sensor` SET userId = :userId WHERE id = :sensorId";
 
         return AppSensor.sequelize.query(sql, {
+            model: AppSensor,
             replacements: {
                 sensorId: sensorId,
                 userId: userId
@@ -122,6 +124,7 @@ module.exports = function(sequelize, Sequelize) {
         var sql = "UPDATE `app-sensor` SET userId = NULL WHERE id = :sensorId";
 
         return AppSensor.sequelize.query(sql, {
+            model: AppSensor,
             replacements: { sensorId: sensorId },
             type: sequelize.QueryTypes.UPDATE
         });

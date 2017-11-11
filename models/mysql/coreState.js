@@ -65,6 +65,7 @@ module.exports = function(sequelize, Sequelize) {
         var sql = "SELECT id, countryId, nameEn AS name FROM `core-state` WHERE id = :stateId;";
 
         return CoreState.sequelize.query(sql, {
+            model: CoreState,
             replacements: { stateId: stateId },
             type: sequelize.QueryTypes.SELECT,
             plain: true // Return a single row
@@ -85,6 +86,7 @@ module.exports = function(sequelize, Sequelize) {
             sql += "WHERE countryId = :countryId;";
 
         return CoreState.sequelize.query(sql, {
+            model: CoreState,
             replacements: { countryId: countryId },
             type: sequelize.QueryTypes.SELECT
         });

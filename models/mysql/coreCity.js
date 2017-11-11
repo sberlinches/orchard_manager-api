@@ -48,6 +48,7 @@ module.exports = function(sequelize, Sequelize) {
         var sql = "SELECT id, stateId, nameEn AS name FROM `core-city`;";
 
         return CoreCity.sequelize.query(sql, {
+            model: CoreCity,
             type: sequelize.QueryTypes.SELECT
         });
 
@@ -65,6 +66,7 @@ module.exports = function(sequelize, Sequelize) {
         var sql = "SELECT id, stateId, nameEn AS name FROM `core-city` WHERE id = :cityId;";
 
         return CoreCity.sequelize.query(sql, {
+            model: CoreCity,
             replacements: { cityId: cityId },
             type: sequelize.QueryTypes.SELECT,
             plain: true // Return a single row
@@ -86,6 +88,7 @@ module.exports = function(sequelize, Sequelize) {
             sql += "WHERE stateId = :stateId;";
 
         return CoreCity.sequelize.query(sql, {
+            model: CoreCity,
             replacements: { stateId: stateId },
             type: sequelize.QueryTypes.SELECT
         });

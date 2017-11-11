@@ -186,6 +186,7 @@ module.exports = function(sequelize, Sequelize) {
         var sql ="SELECT *, nameEn AS name FROM `app-variety`";
 
         return AppVariety.sequelize.query(sql, {
+            model: AppVariety,
             type: sequelize.QueryTypes.SELECT
         });
 
@@ -203,6 +204,7 @@ module.exports = function(sequelize, Sequelize) {
         var sql ="SELECT *, nameEn AS name FROM `app-variety` WHERE plantId = :plantId";
 
         return AppVariety.sequelize.query(sql, {
+            model: AppVariety,
             replacements: { plantId: plantId },
             type: sequelize.QueryTypes.SELECT
         });

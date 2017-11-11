@@ -51,6 +51,7 @@ module.exports = function(sequelize, Sequelize) {
         var sql = "SELECT id, nameEn AS name FROM `core-country`;";
 
         return CoreCountry.sequelize.query(sql, {
+            model: CoreCountry,
             type: sequelize.QueryTypes.SELECT
         });
 
@@ -68,6 +69,7 @@ module.exports = function(sequelize, Sequelize) {
         var sql = "SELECT id, nameEn AS name FROM `core-country` WHERE id = :countryId;";
 
         return CoreCountry.sequelize.query(sql, {
+            model: CoreCountry,
             replacements: { countryId: countryId },
             type: sequelize.QueryTypes.SELECT,
             plain: true // Return a single row

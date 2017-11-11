@@ -83,6 +83,7 @@ module.exports = function(sequelize, Sequelize) {
             sql += "ORDER BY zone.alias ASC;";
 
         return AppUsersZones.sequelize.query(sql, {
+            model: AppUsersZones,
             replacements: { userId: userId },
             type: sequelize.QueryTypes.SELECT
         })

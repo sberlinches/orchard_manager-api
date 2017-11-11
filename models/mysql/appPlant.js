@@ -68,6 +68,7 @@ module.exports = function(sequelize, Sequelize) {
         var sql = "SELECT id, nameEn AS name FROM `app-plant`;";
 
         return AppPlant.sequelize.query(sql, {
+            model: AppPlant,
             type: sequelize.QueryTypes.SELECT
         });
 
@@ -85,6 +86,7 @@ module.exports = function(sequelize, Sequelize) {
         var sql = "SELECT id, nameEn AS name FROM `app-plant` WHERE nameEn LIKE '%" + name + "%' ORDER BY name ASC LIMIT 5;";
 
         return AppPlant.sequelize.query(sql, {
+            model: AppPlant,
             type: sequelize.QueryTypes.SELECT
         });
 
