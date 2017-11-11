@@ -20,15 +20,15 @@ const zoneRoute     = require('./zoneRoute');
 // Add to middleware
 router.use('/', apiRoute);
 router.use('/auth', authRoute);
-router.use('/cities', cityRoute);
-router.use('/countries', countryRoute);
-router.use('/plants', plantRoute);
-router.use('/plant_logs', plantLogRoute);
-router.use('/sensors', sensorRoute);
-router.use('/states', stateRoute);
-router.use('/users', userRoute);
-router.use('/varieties', varietyRoute);
-router.use('/zones', zoneRoute);
+router.use('/cit(y)?(ies)?', cityRoute);
+router.use('/countr(y)?(ies)?', countryRoute);
+router.use('/plant(s)?', plantRoute);
+router.use('/plant_log(s)?', plantLogRoute);
+router.use('/sensor(s)?', sensorRoute);
+router.use('/state(s)?', stateRoute);
+router.use('/user(s)?', userRoute);
+router.use('/variet(y)?(ies)?', varietyRoute);
+router.use('/zone(s)?', zoneRoute);
 // All routes above are under /api
 router.use('/api', router);
 
