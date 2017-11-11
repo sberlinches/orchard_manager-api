@@ -7,10 +7,10 @@ const isAuthenticated   = require('../middlewares/isAuthenticated');
 const userController    = require('../controllers/userController');
 
 // Register routes
-router.get('/', isAuthenticated, userController.findAll);
-router.post('/', isAuthenticated, userController.create);
-router.get('/:id(\\d+)', isAuthenticated, userController.findById);
-router.patch('/:id(\\d+)', isAuthenticated, userController.update);
-router.delete('/:id(\\d+)', isAuthenticated, userController.destroy);
+router.get('/', isAuthenticated, userController.getUsers);
+router.post('/', isAuthenticated, userController.addUser);
+router.get('/:userId(\\d+)', isAuthenticated, userController.getUser);
+router.patch('/:userId(\\d+)', isAuthenticated, userController.updateUser);
+router.delete('/:userId(\\d+)', isAuthenticated, userController.removeUser);
 
 module.exports = router;

@@ -196,16 +196,127 @@ module.exports = function(sequelize, Sequelize) {
     };
 
     /**
+     * Finds all users
+     *
+     * @returns {User}
+     */
+    CoreUser.findUsers = function() {
+
+        var sql = "SELECT id, username, firstName, lastName FROM `core-user` WHERE deletedAt IS NULL";
+
+        return CoreUser.sequelize.query(sql, {
+            model: CoreUser,
+            type: sequelize.QueryTypes.SELECT
+        });
+
+        /*return CoreUser.findAll({
+            attributes: { exclude: ['password'] }
+        });*/
+    };
+
+    /**
+     * Gets an user
+     *
+     * @param userId The user id
+     * @returns {User}
+     */
+    CoreUser.findUser = function(userId) {
+
+        var sql = "SELECT id, username, firstName, lastName FROM `core-user` WHERE deletedAt IS NULL AND id = :userId";
+
+        return CoreUser.sequelize.query(sql, {
+            model: CoreUser,
+            replacements: { userId: userId },
+            type: sequelize.QueryTypes.SELECT,
+            plain: true
+        });
+
+        /*return CoreUser.findById(userId, {
+            attributes: { exclude: ['password'] }
+        })*/
+    };
+
+    /**
+     * Creates a new user
+     *
+     * @param user The user object
+     * @returns {user}
+     */
+    CoreUser.addUser = function(user) {
+
+        return CoreUser.create(user)
+    };
+
+    /**
+     * Updates partially an user
+     *
+     * @param userId The user id
+     * @param user The user object
+     * @returns {Promise}
+     */
+    CoreUser.updateUser = function(userId, user) {
+
+        return CoreUser.update(user, {
+            where: { id: userId }
+        })
+    };
+
+    /**
+     * Deletes an user
+     *
+     * @param userId The user id
+     * @returns {Promise}
+     */
+    CoreUser.removeUser = function(userId) {
+
+        var sql = "UPDATE `core-user` SET deletedAt = :deletedAt WHERE deletedAt IS NULL AND id = :userId";
+
+        return CoreUser.sequelize.query(sql, {
+            model: CoreUser,
+            replacements: {
+                userId: userId,
+                deletedAt: '2017-11-10 16:54:29'
+            },
+            type: sequelize.QueryTypes.UPDATE
+        });
+
+        /*return CoreUser.destroy({
+            where: { id: userId }
+        })*/
+    };
+
+    /**
      * Checks if the username and password matches with the DB
      * Then gets the user and its associated details.
      *
      * @param username User username
      * @param password User password
-     * @returns user
+     * @returns {User}
      */
     CoreUser.login = function(username, password) {
 
-        var options = { where: { username: username } };
+        var sql = "SELECT * FROM `core-user` WHERE deletedAt IS NULL AND username = :username;";
+
+        return CoreUser.sequelize.query(sql, {
+            model: CoreUser,
+            replacements: { username: username },
+            type: sequelize.QueryTypes.SELECT,
+            plain: true
+        }).then(function(user) {
+
+            if(!user)
+                throw new Error('Bad username');
+
+            if(!bcrypt.compareSync(password, user.dataValues.password))
+                throw new Error('Bad password');
+
+            // We don't want to send back the password...
+            delete user.dataValues.password;
+
+            return user;
+        });
+
+        /*var options = { where: { username: username } };
 
         return CoreUser.findOne(options)
             .then(function(user) {
@@ -231,7 +342,32 @@ module.exports = function(sequelize, Sequelize) {
                     .then(function(user) {
                         return user;
                     });
-            });
+            });*/
+    };
+
+    /**
+     * Creates an user account and stores it in the session
+     *
+     * @param user The user object
+     * @returns {User}
+     */
+    CoreUser.signup = function(user) {
+
+        var sql = "INSERT INTO `core-user` (id, username, email, password, roleId) ";
+            sql += "VALUES (DEFAULT, :username, :email, :password, :roleId);";
+
+        return CoreUser.sequelize.query(sql, {
+            model: CoreUser,
+            replacements: {
+                username: user.username,
+                email: user.email,
+                password: bcrypt.hashSync(user.password, config.bcrypt.salt),
+                roleId: user.roleId
+            },
+            type: sequelize.QueryTypes.INSERT
+        });
+
+        //return this.addUser(user);
     };
 
     return CoreUser;

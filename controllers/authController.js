@@ -41,7 +41,7 @@ exports.signup = function(req, res) {
     // Every account created through signup has user role
     req.body.roleId = 3; // TODO: No literals
 
-    CoreUser.create(req.body)
+    CoreUser.signup(req.body)
         .then(function(user) {
             // Deletes the password before send the user back
             delete user.dataValues.password;

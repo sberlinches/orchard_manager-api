@@ -10,13 +10,9 @@ const CoreUser  = sequelize.models.CoreUser;
  * @param req HTTP request argument
  * @param res HTTP response argument
  */
-exports.findAll = function(req, res) {
+exports.getUsers = function(req, res) {
 
-    var options = {
-        attributes: { exclude: ['password'] }
-    };
-
-    CoreUser.findAll(options)
+    CoreUser.findUsers()
         .then(function(user) {
             res.status(200).json(user);
         })
@@ -31,13 +27,9 @@ exports.findAll = function(req, res) {
  * @param req HTTP request argument
  * @param res HTTP response argument
  */
-exports.findById = function(req, res) {
+exports.getUser = function(req, res) {
 
-    var options = {
-        attributes: { exclude: ['password'] }
-    };
-
-    CoreUser.findById(req.params.id, options)
+    CoreUser.findUser(req.params.userId)
         .then(function(user) {
             res.status(200).json(user);
         })
@@ -47,14 +39,14 @@ exports.findById = function(req, res) {
 };
 
 /**
- * Inserts a new user
+ * Creates a new user
  *
  * @param req HTTP request argument
  * @param res HTTP response argument
  */
-exports.create = function(req, res) {
+exports.addUser = function(req, res) {
 
-    CoreUser.create(req.body)
+    CoreUser.addUser(req.body)
         .then(function(user) {
             // Deletes the password before send the user back
             delete user.dataValues.password;
@@ -71,15 +63,11 @@ exports.create = function(req, res) {
  * @param req HTTP request argument
  * @param res HTTP response argument
  */
-exports.update = function(req, res) {
+exports.updateUser = function(req, res) {
 
-    var options = {
-        where: { id: req.params.id }
-    };
-
-    CoreUser.update(req.body, options)
-        .then(function(result) {
-            res.status(200).json(result);
+    CoreUser.updateUser(req.params.userId, req.body)
+        .then(function(response) {
+            res.status(200).json(response);
         })
         .catch(function(err) {
             res.status(500).json(err);
@@ -92,15 +80,11 @@ exports.update = function(req, res) {
  * @param req HTTP request argument
  * @param res HTTP response argument
  */
-exports.destroy = function(req, res) {
+exports.removeUser = function(req, res) {
 
-    var options = {
-        where: { id: req.params.id }
-    };
-
-    CoreUser.destroy(options)
-        .then(function(result) {
-            res.status(200).json(result);
+    CoreUser.removeUser(req.params.userId)
+        .then(function(response) {
+            res.status(200).json(response);
         })
         .catch(function(err) {
             res.status(500).json(err);
