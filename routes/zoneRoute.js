@@ -15,23 +15,23 @@ router.patch('/:zoneId(\\d+)', isAuthenticated, zoneController.updateZone);
 router.delete('/:zoneId(\\d+)', isAuthenticated, zoneController.removeZone);
 router.get('/user/:userId(\\d+)', isAuthenticated, zoneController.getZonesByUser);
 
-// Variety
-router.get('/:zoneId(\\d+)/varieties', isAuthenticated, zoneController.getVarieties);
-router.post('/:zoneId(\\d+)/varieties', isAuthenticated, zoneController.addVariety);
-router.delete('/:zoneId(\\d+)/varieties/:varietyId(\\d+)', isAuthenticated, zoneController.removeVariety);
-
-// Sensor
-router.post('/:zoneId(\\d+)/varieties/:varietyId(\\d+)/sensors', isAuthenticated, zoneController.addSensor);
-router.delete('/:zoneId(\\d+)/varieties/:varietyId(\\d+)/sensors/:sensorId(\\d+)', isAuthenticated, zoneController.removeSensor);
-
-// Collaborator
+// Collaborator routes
 router.get('/:zoneId(\\d+)/collaborators', isAuthenticated, zoneController.getCollaborators);
-router.post('/:zoneId(\\d+)/collaborators', isAuthenticated, zoneController.addCollaborator);
-router.delete('/:zoneId(\\d+)/collaborators/:userId(\\d+)', isAuthenticated, zoneController.removeCollaborator);
+router.post('/:zoneId(\\d+)/collaborator', isAuthenticated, zoneController.addCollaborator);
+router.delete('/:zoneId(\\d+)/collaborator/:userId(\\d+)', isAuthenticated, zoneController.removeCollaborator);
+// Follower routes
+router.get('/:zoneId(\d+)/follower', isAuthenticated, zoneController.getFollowers);
+router.post('/:zoneId(\d+)/follower', isAuthenticated, zoneController.addFollower);
+router.delete('/:zoneId(\d+)/follower/:userId(\\d+)', isAuthenticated, zoneController.removeFollower);
 
-// Follower
-router.get('/:zoneId(\d+)/followers', isAuthenticated, zoneController.getFollowers);
-router.post('/:zoneId(\d+)/followers', isAuthenticated, zoneController.addFollower);
-router.delete('/:zoneId(\d+)/followers/:userId(\\d+)', isAuthenticated, zoneController.removeFollower);
+// Variety routes
+router.get('/:zoneId(\\d+)/varieties', isAuthenticated, zoneController.getVarieties);
+router.post('/:zoneId(\\d+)/variety', isAuthenticated, zoneController.addVariety);
+router.patch('/variety/:zoneVarietySensorId(\\d+)', isAuthenticated, zoneController.modifyVariety);
+router.delete('/variety/:zoneVarietySensorId(\\d+)', isAuthenticated, zoneController.removeVariety);
+// Sensor routes
+router.post('/variety/sensor/:zoneVarietySensorId(\\d+)', isAuthenticated, zoneController.addSensor);
+router.patch('/variety/sensor/:zoneVarietySensorId(\\d+)', isAuthenticated, zoneController.modifySensor);
+router.delete('/variety/sensor/:zoneVarietySensorId(\\d+)', isAuthenticated, zoneController.removeSensor);
 
 module.exports = router;

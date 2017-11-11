@@ -60,64 +60,130 @@ module.exports = function(sequelize, Sequelize) {
     };
 
     /**
-     * Adds a sensor
-     * // TODO: Two or more varieties in the same zone. How to distinguish them??
+     * Adds a variety to a certain zone
      *
-     * @param zoneId The zone id
-     * @param varietyId The variety id
-     * @param sensorId The sensor id
-     * @returns {Promise} ZonesVarieties
+     * @param zoneId
+     * @param zonesVarieties
+     * @returns {zoneVarieties}
      */
-    AppZonesVarieties.addSensor = function(zoneId, varietyId, sensorId) {
+    AppZonesVarieties.addVariety = function(zoneId, zonesVarieties) {
 
-        var sql = "UPDATE `app-zones_varieties` SET sensorId = :sensorId ";
-            sql += "WHERE zoneId = :zoneId AND varietyId = :varietyId;";
+        var sql = "INSERT INTO `app-zones_varieties` (id, zoneId, varietyId, sensorId) ";
+            sql+= "VALUES (DEFAULT,:zoneId, :varietyId, :sensorId);";
 
         return AppZonesVarieties.sequelize.query(sql, {
             replacements: {
                 zoneId: zoneId,
-                varietyId: varietyId,
+                varietyId: zonesVarieties.varietyId,
+                sensorId: zonesVarieties.sensorId
+            },
+            type: sequelize.QueryTypes.SELECT
+        });
+
+        /*return AppZonesVarieties.create({
+            zoneId: zoneId,
+            varietyId: zonesVarieties.varietyId,
+            sensorId: zonesVarieties.sensorId
+        });*/
+    };
+
+    /**
+     * Modifies the variety of a certain zone
+     *
+     * @param zoneVarietySensorId
+     * @param varietyId
+     */
+    AppZonesVarieties.modifyVariety = function(zoneVarietySensorId, varietyId) {
+
+        var sql = "UPDATE `app-zones_varieties` SET varietyId = :varietyId WHERE id = :id";
+
+        return AppZonesVarieties.sequelize.query(sql, {
+            replacements: {
+                id: zoneVarietySensorId,
+                varietyId: varietyId
+            },
+            type: sequelize.QueryTypes.UPDATE
+        });
+
+        /*return AppZonesVarieties.update({varietyId: varietyId}, {
+            where: { id: zoneVarietySensorId }
+        });*/
+    };
+
+    /**
+     * Removes the variety from a certain zone
+     * The variety is required, so without variety the entire touple disappears
+     *
+     * @param zoneVarietySensorId
+     * @returns {Promise}
+     */
+    AppZonesVarieties.removeVariety = function(zoneVarietySensorId) {
+
+        var sql = "DELETE FROM `app-zones_varieties` WHERE id = :id";
+
+        return AppZonesVarieties.sequelize.query(sql, {
+            replacements: { id: zoneVarietySensorId },
+            type: sequelize.QueryTypes.UPDATE
+        });
+
+        /*return AppZonesVarieties.destroy({
+            where: { id: zoneVarietySensorId }
+        });*/
+    };
+
+    /**
+     * Adds a sensor to a certain zone
+     *
+     * @param zoneVarietySensorId
+     * @param sensorId
+     * @returns {zoneVarieties}
+     */
+    AppZonesVarieties.addSensor = function(zoneVarietySensorId, sensorId) {
+
+        var sql = "UPDATE `app-zones_varieties` SET sensorId = :sensorId WHERE id = :id AND sensorId IS NULL;";
+
+        return AppZonesVarieties.sequelize.query(sql, {
+            replacements: {
+                id: zoneVarietySensorId,
                 sensorId: sensorId
             },
             type: sequelize.QueryTypes.UPDATE
-        })
+        });
+    };
 
-        /*var options = {
-            where: { zoneId: zoneId, varietyId: varietyId }
-        };
+    /**
+     * Modifies the sensor of a certain zone
+     *
+     * @param zoneVarietySensorId
+     * @param sensorId
+     * @returns {zoneVarieties}
+     */
+    AppZonesVarieties.modifySensor = function(zoneVarietySensorId, sensorId) {
 
-        return AppZonesVarieties.update({sensorId: sensorId}, options);*/
+        var sql = "UPDATE `app-zones_varieties` SET sensorId = :sensorId WHERE id = :id;";
+
+        return AppZonesVarieties.sequelize.query(sql, {
+            replacements: {
+                id: zoneVarietySensorId,
+                sensorId: sensorId
+            },
+            type: sequelize.QueryTypes.UPDATE
+        });
+
+        /*return AppZonesVarieties.update({sensorId: sensorId}, {
+            where: { id: zoneVarietySensorId }
+        });*/
     };
 
     /**
      * Removes a sensor
-     * // TODO: Two or more varieties in the same zone. How to distinguish them??
      *
-     * @param zoneId The zone id
-     * @param varietyId The variety id
-     * @param sensorId The sensor id
-     * @returns {Promise} ZonesVarieties
+     * @param zoneVarietySensorId
+     * @returns {zoneVarieties}
      */
-    AppZonesVarieties.removeSensor = function(zoneId, varietyId, sensorId) {
+    AppZonesVarieties.removeSensor = function(zoneVarietySensorId) {
 
-        var sql = "UPDATE `app-zones_varieties` SET sensorId = NULL ";
-            sql += "WHERE zoneId = :zoneId AND varietyId = :varietyId AND sensorId = :sensorId;";
-
-        return AppZonesVarieties.sequelize.query(sql, {
-            model: AppZonesVarieties,
-            replacements: {
-                zoneId: zoneId,
-                varietyId: varietyId,
-                sensorId: sensorId
-            },
-            type: sequelize.QueryTypes.UPDATE
-        })
-
-        /*var options = {
-            where: { zoneId: zoneId, varietyId: varietyId, sensorId: sensorId }
-        };
-
-        return AppZonesVarieties.update({sensorId: null}, options);*/
+        return this.modifySensor(zoneVarietySensorId, null);
     };
 
 

@@ -78,13 +78,28 @@ module.exports = function(sequelize, Sequelize) {
     };
 
     /**
+     * Finds all zones
+     *
+     * @returns {Zone}
+     */
+    AppZone.findZones = function() {
+
+        var sql = "SELECT id, userId, alias FROM `app-zone` AS `app-zone`;";
+
+        return AppZone.sequelize.query(sql, {
+            type: sequelize.QueryTypes.SELECT
+        });
+
+        //return AppZone.findAll();
+    };
+
+    /**
      * Finds a zone and optionally its associated details
      *
      * @param zoneId The zone id
-     * @param query //TODO: Build the associations object depending on the query string
-     * @returns {Promise} Zone
+     * @returns {Zone}
      */
-    AppZone.findZone = function(zoneId, query) {
+    AppZone.findZone = function(zoneId) {
 
         var sql = "SELECT zone.id, zone.alias, variety.id AS 'varieties.id', variety.nameEn AS 'varieties.name', zones_varieties.sensorId AS 'varieties.sensorId', zones_varieties.id AS 'varieties.plantLogId' ";
             sql += "FROM `app-zone` AS zone ";
@@ -96,7 +111,81 @@ module.exports = function(sequelize, Sequelize) {
             replacements: { zoneId: zoneId },
             type: sequelize.QueryTypes.SELECT,
             nest: true
+        });
+    };
+
+    /**
+     * Adds a new zone to the user
+     * TODO: Use transactions, or a native way to persist it.
+     * TODO: Create should be dynamic. zone + usersZones, or zone + usersZones + zonesVarieties
+     *
+     * @param zone The zone object
+     * @returns {UsersZones}
+     */
+    AppZone.addZone = function(zone) {
+
+        var sql = "INSERT INTO `app-zone` (id, userId, alias) VALUES (DEFAULT, :userId, :alias);";
+
+        //return AppZone.create(zone)
+        return AppZone.sequelize.query(sql, {
+            model: AppZone,
+            replacements: {
+                userId: zone.userId,
+                alias: zone.alias
+            },
+            type: sequelize.QueryTypes.INSERT
         })
+        .then(function(zoneId) {
+
+            zoneId = zoneId[0][0].id;
+            // Once the zone has been added, it needs to be associated
+            // The redundancy of the owner (user) data is just for performance issues
+            return sequelize.models.AppUsersZones.associateZone(zone.userId, zoneId, 1); // TODO: no magic numbers
+        });
+    };
+
+    /**
+     * Updates a zone
+     * TODO: Update in bulk: zone + usersZones + zonesVarieties
+     *
+     * @param zone The zone object
+     * @returns {Promise}
+     */
+    AppZone.updateZone = function(zone) {
+
+        var sql = "UPDATE `app-zone` SET alias = :alias WHERE id = :zoneId";
+
+        return AppZone.sequelize.query(sql, {
+            replacements: {
+                zoneId: zone.id,
+                alias: zone.alias
+            },
+            type: sequelize.QueryTypes.UPDATE
+        });
+
+        /*return AppZone.update(zone, {
+            where: { id: zoneId }
+        })*/
+    };
+
+    /**
+     * Removes a zone and its associated details (Performed in DB side)
+     *
+     * @param zoneId The zone id
+     * @returns {Promise}
+     */
+    AppZone.removeZone = function(zoneId) {
+
+        var sql = "DELETE FROM `app-zone` WHERE id = :zoneId;";
+
+        return AppZone.sequelize.query(sql, {
+            replacements: { zoneId: zoneId },
+            type: sequelize.QueryTypes.UPDATE
+        });
+
+        /*return AppZone.destroy({
+            where: { id: zoneId }
+        });*/
     };
 
     return AppZone;

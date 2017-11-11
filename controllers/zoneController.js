@@ -14,14 +14,7 @@ const AppUsersZones     = sequelize.models.AppUsersZones;
  */
 exports.getZones = function(req, res) {
 
-    var options = {
-        include: [
-            { association: 'users', attributes: ['id', 'username'] },
-            { association: 'varieties', attributes: ['id', 'nameEn'] }
-        ]
-    };
-
-    AppZone.findAll(options)
+    AppZone.findZones()
         .then(function(zone) {
             res.status(200).json(zone);
         })
@@ -39,7 +32,7 @@ exports.getZones = function(req, res) {
  */
 exports.getZone = function(req, res) {
 
-    AppZone.findZone(req.params.zoneId, req.query)
+    AppZone.findZone(req.params.zoneId)
         .then(function(zone) {
             res.status(200).json(zone.groupBy(['id', 'alias']));
         })
@@ -66,27 +59,14 @@ exports.getZonesByUser = function(req, res) {
 };
 
 /**
- * Add a new zone to the user
+ * Adds a new zone to the user
  *
  * @param req HTTP request argument
  * @param res HTTP response argument
  */
 exports.addZone = function(req, res) {
 
-    req.body.userId = req.session.user.id;
-
-    /*
-     * TODO: Use transactions, or a native way to persist it.
-     * TODO: Create should be dynamic. zone + usersZones, or zone + usersZones + zonesVarieties
-     */
-    AppZone.create(req.body)
-        .then(function(zone) {
-            return AppUsersZones.create({
-                userId: req.session.user.id,
-                zoneId: zone.id,
-                roleId: 1 // TODO: no magic numbers. Constants?
-            });
-        })
+    AppZone.addZone(req.body)
         .then(function(AppZonesVarieties) {
             res.status(200).json(AppZonesVarieties);
         })
@@ -103,17 +83,9 @@ exports.addZone = function(req, res) {
  */
 exports.updateZone = function(req, res) {
 
-    var options = {
-        where: { id: req.params.zoneId }
-    };
+    req.body.id = req.params.zoneId;
 
-    /*
-     * update alias name
-     * update the varieties
-     * update the collaborators
-     * update the combination of the previous tables
-     */
-    AppZone.update(req.body, options)
+    AppZone.updateZone(req.body)
         .then(function(result) {
             res.status(200).json(result);
         })
@@ -123,19 +95,14 @@ exports.updateZone = function(req, res) {
 };
 
 /**
- * Removes a zone and its associated details (Performed in DB side).
- * Only the owner of the zone is able to delete it.
+ * Removes the zone and its associated details (Performed in DB side)
  *
  * @param req HTTP request argument
  * @param res HTTP response argument
  */
 exports.removeZone = function(req, res) {
 
-    var options = {
-        where: { id: req.params.zoneId, userId: req.session.user.id }
-    };
-
-    AppZone.destroy(options)
+    AppZone.removeZone(req.params.zoneId)
         .then(function(result) {
             res.status(200).json(result);
         })
@@ -145,18 +112,35 @@ exports.removeZone = function(req, res) {
 };
 
 /*
- * Sensor
+ * Collaborators
  */
 
 /**
- * Adds a sensor to a certain zone
+ * Gets all users (collaborators) of a zone
  *
  * @param req HTTP request argument
  * @param res HTTP response argument
  */
-exports.addSensor = function(req, res) {
+exports.getCollaborators = function(req, res) {
 
-    AppZonesVarieties.addSensor(req.params.zoneId, req.params.varietyId, req.body.sensorId)
+    AppUsersZones.getUsersByRole(req.params.zoneId, 2)// TODO: no literals
+        .then(function(users) {
+            res.status(200).json(users);
+        })
+        .catch(function(err) {
+            res.status(500).json(err);
+        });
+};
+
+/**
+ * Adds a user (collaborator) to a zone
+ *
+ * @param req HTTP request argument
+ * @param res HTTP response argument
+ */
+exports.addCollaborator = function(req, res) {
+
+    AppUsersZones.addUserByRole(req.body.userId, req.params.zoneId, 2)// TODO: no literals
         .then(function(result) {
             res.status(200).json(result);
         })
@@ -166,14 +150,69 @@ exports.addSensor = function(req, res) {
 };
 
 /**
- * Remove a sensor from a certain zone
+ * Removes the user (collaborator) from a zone
  *
  * @param req HTTP request argument
  * @param res HTTP response argument
  */
-exports.removeSensor = function(req, res) {
+exports.removeCollaborator = function(req, res) {
 
-    AppZonesVarieties.removeSensor(req.params.zoneId, req.params.varietyId, req.params.sensorId)
+    AppUsersZones.removeUserByRole(req.params.userId, req.params.zoneId, 2)// TODO: no literals
+        .then(function(result) {
+            res.status(200).json(result);
+        })
+        .catch(function(err) {
+            res.status(500).json(err);
+        });
+};
+
+/*
+ * Followers
+ */
+
+/**
+ * Gets all users (followers) of a zone
+ *
+ * @param req HTTP request argument
+ * @param res HTTP response argument
+ */
+exports.getFollowers = function(req, res) {
+
+    AppUsersZones.getUsersByRole(req.params.zoneId, 3)// TODO: no literals
+        .then(function(users) {
+            res.status(200).json(users);
+        })
+        .catch(function(err) {
+            res.status(500).json(err);
+        });
+};
+
+/**
+ * Adds a user (follower) to a certain zone
+ *
+ * @param req HTTP request argument
+ * @param res HTTP response argument
+ */
+exports.addFollower = function(req, res) {
+
+    AppUsersZones.addUserByRole(req.body.userId, req.params.zoneId, 3)// TODO: no literals
+        .then(function(result) {
+            res.status(200).json(result);
+        })
+        .catch(function(err) {
+            res.status(500).json(err);
+        });
+};
+
+/**
+ * Removes the user (follower) from a zone
+ *
+ * @param req HTTP request argument
+ * @param res HTTP response argument
+ */
+exports.removeFollower = function(req, res) {
+
+    AppUsersZones.removeUserByRole(req.params.userId, req.params.zoneId, 3)// TODO: no literals
         .then(function(result) {
             res.status(200).json(result);
         })
@@ -202,9 +241,7 @@ exports.getVarieties = function(req, res) {};
  */
 exports.addVariety = function(req, res) {
 
-    req.body.zoneId = req.params.zoneId;
-
-    AppZonesVarieties.create(req.body)
+    AppZonesVarieties.addVariety(req.params.zoneId, req.body)
         .then(function(result) {
             res.status(200).json(result);
         })
@@ -214,37 +251,52 @@ exports.addVariety = function(req, res) {
 };
 
 /**
- * Remove a variety from a certain zone
+ * Modifies the variety of a certain zone
  *
  * @param req HTTP request argument
  * @param res HTTP response argument
  */
-exports.removeVariety = function(req, res) {};
+exports.modifyVariety = function(req, res) {
+
+    AppZonesVarieties.modifyVariety(req.params.zoneVarietySensorId, req.body.varietyId)
+        .then(function(result) {
+            res.status(200).json(result);
+        })
+        .catch(function(err) {
+            res.status(500).json(err);
+        });
+};
+
+/**
+ * Removes the variety from a certain zone
+ *
+ * @param req HTTP request argument
+ * @param res HTTP response argument
+ */
+exports.removeVariety = function(req, res) {
+
+    AppZonesVarieties.removeVariety(req.params.zoneVarietySensorId)
+        .then(function(result) {
+            res.status(200).json(result);
+        })
+        .catch(function(err) {
+            res.status(500).json(err);
+        });
+};
 
 /*
- * Collaborators
+ * Sensor
  */
 
 /**
- * Gets all collaborators of a certain zone
+ * Adds a sensor to a certain zone
  *
  * @param req HTTP request argument
  * @param res HTTP response argument
  */
-exports.getCollaborators = function(req, res) {};
+exports.addSensor = function(req, res) {
 
-/**
- * Adds a collaborator to a certain zone
- *
- * @param req HTTP request argument
- * @param res HTTP response argument
- */
-exports.addCollaborator = function(req, res) {
-
-    req.body.zoneId = req.params.zoneId;
-    req.body.roleId = 2; // TODO: no literals
-
-    AppUsersZones.create(req.body)
+    AppZonesVarieties.addSensor(req.params.zoneVarietySensorId, req.body.sensorId)
         .then(function(result) {
             res.status(200).json(result);
         })
@@ -254,37 +306,14 @@ exports.addCollaborator = function(req, res) {
 };
 
 /**
- * Remove a collaborator of a certain zone
+ * Modifies the sensor of a certain zone
  *
  * @param req HTTP request argument
  * @param res HTTP response argument
  */
-exports.removeCollaborator = function(req, res) {};
+exports.modifySensor = function(req, res) {
 
-/*
- * Followers
- */
-
-/**
- * Gets all followers of a certain zone
- *
- * @param req HTTP request argument
- * @param res HTTP response argument
- */
-exports.getFollowers = function(req, res) {};
-
-/**
- * Adds a follower to a certain zone
- *
- * @param req HTTP request argument
- * @param res HTTP response argument
- */
-exports.addFollower = function(req, res) {
-
-    req.body.zoneId = req.params.zoneId;
-    req.body.roleId = 3; // TODO: no literals
-
-    AppUsersZones.create(req.body)
+    AppZonesVarieties.modifySensor(req.params.zoneVarietySensorId, req.body.sensorId)
         .then(function(result) {
             res.status(200).json(result);
         })
@@ -294,9 +323,18 @@ exports.addFollower = function(req, res) {
 };
 
 /**
- * Remove a follower of a certain zone
+ * Removes the sensor from a certain zone
  *
  * @param req HTTP request argument
  * @param res HTTP response argument
  */
-exports.removeFollower = function(req, res) {};
+exports.removeSensor = function(req, res) {
+
+    AppZonesVarieties.removeSensor(req.params.zoneVarietySensorId)
+        .then(function(result) {
+            res.status(200).json(result);
+        })
+        .catch(function(err) {
+            res.status(500).json(err);
+        });
+};
