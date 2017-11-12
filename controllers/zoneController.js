@@ -67,8 +67,8 @@ exports.getZonesByUser = function(req, res) {
 exports.addZone = function(req, res) {
 
     AppZone.addZone(req.body)
-        .then(function(AppZonesVarieties) {
-            res.status(200).json(AppZonesVarieties);
+        .then(function(result) {
+            res.status(200).json(result);
         })
         .catch(function(err) {
             res.status(500).json(err);

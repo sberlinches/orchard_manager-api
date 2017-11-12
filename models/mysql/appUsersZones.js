@@ -138,7 +138,7 @@ module.exports = function(sequelize, Sequelize) {
                 zoneId: zoneId,
                 roleId: roleId
             },
-            type: sequelize.QueryTypes.SELECT
+            type: sequelize.QueryTypes.INSERT
         });
 
         /*return AppUsersZones.create({

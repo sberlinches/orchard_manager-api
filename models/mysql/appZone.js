@@ -127,7 +127,7 @@ module.exports = function(sequelize, Sequelize) {
      * TODO: Create should be dynamic. zone + usersZones, or zone + usersZones + zonesVarieties
      *
      * @param zone The zone object
-     * @returns {UsersZones}
+     * @returns {Promise}
      */
     AppZone.addZone = function(zone) {
 
@@ -147,7 +147,7 @@ module.exports = function(sequelize, Sequelize) {
             zoneId = zoneId[0][0].id;
             // Once the zone has been added, it needs to be associated
             // The redundancy of the owner (user) data is just for performance issues
-            return sequelize.models.AppUsersZones.associateZone(zone.userId, zoneId, 1); // TODO: no magic numbers
+            return sequelize.models.AppUsersZones.addUserByRole(zone.userId, zoneId, 1); // TODO: no magic numbers
         });
     };
 
