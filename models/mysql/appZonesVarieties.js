@@ -79,9 +79,9 @@ module.exports = function(sequelize, Sequelize) {
             replacements: {
                 zoneId: zoneId,
                 varietyId: zonesVarieties.varietyId,
-                sensorId: zonesVarieties.sensorId
+                sensorId: (zonesVarieties.sensorId)? zonesVarieties.sensorId: null
             },
-            type: sequelize.QueryTypes.SELECT
+            type: sequelize.QueryTypes.INSERT
         });
 
         /*return AppZonesVarieties.create({
