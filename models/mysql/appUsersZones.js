@@ -76,7 +76,7 @@ module.exports = function(sequelize, Sequelize) {
      * Finds all zones where the user is: Owner, collaborator and follower
      *
      * @param userId The user id
-     * @returns {UsersZones}
+     * @returns {Promise}
      */
     AppUsersZones.findZonesByUser = function(userId) {
 
@@ -103,7 +103,7 @@ module.exports = function(sequelize, Sequelize) {
     };
 
     /**
-     * Gets all users by role of a zone
+     * Gets all users (by role) of a zone
      *
      * @param zoneId
      * @param roleId
@@ -124,7 +124,7 @@ module.exports = function(sequelize, Sequelize) {
     };
 
     /**
-     * Adds an user with certain role to a zone
+     * Adds a user (by role) to a zone
      *
      * @param userId The user to associate
      * @param zoneId The zone to be associated
@@ -153,7 +153,7 @@ module.exports = function(sequelize, Sequelize) {
     };
 
     /**
-     * Removes an user with certain role from a zone
+     * Removes the user (by role) from the zone
      *
      * @param userId
      * @param zoneId

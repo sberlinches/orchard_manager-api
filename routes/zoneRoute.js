@@ -9,10 +9,10 @@ const zoneController    = require('../controllers/zoneController');
 // TODO: "integers" are not casted as integers...
 // Zone routes
 router.get('/', isAuthenticated, zoneController.getZones);
-router.post('/', isAuthenticated, zoneController.addZone);
+router.post('/', isAuthenticated, zoneController.createZone);
 router.get('/:zoneId(\\d+)', isAuthenticated, zoneController.getZone);
 router.patch('/:zoneId(\\d+)', isAuthenticated, zoneController.updateZone);
-router.delete('/:zoneId(\\d+)', isAuthenticated, zoneController.removeZone);
+router.delete('/:zoneId(\\d+)', isAuthenticated, zoneController.deleteZone);
 router.get('/user/:userId(\\d+)', isAuthenticated, zoneController.getZonesByUser);
 
 // Collaborator routes

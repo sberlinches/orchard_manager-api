@@ -125,14 +125,14 @@ module.exports = function(sequelize, Sequelize) {
     };
 
     /**
-     * Adds a new zone to the user
+     * Creates a new zone
      * TODO: Use transactions, or a native way to persist it.
      * TODO: Create should be dynamic. zone + usersZones, or zone + usersZones + zonesVarieties
      *
-     * @param zone The zone object
+     * @param zone
      * @returns {Promise}
      */
-    AppZone.addZone = function(zone) {
+    AppZone.createZone = function(zone) {
 
         var sql = "INSERT INTO `app-zone` (id, userId, alias) VALUES (DEFAULT, :userId, :alias);";
 
@@ -179,12 +179,12 @@ module.exports = function(sequelize, Sequelize) {
     };
 
     /**
-     * Removes a zone and its associated details (Performed in DB side)
+     * Deletes a zone and its associated details (Performed in DB side)
      *
      * @param zoneId The zone id
      * @returns {Promise}
      */
-    AppZone.removeZone = function(zoneId) {
+    AppZone.deleteZone = function(zoneId) {
 
         var sql = "DELETE FROM `app-zone` WHERE id = :zoneId;";
 

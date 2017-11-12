@@ -59,14 +59,14 @@ exports.getZonesByUser = function(req, res) {
 };
 
 /**
- * Adds a new zone to the user
+ * Creates a new zone
  *
  * @param req HTTP request argument
  * @param res HTTP response argument
  */
-exports.addZone = function(req, res) {
+exports.createZone = function(req, res) {
 
-    AppZone.addZone(req.body)
+    AppZone.createZone(req.body)
         .then(function(result) {
             res.status(200).json(result);
         })
@@ -95,14 +95,14 @@ exports.updateZone = function(req, res) {
 };
 
 /**
- * Removes the zone and its associated details (Performed in DB side)
+ * Deletes the zone and its associated details (Performed in DB side)
  *
  * @param req HTTP request argument
  * @param res HTTP response argument
  */
-exports.removeZone = function(req, res) {
+exports.deleteZone = function(req, res) {
 
-    AppZone.removeZone(req.params.zoneId)
+    AppZone.deleteZone(req.params.zoneId)
         .then(function(result) {
             res.status(200).json(result);
         })
@@ -150,7 +150,7 @@ exports.addCollaborator = function(req, res) {
 };
 
 /**
- * Removes the user (collaborator) from a zone
+ * Removes the user (Collaborator) from the zone
  *
  * @param req HTTP request argument
  * @param res HTTP response argument
@@ -188,7 +188,7 @@ exports.getFollowers = function(req, res) {
 };
 
 /**
- * Adds a user (follower) to a certain zone
+ * Adds a user (follower) to a zone
  *
  * @param req HTTP request argument
  * @param res HTTP response argument
@@ -205,7 +205,7 @@ exports.addFollower = function(req, res) {
 };
 
 /**
- * Removes the user (follower) from a zone
+ * Removes the user (follower) from the zone
  *
  * @param req HTTP request argument
  * @param res HTTP response argument
@@ -268,7 +268,7 @@ exports.modifyVariety = function(req, res) {
 };
 
 /**
- * Removes the variety from a zone
+ * Removes the variety from the zone
  *
  * @param req HTTP request argument
  * @param res HTTP response argument
@@ -289,7 +289,7 @@ exports.removeVariety = function(req, res) {
  */
 
 /**
- * Adds a sensor to a zone
+ * Adds a sensor to a variety
  *
  * @param req HTTP request argument
  * @param res HTTP response argument
@@ -306,7 +306,7 @@ exports.addSensor = function(req, res) {
 };
 
 /**
- * Modifies the sensor of a zone
+ * Modifies the sensor of a variety
  *
  * @param req HTTP request argument
  * @param res HTTP response argument
@@ -323,7 +323,7 @@ exports.modifySensor = function(req, res) {
 };
 
 /**
- * Removes the sensor from a certain zone
+ * Removes the sensor from the variety
  *
  * @param req HTTP request argument
  * @param res HTTP response argument

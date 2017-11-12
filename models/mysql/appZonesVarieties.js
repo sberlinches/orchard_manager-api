@@ -64,11 +64,11 @@ module.exports = function(sequelize, Sequelize) {
     };
 
     /**
-     * Adds a variety to a certain zone
+     * Adds a variety to a zone
      *
      * @param zoneId
      * @param zonesVarieties
-     * @returns {zoneVarieties}
+     * @returns {Promise}
      */
     AppZonesVarieties.addVariety = function(zoneId, zonesVarieties) {
 
@@ -92,7 +92,7 @@ module.exports = function(sequelize, Sequelize) {
     };
 
     /**
-     * Modifies the variety of a certain zone
+     * Modifies the variety of a zone
      *
      * @param zoneVarietySensorId
      * @param varietyId
@@ -115,7 +115,7 @@ module.exports = function(sequelize, Sequelize) {
     };
 
     /**
-     * Removes the variety from a certain zone
+     * Removes the variety from the zone
      * The variety is required, so without variety the entire touple disappears
      *
      * @param zoneVarietySensorId
@@ -136,11 +136,11 @@ module.exports = function(sequelize, Sequelize) {
     };
 
     /**
-     * Adds a sensor to a certain zone
+     * Adds a sensor to a variety
      *
      * @param zoneVarietySensorId
      * @param sensorId
-     * @returns {zoneVarieties}
+     * @returns {Promise}
      */
     AppZonesVarieties.addSensor = function(zoneVarietySensorId, sensorId) {
 
@@ -156,11 +156,11 @@ module.exports = function(sequelize, Sequelize) {
     };
 
     /**
-     * Modifies the sensor of a certain zone
+     * Modifies the sensor of a variety
      *
      * @param zoneVarietySensorId
      * @param sensorId
-     * @returns {zoneVarieties}
+     * @returns {Promise}
      */
     AppZonesVarieties.modifySensor = function(zoneVarietySensorId, sensorId) {
 
@@ -180,10 +180,10 @@ module.exports = function(sequelize, Sequelize) {
     };
 
     /**
-     * Removes a sensor
+     * Removes the sensor from the variety
      *
      * @param zoneVarietySensorId
-     * @returns {zoneVarieties}
+     * @returns {Promise}
      */
     AppZonesVarieties.removeSensor = function(zoneVarietySensorId) {
 
