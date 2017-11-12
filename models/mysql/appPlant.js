@@ -28,6 +28,7 @@ module.exports = function(sequelize, Sequelize) {
             createdAt: {
                 type: Sequelize.DATE,
                 field: 'createdAt',
+                allowNull: true,
                 validate: {
                     isDate: true
                 }
@@ -35,6 +36,7 @@ module.exports = function(sequelize, Sequelize) {
             updatedAt: {
                 type: Sequelize.DATE,
                 field: 'updatedAt',
+                allowNull: true,
                 validate: {
                     isDate: true
                 }

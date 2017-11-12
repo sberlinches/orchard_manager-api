@@ -37,6 +37,7 @@ module.exports = function(sequelize, Sequelize) {
             airTempMin: {
                 type: Sequelize.DECIMAL(4, 2),
                 field: 'airTempMin',
+                allowNull: true,
                 validate: {
                     isFloat: true
                 }
@@ -44,6 +45,7 @@ module.exports = function(sequelize, Sequelize) {
             airTempMax: {
                 type: Sequelize.DECIMAL(4, 2),
                 field: 'airTempMax',
+                allowNull: true,
                 validate: {
                     isFloat: true
                 }
@@ -51,6 +53,7 @@ module.exports = function(sequelize, Sequelize) {
             soilTempMin: {
                 type: Sequelize.DECIMAL(4, 2),
                 field: 'soilTempMin',
+                allowNull: true,
                 validate: {
                     isFloat: true
                 }
@@ -58,6 +61,7 @@ module.exports = function(sequelize, Sequelize) {
             soilTempMax: {
                 type: Sequelize.DECIMAL(4, 2),
                 field: 'airTempMin',
+                allowNull: true,
                 validate: {
                     isFloat: true
                 }
@@ -65,6 +69,7 @@ module.exports = function(sequelize, Sequelize) {
             lightMin: {
                 type: Sequelize.INTEGER(6).UNSIGNED,
                 field: 'lightMin',
+                allowNull: true,
                 validate: {
                     isInt: true
                 }
@@ -72,6 +77,7 @@ module.exports = function(sequelize, Sequelize) {
             lightMax: {
                 type: Sequelize.INTEGER(6).UNSIGNED,
                 field: 'lightMax',
+                allowNull: true,
                 validate: {
                     isInt: true
                 }
@@ -79,6 +85,7 @@ module.exports = function(sequelize, Sequelize) {
             airHumMin: {
                 type: Sequelize.DECIMAL(5, 2).UNSIGNED,
                 field: 'airHumMin',
+                allowNull: true,
                 validate: {
                     isFloat: true
                 }
@@ -86,6 +93,7 @@ module.exports = function(sequelize, Sequelize) {
             airHumMax: {
                 type: Sequelize.DECIMAL(5, 2).UNSIGNED,
                 field: 'airHumMax',
+                allowNull: true,
                 validate: {
                     isFloat: true
                 }
@@ -93,6 +101,7 @@ module.exports = function(sequelize, Sequelize) {
             soilMoistMin: {
                 type: Sequelize.DECIMAL(5, 2).UNSIGNED,
                 field: 'soilMoistMin',
+                allowNull: true,
                 validate: {
                     isFloat: true
                 }
@@ -100,6 +109,7 @@ module.exports = function(sequelize, Sequelize) {
             soilMoistMax: {
                 type: Sequelize.DECIMAL(5, 2).UNSIGNED,
                 field: 'soilMoistMax',
+                allowNull: true,
                 validate: {
                     isFloat: true
                 }
@@ -107,6 +117,7 @@ module.exports = function(sequelize, Sequelize) {
             phMin: {
                 type: Sequelize.DECIMAL(4, 2).UNSIGNED,
                 field: 'phMin',
+                allowNull: true,
                 validate: {
                     isFloat: true
                 }
@@ -114,6 +125,7 @@ module.exports = function(sequelize, Sequelize) {
             phMax: {
                 type: Sequelize.DECIMAL(4, 2).UNSIGNED,
                 field: 'phMax',
+                allowNull: true,
                 validate: {
                     isFloat: true
                 }
@@ -121,6 +133,7 @@ module.exports = function(sequelize, Sequelize) {
             germinationMin: {
                 type: Sequelize.INTEGER(4).UNSIGNED,
                 field: 'germinationMin',
+                allowNull: true,
                 validate: {
                     isInt: true
                 }
@@ -128,6 +141,7 @@ module.exports = function(sequelize, Sequelize) {
             germinationMax: {
                 type: Sequelize.INTEGER(4).UNSIGNED,
                 field: 'germinationMax',
+                allowNull: true,
                 validate: {
                     isInt: true
                 }
@@ -135,6 +149,7 @@ module.exports = function(sequelize, Sequelize) {
             maturityMin: {
                 type: Sequelize.INTEGER(4).UNSIGNED,
                 field: 'maturityMin',
+                allowNull: true,
                 validate: {
                     isInt: true
                 }
@@ -142,6 +157,7 @@ module.exports = function(sequelize, Sequelize) {
             maturityMax: {
                 type: Sequelize.INTEGER(4).UNSIGNED,
                 field: 'maturityMax',
+                allowNull: true,
                 validate: {
                     isInt: true
                 }
@@ -149,6 +165,7 @@ module.exports = function(sequelize, Sequelize) {
             createdAt: {
                 type: Sequelize.DATE,
                 field: 'createdAt',
+                allowNull: true,
                 validate: {
                     isDate: true
                 }
@@ -156,6 +173,7 @@ module.exports = function(sequelize, Sequelize) {
             updatedAt: {
                 type: Sequelize.DATE,
                 field: 'updatedAt',
+                allowNull: true,
                 validate: {
                     isDate: true
                 }

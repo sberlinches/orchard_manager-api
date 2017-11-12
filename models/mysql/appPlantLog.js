@@ -18,6 +18,7 @@ module.exports = function(sequelize, Sequelize) {
             airTemp: {
                 type: Sequelize.DECIMAL(4, 2),
                 field: 'airTemp',
+                allowNull: true,
                 validate: {
                     isFloat: true
                 }
@@ -25,6 +26,7 @@ module.exports = function(sequelize, Sequelize) {
             soilTemp: {
                 type: Sequelize.DECIMAL(4, 2),
                 field: 'soilTemp',
+                allowNull: true,
                 validate: {
                     isFloat: true
                 }
@@ -32,6 +34,7 @@ module.exports = function(sequelize, Sequelize) {
             light: {
                 type: Sequelize.INTEGER(6).UNSIGNED,
                 field: 'light',
+                allowNull: true,
                 validate: {
                     isInt: true
                 }
@@ -39,6 +42,7 @@ module.exports = function(sequelize, Sequelize) {
             airHum: {
                 type: Sequelize.DECIMAL(5, 2).UNSIGNED,
                 field: 'airHum',
+                allowNull: true,
                 validate: {
                     isFloat: true
                 }
@@ -46,6 +50,7 @@ module.exports = function(sequelize, Sequelize) {
             soilMoist: {
                 type: Sequelize.DECIMAL(5, 2).UNSIGNED,
                 field: 'soilMoist',
+                allowNull: true,
                 validate: {
                     isFloat: true
                 }
@@ -53,6 +58,7 @@ module.exports = function(sequelize, Sequelize) {
             ph: {
                 type: Sequelize.DECIMAL(4, 2).UNSIGNED,
                 field: 'ph',
+                allowNull: true,
                 validate: {
                     isFloat: true
                 }
@@ -60,6 +66,7 @@ module.exports = function(sequelize, Sequelize) {
             isGerminated: {
                 type: Sequelize.BOOLEAN,
                 field: 'isGerminated',
+                allowNull: true,
                 validate: {
                     isInt: true
                 }
@@ -67,6 +74,7 @@ module.exports = function(sequelize, Sequelize) {
             isMature: {
                 type: Sequelize.BOOLEAN,
                 field: 'isGerminated',
+                allowNull: true,
                 validate: {
                     isInt: true
                 }
@@ -74,6 +82,7 @@ module.exports = function(sequelize, Sequelize) {
             createdAt: {
                 type: Sequelize.DATE,
                 field: 'createdAt',
+                allowNull: true,
                 validate: {
                     isDate: true
                 }

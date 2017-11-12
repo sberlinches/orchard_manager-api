@@ -18,6 +18,7 @@ module.exports = function(sequelize, Sequelize) {
             zoneId: {
                 type: Sequelize.INTEGER(11).UNSIGNED,
                 field: 'zoneId',
+                allowNull: false,
                 validate: {
                     isInt: true
                 }
@@ -25,6 +26,7 @@ module.exports = function(sequelize, Sequelize) {
             varietyId: {
                 type: Sequelize.INTEGER(11).UNSIGNED,
                 field: 'varietyId',
+                allowNull: false,
                 validate: {
                     isInt: true
                 }
@@ -32,6 +34,7 @@ module.exports = function(sequelize, Sequelize) {
             sensorId: {
                 type: Sequelize.INTEGER(11).UNSIGNED,
                 field: 'sensorId',
+                allowNull: true,
                 validate: {
                     isInt: true
                 }
@@ -39,6 +42,7 @@ module.exports = function(sequelize, Sequelize) {
             createdAt: {
                 type: Sequelize.DATE,
                 field: 'createdAt',
+                allowNull: true,
                 validate: {
                     isDate: true
                 }

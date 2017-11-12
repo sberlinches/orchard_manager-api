@@ -12,24 +12,27 @@ module.exports = function(sequelize, Sequelize) {
     const AppUsersZones = sequelize.define('app-users_zones', {
         userId: {
             type: Sequelize.INTEGER(11).UNSIGNED,
-            primaryKey: true,
             field: 'userId',
+            primaryKey: true,
+            allowNull: false,
             validate: {
                 isInt: true
             }
         },
         zoneId: {
             type: Sequelize.INTEGER(11).UNSIGNED,
-            primaryKey: true,
             field: 'zoneId',
+            primaryKey: true,
+            allowNull: false,
             validate: {
                 isInt: true
             }
         },
         roleId: {
             type: Sequelize.INTEGER(4).UNSIGNED,
-            primaryKey: true,
             field: 'roleId',
+            primaryKey: true,
+            allowNull: false,
             validate: {
                 isInt: true
             }
@@ -37,6 +40,7 @@ module.exports = function(sequelize, Sequelize) {
         createdAt: {
             type: Sequelize.DATE,
             field: 'createdAt',
+            allowNull: true,
             validate: {
                 isDate: true
             }

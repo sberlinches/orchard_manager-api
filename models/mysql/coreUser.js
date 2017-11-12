@@ -51,6 +51,7 @@ module.exports = function(sequelize, Sequelize) {
         roleId: {
             type: Sequelize.INTEGER(4).UNSIGNED,
             field: 'roleId',
+            allowNull: false,
             validate: {
                 isInt: true
             }
@@ -58,6 +59,7 @@ module.exports = function(sequelize, Sequelize) {
         firstName: {
             type: Sequelize.STRING(30),
             field: 'firstName',
+            allowNull: true,
             validate: {
                 isAlpha: true,
                 notEmpty: true,
@@ -67,6 +69,7 @@ module.exports = function(sequelize, Sequelize) {
         lastName: {
             type: Sequelize.STRING(30),
             field: 'lastName',
+            allowNull: true,
             validate: {
                 isAlpha: true, // TODO: Accept blank spaces "lastname1 lastname2"
                 notEmpty: true,
@@ -76,6 +79,7 @@ module.exports = function(sequelize, Sequelize) {
         countryId: {
             type: Sequelize.INTEGER(6).UNSIGNED,
             field: 'countryId',
+            allowNull: true,
             validate: {
                 isInt: true
             }
@@ -83,6 +87,7 @@ module.exports = function(sequelize, Sequelize) {
         stateId: {
             type: Sequelize.INTEGER(11).UNSIGNED,
             field: 'stateId',
+            allowNull: true,
             validate: {
                 isInt: true
             }
@@ -90,6 +95,7 @@ module.exports = function(sequelize, Sequelize) {
         cityId: {
             type: Sequelize.INTEGER(11).UNSIGNED,
             field: 'cityId',
+            allowNull: true,
             validate: {
                 isInt: true
             }
@@ -97,6 +103,7 @@ module.exports = function(sequelize, Sequelize) {
         birthAt: {
             type: Sequelize.DATEONLY,
             field: 'birthAt',
+            allowNull: true,
             validate: {
                 isDate: true
             }
@@ -104,6 +111,7 @@ module.exports = function(sequelize, Sequelize) {
         createdAt: {
             type: Sequelize.DATE,
             field: 'createdAt',
+            allowNull: true,
             validate: {
                 isDate: true
             }
@@ -111,6 +119,7 @@ module.exports = function(sequelize, Sequelize) {
         updatedAt: {
             type: Sequelize.DATE,
             field: 'updatedAt',
+            allowNull: true,
             validate: {
                 isDate: true
             }
@@ -118,6 +127,7 @@ module.exports = function(sequelize, Sequelize) {
         deletedAt: {
             type: Sequelize.DATE,
             field: 'deletedAt',
+            allowNull: true,
             validate: {
                 isDate: true
             }

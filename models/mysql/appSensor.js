@@ -18,6 +18,7 @@ module.exports = function(sequelize, Sequelize) {
         userId: {
             type: Sequelize.INTEGER(11).UNSIGNED,
             field: 'userId',
+            allowNull: true,
             validate: {
                 isInt: true
             }
@@ -31,6 +32,7 @@ module.exports = function(sequelize, Sequelize) {
         createdAt: {
             type: Sequelize.DATE,
             field: 'createdAt',
+            allowNull: true,
             validate: {
                 isDate: true
             }
@@ -38,6 +40,7 @@ module.exports = function(sequelize, Sequelize) {
         updatedAt: {
             type: Sequelize.DATE,
             field: 'updatedAt',
+            allowNull: true,
             validate: {
                 isDate: true
             }
@@ -45,6 +48,7 @@ module.exports = function(sequelize, Sequelize) {
         deletedAt: {
             type: Sequelize.DATE,
             field: 'deletedAt',
+            allowNull: true,
             validate: {
                 isDate: true
             }
