@@ -96,22 +96,29 @@ module.exports = function(sequelize, Sequelize) {
     /**
      * Finds a zone and optionally its associated details
      *
-     * @param zoneId The zone id
-     * @returns {Zone}
+     * @param zoneId
+     * @returns {Promise}
      */
     AppZone.findZone = function(zoneId) {
 
-        var sql = "SELECT zone.id, zone.alias, variety.id AS 'varieties.id', variety.nameEn AS 'varieties.name', zones_varieties.sensorId AS 'varieties.sensorId', zones_varieties.id AS 'varieties.plantLogId' ";
-            sql += "FROM `app-zone` AS zone ";
-            sql += "LEFT OUTER JOIN `app-zones_varieties` AS zones_varieties ON zone.id = zones_varieties.zoneId ";
-            sql += "INNER JOIN `app-variety` AS variety ON zones_varieties.varietyId = variety.id ";
-            sql += "WHERE zone.id = :zoneId;";
+        var sql = "SELECT zone.id, zone.alias, zones_varieties.id AS 'varietiesSensors.id', variety.id AS 'varietiesSensors.variety.id', ";
+            sql+= "variety.nameEn AS 'varietiesSensors.variety.name', zones_varieties.sensorId AS 'varietiesSensors.sensor.id' ";
+            sql+= "FROM `app-zone` AS zone ";
+            sql+= "LEFT OUTER JOIN `app-zones_varieties` AS zones_varieties ON zone.id = zones_varieties.zoneId ";
+            sql+= "LEFT OUTER JOIN `app-variety` AS variety ON zones_varieties.varietyId = variety.id ";
+            sql+= "WHERE zone.id = :zoneId;";
 
         return AppZone.sequelize.query(sql, {
             replacements: { zoneId: zoneId },
             type: sequelize.QueryTypes.SELECT,
             nest: true
         });
+
+        /*return AppZone.findOne({
+            where: { id: zoneId },
+            attributes: ['id', 'alias'],
+            include: [ 'varieties' ]
+        });*/
     };
 
     /**

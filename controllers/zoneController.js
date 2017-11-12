@@ -226,7 +226,7 @@ exports.removeFollower = function(req, res) {
  */
 
 /**
- * Gets all varieties of a certain zone
+ * Gets all varieties of a zone
  *
  * @param req HTTP request argument
  * @param res HTTP response argument
@@ -234,7 +234,7 @@ exports.removeFollower = function(req, res) {
 exports.getVarieties = function(req, res) {};
 
 /**
- * Adds a variety to a certain zone
+ * Adds a variety to a zone
  *
  * @param req HTTP request argument
  * @param res HTTP response argument
@@ -251,7 +251,7 @@ exports.addVariety = function(req, res) {
 };
 
 /**
- * Modifies the variety of a certain zone
+ * Modifies the variety of a zone
  *
  * @param req HTTP request argument
  * @param res HTTP response argument
@@ -268,7 +268,7 @@ exports.modifyVariety = function(req, res) {
 };
 
 /**
- * Removes the variety from a certain zone
+ * Removes the variety from a zone
  *
  * @param req HTTP request argument
  * @param res HTTP response argument
@@ -289,7 +289,7 @@ exports.removeVariety = function(req, res) {
  */
 
 /**
- * Adds a sensor to a certain zone
+ * Adds a sensor to a zone
  *
  * @param req HTTP request argument
  * @param res HTTP response argument
@@ -306,7 +306,7 @@ exports.addSensor = function(req, res) {
 };
 
 /**
- * Modifies the sensor of a certain zone
+ * Modifies the sensor of a zone
  *
  * @param req HTTP request argument
  * @param res HTTP response argument

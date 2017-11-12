@@ -62,8 +62,11 @@ Array.prototype.groupBy = function(groupParameters) {
     // 2. Fill the agregated parameters
     array.forEach(function(object) {
         keys.forEach(function(key) {
-            if(!groupParameters.includes(key))
-                newObject[key].push(object[key]);
+            if(!groupParameters.includes(key)) {
+                if(object[key].id !== null) { // TODO: temporal fix to avoid oject full of null attributes
+                    newObject[key].push(object[key]);
+                }
+            }
         });
     });
 
