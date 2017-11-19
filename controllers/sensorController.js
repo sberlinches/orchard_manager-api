@@ -12,7 +12,7 @@ const AppSensor = sequelize.models.AppSensor;
  */
 exports.getSensorsByUser = function(req, res) {
 
-    AppSensor.findAllByUserId(req.params.userId)
+    AppSensor.findAllByUserId(parseInt(req.params.userId)) // TODO: parse int as default
         .then(function(sensor) {
             res.status(200).json(sensor);
         })

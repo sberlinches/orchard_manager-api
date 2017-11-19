@@ -69,13 +69,19 @@ module.exports = function(sequelize, Sequelize) {
     /**
      * Finds all sensors owned by the given user
      *
-     * @param userId The user id
+     * @param {number} userId The user id
      * @returns {Promise}
      */
     AppSensor.findAllByUserId = function(userId) {
 
         var sql = "SELECT id, serial FROM `app-sensor` ";
             sql += "WHERE deletedAt IS NULL AND userId = :userId;";
+
+        // TODO: temporal approach to add sensors
+        if(userId === 0) {
+            sql = "SELECT id, serial FROM `app-sensor` ";
+            sql += "WHERE deletedAt IS NULL AND userId IS NULL;";
+        }
 
         return AppSensor.sequelize.query(sql, {
             model: AppSensor,
@@ -98,7 +104,7 @@ module.exports = function(sequelize, Sequelize) {
      */
     AppSensor.updateSensorOwnership = function(sensorId, userId) {
 
-        var sql = "UPDATE `app-sensor` SET userId = :userId WHERE id = :sensorId";
+        var sql = "UPDATE `app-sensor` SET userId = :userId WHERE id = :sensorId;";
 
         return AppSensor.sequelize.query(sql, {
             model: AppSensor,
