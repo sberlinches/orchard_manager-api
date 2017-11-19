@@ -187,7 +187,7 @@ module.exports = function(sequelize, Sequelize) {
      */
     AppZonesVarieties.removeSensor = function(zoneVarietySensorId) {
 
-        return this.modifySensor(zoneVarietySensorId, null);
+        return this.changeSensor(zoneVarietySensorId, null);
     };
 
 
