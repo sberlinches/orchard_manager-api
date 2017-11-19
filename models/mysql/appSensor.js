@@ -124,19 +124,28 @@ module.exports = function(sequelize, Sequelize) {
     };
 
     /**
-     * Deletes the sensor ownership
+     * Deletes the sensor ownership and the associated sensors to the variety
      *
      * @param sensorId The sensor id
      * @returns {Promise}
      */
     AppSensor.deleteSensorOwnership = function(sensorId) {
 
-        var sql = "UPDATE `app-sensor` SET userId = NULL WHERE id = :sensorId";
+        var sql = "UPDATE `app-sensor` SET userId = NULL WHERE id = :sensorId;";
 
         return AppSensor.sequelize.query(sql, {
             model: AppSensor,
             replacements: { sensorId: sensorId },
             type: sequelize.QueryTypes.UPDATE
+        }).then(function() {
+
+            var sql = "UPDATE `app-zones_varieties` SET sensorId = NULL WHERE sensorId = :sensorId;";
+
+            return AppSensor.sequelize.query(sql, {
+                //model: AppSensor,
+                replacements: { sensorId: sensorId },
+                type: sequelize.QueryTypes.UPDATE
+            });
         });
 
         /*return AppSensor.update({
