@@ -72,7 +72,7 @@ module.exports = function(sequelize, Sequelize) {
      * @param userId The user id
      * @returns {Promise}
      */
-    AppSensor.findAllByUserId = function (userId) {
+    AppSensor.findAllByUserId = function(userId) {
 
         var sql = "SELECT id, serial FROM `app-sensor` ";
             sql += "WHERE deletedAt IS NULL AND userId = :userId;";
@@ -96,7 +96,7 @@ module.exports = function(sequelize, Sequelize) {
      * @param userId The new owner id
      * @returns {Promise}
      */
-    AppSensor.updateSensorOwnership = function (sensorId, userId) {
+    AppSensor.updateSensorOwnership = function(sensorId, userId) {
 
         var sql = "UPDATE `app-sensor` SET userId = :userId WHERE id = :sensorId";
 
@@ -123,7 +123,7 @@ module.exports = function(sequelize, Sequelize) {
      * @param sensorId The sensor id
      * @returns {Promise}
      */
-    AppSensor.deleteSensorOwnership = function (sensorId) {
+    AppSensor.deleteSensorOwnership = function(sensorId) {
 
         var sql = "UPDATE `app-sensor` SET userId = NULL WHERE id = :sensorId";
 

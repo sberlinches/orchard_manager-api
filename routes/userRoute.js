@@ -8,7 +8,7 @@ const userController    = require('../controllers/userController');
 
 // Register routes
 router.get('/', isAuthenticated, userController.getUsers);
-router.post('/', isAuthenticated, userController.addUser);
+router.post('/', isAuthenticated, userController.createUser);
 router.get('/:userId(\\d+)', isAuthenticated, userController.getUser);
 router.patch('/:userId(\\d+)', isAuthenticated, userController.updateUser);
 router.delete('/:userId(\\d+)', isAuthenticated, userController.removeUser);

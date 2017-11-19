@@ -44,9 +44,9 @@ exports.getUser = function(req, res) {
  * @param req HTTP request argument
  * @param res HTTP response argument
  */
-exports.addUser = function(req, res) {
+exports.createUser = function(req, res) {
 
-    CoreUser.addUser(req.body)
+    CoreUser.createUser(req.body)
         .then(function(user) {
             // Deletes the password before send the user back
             delete user.dataValues.password;

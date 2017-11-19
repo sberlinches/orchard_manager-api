@@ -92,12 +92,12 @@ module.exports = function(sequelize, Sequelize) {
     };
 
     /**
-     * Modifies the variety of a zone
+     * Changes the variety of a zone
      *
      * @param zoneVarietySensorId
      * @param varietyId
      */
-    AppZonesVarieties.modifyVariety = function(zoneVarietySensorId, varietyId) {
+    AppZonesVarieties.changeVariety = function(zoneVarietySensorId, varietyId) {
 
         var sql = "UPDATE `app-zones_varieties` SET varietyId = :varietyId WHERE id = :id";
 
@@ -156,13 +156,13 @@ module.exports = function(sequelize, Sequelize) {
     };
 
     /**
-     * Modifies the sensor of a variety
+     * Changes the sensor of a variety
      *
      * @param zoneVarietySensorId
      * @param sensorId
      * @returns {Promise}
      */
-    AppZonesVarieties.modifySensor = function(zoneVarietySensorId, sensorId) {
+    AppZonesVarieties.changeSensor = function(zoneVarietySensorId, sensorId) {
 
         var sql = "UPDATE `app-zones_varieties` SET sensorId = :sensorId WHERE id = :id;";
 

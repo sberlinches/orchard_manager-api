@@ -251,14 +251,14 @@ exports.addVariety = function(req, res) {
 };
 
 /**
- * Modifies the variety of a zone
+ * Changes the variety of a zone
  *
  * @param req HTTP request argument
  * @param res HTTP response argument
  */
-exports.modifyVariety = function(req, res) {
+exports.changeVariety = function(req, res) {
 
-    AppZonesVarieties.modifyVariety(req.params.zoneVarietySensorId, req.body.varietyId)
+    AppZonesVarieties.changeVariety(req.params.zoneVarietySensorId, req.body.varietyId)
         .then(function(result) {
             res.status(200).json(result);
         })
@@ -306,14 +306,14 @@ exports.addSensor = function(req, res) {
 };
 
 /**
- * Modifies the sensor of a variety
+ * Changes the sensor of a variety
  *
  * @param req HTTP request argument
  * @param res HTTP response argument
  */
-exports.modifySensor = function(req, res) {
+exports.changeSensor = function(req, res) {
 
-    AppZonesVarieties.modifySensor(req.params.zoneVarietySensorId, req.body.sensorId)
+    AppZonesVarieties.changeSensor(req.params.zoneVarietySensorId, req.body.sensorId)
         .then(function(result) {
             res.status(200).json(result);
         })

@@ -252,7 +252,7 @@ module.exports = function(sequelize, Sequelize) {
      * @param user The user object
      * @returns {user}
      */
-    CoreUser.addUser = function(user) {
+    CoreUser.createUser = function(user) {
 
         return CoreUser.create(user)
     };

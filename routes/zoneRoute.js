@@ -27,11 +27,11 @@ router.delete('/:zoneId(\d+)/follower/:userId(\\d+)', isAuthenticated, zoneContr
 // Variety routes
 router.get('/:zoneId(\\d+)/varieties', isAuthenticated, zoneController.getVarieties);
 router.post('/:zoneId(\\d+)/variety', isAuthenticated, zoneController.addVariety);
-router.patch('/variety/:zoneVarietySensorId(\\d+)', isAuthenticated, zoneController.modifyVariety);
+router.patch('/variety/:zoneVarietySensorId(\\d+)', isAuthenticated, zoneController.changeVariety);
 router.delete('/variety/:zoneVarietySensorId(\\d+)', isAuthenticated, zoneController.removeVariety);
 // Sensor routes
 router.post('/variety/sensor/:zoneVarietySensorId(\\d+)', isAuthenticated, zoneController.addSensor);
-router.patch('/variety/sensor/:zoneVarietySensorId(\\d+)', isAuthenticated, zoneController.modifySensor);
+router.patch('/variety/sensor/:zoneVarietySensorId(\\d+)', isAuthenticated, zoneController.changeSensor);
 router.delete('/variety/sensor/:zoneVarietySensorId(\\d+)', isAuthenticated, zoneController.removeSensor);
 
 module.exports = router;
