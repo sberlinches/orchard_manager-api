@@ -124,7 +124,7 @@ module.exports = function(sequelize, Sequelize) {
     };
 
     /**
-     * De-registers the sensor from an user and deletes the associated sensors from the variety
+     * De-registers the sensor from the user and deletes the associated sensors from the variety
      *
      * @param sensorId The sensor id
      * @returns {Promise}

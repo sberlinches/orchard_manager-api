@@ -39,7 +39,7 @@ exports.registerSensor = function(req, res) {
 };
 
 /**
- * De-registers the sensor from an user
+ * De-registers the sensor from the user
  *
  * @param req HTTP request argument
  * @param res HTTP response argument
