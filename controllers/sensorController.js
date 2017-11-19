@@ -22,14 +22,14 @@ exports.getSensorsByUser = function(req, res) {
 };
 
 /**
- * Updates the sensor ownership
+ * Registers the sensor to an user
  *
  * @param req HTTP request argument
  * @param res HTTP response argument
  */
-exports.updateSensorOwnership = function(req, res) {
+exports.registerSensor = function(req, res) {
 
-    AppSensor.updateSensorOwnership(req.params.sensorId, req.body.userId)
+    AppSensor.registerSensor(req.params.sensorId, req.body.userId)
         .then(function(response) {
             res.status(200).json(response);
         })
@@ -39,14 +39,14 @@ exports.updateSensorOwnership = function(req, res) {
 };
 
 /**
- * Deletes the sensor ownership
+ * De-registers the sensor from an user
  *
  * @param req HTTP request argument
  * @param res HTTP response argument
  */
-exports.deleteSensorOwnership = function(req, res) {
+exports.deregisterSensor = function(req, res) {
 
-    AppSensor.deleteSensorOwnership(req.params.sensorId)
+    AppSensor.deregisterSensor(req.params.sensorId)
         .then(function(response) {
             res.status(200).json(response);
         })

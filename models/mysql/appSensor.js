@@ -96,13 +96,13 @@ module.exports = function(sequelize, Sequelize) {
     };
 
     /**
-     * Updates the sensor ownership
+     * Registers the sensor to an user
      *
      * @param sensorId The sensor id
      * @param userId The new owner id
      * @returns {Promise}
      */
-    AppSensor.updateSensorOwnership = function(sensorId, userId) {
+    AppSensor.registerSensor = function(sensorId, userId) {
 
         var sql = "UPDATE `app-sensor` SET userId = :userId WHERE id = :sensorId;";
 
@@ -124,12 +124,12 @@ module.exports = function(sequelize, Sequelize) {
     };
 
     /**
-     * Deletes the sensor ownership and the associated sensors to the variety
+     * De-registers the sensor from an user and deletes the associated sensors from the variety
      *
      * @param sensorId The sensor id
      * @returns {Promise}
      */
-    AppSensor.deleteSensorOwnership = function(sensorId) {
+    AppSensor.deregisterSensor = function(sensorId) {
 
         var sql = "UPDATE `app-sensor` SET userId = NULL WHERE id = :sensorId;";
 
