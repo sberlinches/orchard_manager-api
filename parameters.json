@@ -1,15 +1,15 @@
-{
+  {
   "production": {
     "host": null,
     "port": 8080,
     "key": "",
     "cert": "",
     "mysql": {
-      "host": "",
+      "host": "104.197.182.70",
       "port": 3306,
-      "database": "",
-      "username": "",
-      "password": "",
+      "database": "orchardManager",
+      "username": "root",
+      "password": "joKciBu3vxpd6wkt",
       "dialect": "mysql",
       "dialectOptions": {},
       "timezone": "America/Vancouver"
@@ -18,7 +18,7 @@
       "host": "",
       "port": 6379
     },
-    "session": ""
+    "session": "1234567890QWERTY"
   },
   "development": {
     "host": null,
