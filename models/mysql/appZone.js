@@ -104,11 +104,15 @@ module.exports = function(sequelize, Sequelize) {
      */
     AppZone.findZone = function(zoneId) {
 
-        var sql = "SELECT zone.id, zone.alias, zones_varieties.id AS 'varietiesSensors.id', variety.id AS 'varietiesSensors.variety.id', ";
-            sql+= "variety.nameEn AS 'varietiesSensors.variety.name', zones_varieties.sensorId AS 'varietiesSensors.sensor.id' ";
+        var sql = "SELECT zone.id, zone.alias, ";
+            sql+= "zones_varieties.id AS 'varietiesSensors.id', variety.id AS 'varietiesSensors.variety.id', ";
+            sql+= "variety.nameEn AS 'varietiesSensors.variety.name', zones_varieties.sensorId AS 'varietiesSensors.sensor.id', ";
+            sql+= "users.id AS 'users.id', users.username AS 'users.username', zones_users.roleId AS 'users.roleId' ";
             sql+= "FROM `app-zone` AS zone ";
             sql+= "LEFT OUTER JOIN `app-zones_varieties` AS zones_varieties ON zone.id = zones_varieties.zoneId ";
             sql+= "LEFT OUTER JOIN `app-variety` AS variety ON zones_varieties.varietyId = variety.id ";
+            sql+= "LEFT OUTER JOIN `app-users_zones` AS zones_users ON zone.id = zones_users.zoneId " ;
+            sql+= "LEFT OUTER JOIN `core-user` AS users ON zones_users.userId = users.id ";
             sql+= "WHERE zone.id = :zoneId ORDER BY zones_varieties.id DESC;";
 
         return AppZone.sequelize.query(sql, {
@@ -120,7 +124,7 @@ module.exports = function(sequelize, Sequelize) {
         /*return AppZone.findOne({
             where: { id: zoneId },
             attributes: ['id', 'alias'],
-            include: [ 'varieties' ]
+            include: [ 'varieties', 'users' ]
         });*/
     };
 

@@ -34,7 +34,7 @@ exports.getZone = function(req, res) {
 
     AppZone.findZone(req.params.zoneId)
         .then(function(zone) {
-            res.status(200).json(zone.groupBy(['id', 'alias']));
+            res.status(200).json(zone.groupBy(['id', 'alias'], true, true));
         })
         .catch(function(err) {
             res.status(500).json(err);

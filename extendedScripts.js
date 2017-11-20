@@ -12,6 +12,21 @@ String.prototype.capitalize = function() {
 };
 
 /**
+ * Check whether the object given is contained in the parent array or not
+ *
+ * @param object The object to evaluate
+ * @returns {boolean}
+ */
+Array.prototype.objectContains = function(object) {
+
+    for (var i = 0, length = this.length; i < length; i++) {
+        if(this[i].contains(object)) return true;
+    }
+
+    return false;
+};
+
+/**
  * Group an array by the provided parameters
  * Before:
  *
@@ -38,39 +53,79 @@ String.prototype.capitalize = function() {
  * }
  *
  * @param groupParameters The parameters to group by
+ * @param {boolean} removeNulls
+ * @param {boolean} removeDuplicates
  * @returns {*}
  */
-Array.prototype.groupBy = function(groupParameters) {
+Array.prototype.groupBy = function(groupParameters, removeNulls, removeDuplicates) {
 
-    var array = this;
+    var check = 'id';
+    var inputArr = this;
 
-    if (!array.length || !groupParameters.length) {
-        return array;
+    // 1. return the input if:
+    // the array to group by is empty (inputArr)
+    // the array of parameters to group for is empty (groupParameters)
+    if (!inputArr.length || !groupParameters.length) {
+        return inputArr;
     }
 
-    var newObject   = {};
-    var keys        = Object.keys(array[0]);
+    // 2. extract the keys of the first object in the array
+    // Due to every object is going to have the same keys, it's not worth do it for every single one
+    var keys = Object.keys(inputArr[0]);
+    var outputObj = {};
 
-    // 1. Add the parent parameters of the new object
+    // 3. Add the parent parameters of the new object
     keys.forEach(function(key) {
-        if(groupParameters.includes(key))
-        // 1.1 If it's a parameter to be grouped add the value
-            newObject[key] = array[0][key];
-        else
-        // 1.2 The non grouped parameters are agregated
-            newObject[key] = [];
-    });
 
-    // 2. Fill the agregated parameters
-    array.forEach(function(object) {
-        keys.forEach(function(key) {
-            if(!groupParameters.includes(key)) {
-                if(object[key].id !== null) { // TODO: temporal fix to avoid oject full of null attributes
-                    newObject[key].push(object[key]);
+        // 3.1. If it's a parameter to be grouped add the value to the new object
+        if(groupParameters.includes(key)) {
+            outputObj[key] = inputArr[0][key];
+        }
+        // 3.2. The non grouped parameters are going to be agregated
+        else {
+            outputObj[key] = [];
+
+            // 3.2.1. Fill the array
+            inputArr.forEach(function(inputObject) {
+
+                if(inputObject[key].id !== null) { // TODO: temporal fix to avoid oject full of null attributes
+
+                    if(removeDuplicates) { //TODO: this should be an object instead of a boolean
+                        if(key === 'users') {
+                            if(!outputObj[key].objectContains({id:inputObject[key].id, roleId:inputObject[key].roleId})) {
+                                outputObj[key].push(inputObject[key]);
+                            }
+                        } else {
+                            if(!outputObj[key].objectContains({id:inputObject[key].id})) {
+                                outputObj[key].push(inputObject[key]);
+                            }
+                        }
+                    } else {
+                        outputObj[key].push(inputObject[key]);
+                    }
                 }
-            }
-        });
+            });
+        }
     });
 
-    return newObject;
+    return outputObj;
+};
+
+/**
+ * Check whether the object given is contained in the parent object or not
+ *
+ * @param object The object to evaluate
+ * @returns {boolean}
+ */
+Object.prototype.contains = function(object) {
+
+    var keys    = Object.keys(object);
+    var res     = true;
+
+    for (var i = 0, lenght = keys.length; i < lenght; i++) {
+        if(this[keys[i]] !== object[keys[i]])
+            res = false;
+    }
+
+    return res;
 };
