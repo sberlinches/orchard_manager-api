@@ -22,7 +22,7 @@ exports.login = function(req, res) {
     CoreUser.login(username, password)
         .then(function(user) {
             // Stores the user in session
-            req.session.user = user;
+            //req.session.user = user;
             res.status(200).send(user);
         })
         .catch(function(err) {
@@ -44,9 +44,9 @@ exports.signup = function(req, res) {
     CoreUser.signup(req.body)
         .then(function(user) {
             // Deletes the password before send the user back
-            delete user.dataValues.password;
+            //delete user.dataValues.password;
             // Stores the user in session
-            req.session.user = user;
+            //req.session.user = user;
             res.status(200).json(user);
         })
         .catch(function(err) {
