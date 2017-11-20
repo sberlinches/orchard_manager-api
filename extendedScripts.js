@@ -20,11 +20,31 @@ String.prototype.capitalize = function() {
 Array.prototype.objectContains = function(object) {
 
     for (var i = 0, length = this.length; i < length; i++) {
-        if(this[i].contains(object)) return true;
+        if(isObjectWithinObject(this[i], object)) return true;
     }
 
     return false;
 };
+
+/**
+ * Checks whether the objectChild is contained in the objectParent or not
+ *
+ * @param objectParent
+ * @param objectChild
+ * @returns {boolean}
+ */
+function isObjectWithinObject(objectParent, objectChild) {
+
+    var keys    = Object.keys(objectChild);
+    var res     = true;
+
+    for (var i = 0, lenght = keys.length; i < lenght; i++) {
+        if(objectParent[keys[i]] !== objectChild[keys[i]])
+            res = false;
+    }
+
+    return res;
+}
 
 /**
  * Group an array by the provided parameters
@@ -109,23 +129,4 @@ Array.prototype.groupBy = function(groupParameters, removeNulls, removeDuplicate
     });
 
     return outputObj;
-};
-
-/**
- * Check whether the object given is contained in the parent object or not
- *
- * @param object The object to evaluate
- * @returns {boolean}
- */
-Object.prototype.contains = function(object) {
-
-    var keys    = Object.keys(object);
-    var res     = true;
-
-    for (var i = 0, lenght = keys.length; i < lenght; i++) {
-        if(this[keys[i]] !== object[keys[i]])
-            res = false;
-    }
-
-    return res;
 };
